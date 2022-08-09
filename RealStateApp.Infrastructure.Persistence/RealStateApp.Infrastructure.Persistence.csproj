@@ -15,9 +15,4 @@
 	  <ProjectReference Include="..\RealStateApp.Core.Domain\RealStateApp.Core.Domain.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Mapping\" />
-	  <Folder Include="Mapping\" />
-	</ItemGroup>
-
 </Project>
