@@ -9,7 +9,6 @@ namespace RealStateApp.Infrastructure.Persistence.Contexts
     public class ApplicationContext : DbContext
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
-        public DbSet<Usuarios> Usuarios { get; set; }
         public DbSet<Propiedades> Propiedades { get; set; }
         public DbSet<Mejoras> Mejoras { get; set; }
         public DbSet<MejorasPropiedades> MejorasPropiedades { get; set; }
@@ -19,7 +18,6 @@ namespace RealStateApp.Infrastructure.Persistence.Contexts
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.ApplyConfiguration(new UsuariosMap());
             builder.ApplyConfiguration(new PropiedadesMap());
             builder.ApplyConfiguration(new MejorasMap());
             builder.ApplyConfiguration(new MejorasPropiedadesMap());
