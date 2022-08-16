@@ -22,12 +22,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Administrador\Mejoras\" />
-    <Folder Include="Views\Administrador\Administradores\" />
-    <Folder Include="Views\Administrador\Agentes\" />
-    <Folder Include="Views\Administrador\Home\" />
-    <Folder Include="Views\Administrador\TipoVentas\" />
-    <Folder Include="Views\Administrador\Propiedades\" />
+    <Folder Include="Views\Admin\Improvements\" />
+    <Folder Include="Views\Admin\Admins\" />
+    <Folder Include="Views\Admin\Agents\" />
+    <Folder Include="Views\Admin\Home\" />
+    <Folder Include="Views\Admin\PropertyType\" />
+    <Folder Include="Views\Admin\SalesType\" />
+    <Folder Include="Views\Admin\Properties\" />
   </ItemGroup>
 
 </Project>
