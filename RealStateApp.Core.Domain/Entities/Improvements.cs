@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Domain.Entities
 {
-    public class Mejoras
+    public class Improvements
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
 
-        public ICollection<Propiedades> Propiedades { get; set; }
+        public ICollection<Property> Propiedades { get; set; }
     }
 }

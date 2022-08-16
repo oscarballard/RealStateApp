@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Infrastructure.Persistence.Mapping
 {
-    public class TipoVentasMap : IEntityTypeConfiguration<TipoVentas>
+    public class SalesTypeMap : IEntityTypeConfiguration<SalesType>
     {
-        public void Configure(EntityTypeBuilder<TipoVentas> builder)
+        public void Configure(EntityTypeBuilder<SalesType> builder)
         {
             builder.ToTable("TipoVentas")
                 .HasKey(u => u.Id);
 
             builder
-                .HasMany<Propiedades>(u => u.Propiedades)
+                .HasMany<Property>(u => u.Propiedades)
                 .WithOne(u => u.TipoVenta)
                 .HasForeignKey(p => p.IdTipoVenta)
                 .OnDelete(DeleteBehavior.Cascade);

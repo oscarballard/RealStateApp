@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Domain.Entities
 {
-    public class MejorasPropiedades
+    public class PropertyImprovements
     {
         public int Id { get; set; }
         public int IdPropiedad { get; set; }
         public int IdMejora { get; set; }
 
-        public Propiedades Propiedad { get; set; }
-        public Mejoras Mejora { get; set; }
+        public Property Propiedad { get; set; }
+        public Improvements Mejora { get; set; }
     }
 }

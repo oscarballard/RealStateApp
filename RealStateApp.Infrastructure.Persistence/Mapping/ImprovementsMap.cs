@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Infrastructure.Persistence.Mapping
 {
-    public class MejorasMap : IEntityTypeConfiguration<Mejoras>
+    public class ImprovementsMap : IEntityTypeConfiguration<Improvements>
     {
-        public void Configure(EntityTypeBuilder<Mejoras> builder)
+        public void Configure(EntityTypeBuilder<Improvements> builder)
         {
             builder.ToTable("Mejoras")
                 .HasKey(u => u.Id);

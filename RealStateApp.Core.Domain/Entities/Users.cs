@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Domain.Entities
 {
-    public class Usuarios
+    public class Users
     {
         public int Id { get; set; }
         public string Nombre { get; set; }
@@ -18,6 +18,6 @@ namespace RealStateApp.Core.Domain.Entities
         public int IdTipoUsuario { get; set; }
 
         //NAVIGATION PROPERTTY
-        public ICollection<Propiedades> Propiedades { get; set; }
+        public ICollection<Property> Propiedades { get; set; }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Domain.Entities
 {
-    public class Propiedades
+    public class Property
     {
         public int Id { get; set; }
         public int Codigo { get; set; }
@@ -24,9 +24,9 @@ namespace RealStateApp.Core.Domain.Entities
         public string Imagen4 { get; set; }
 
         //NAVIGATION PROPERTTY
-        public TipoVentas TipoVenta { get; set; }
-        public TipoPropiedades TipoPropiedad { get; set; }
-        public Usuarios Usuario { get; set; }
-        public ICollection<Mejoras> Mejoras { get; set; }
+        public SalesType TipoVenta { get; set; }
+        public PropertyType TipoPropiedad { get; set; }
+        public Users Usuario { get; set; }
+        public ICollection<Improvements> Mejoras { get; set; }
     }
 }
