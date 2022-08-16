@@ -22,7 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Administrador\" />
+    <Folder Include="Views\Administrador\Mejoras\" />
+    <Folder Include="Views\Administrador\Administradores\" />
+    <Folder Include="Views\Administrador\Agentes\" />
+    <Folder Include="Views\Administrador\Home\" />
+    <Folder Include="Views\Administrador\TipoVentas\" />
+    <Folder Include="Views\Administrador\Propiedades\" />
   </ItemGroup>
 
 </Project>
