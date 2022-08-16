@@ -21,14 +21,4 @@
     <ProjectReference Include="..\RealStateApp.Infrastructure.Shared\RealStateApp.Infrastructure.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Admin\Improvements\" />
-    <Folder Include="Views\Admin\Admins\" />
-    <Folder Include="Views\Admin\Agents\" />
-    <Folder Include="Views\Admin\Home\" />
-    <Folder Include="Views\Admin\PropertyType\" />
-    <Folder Include="Views\Admin\SalesType\" />
-    <Folder Include="Views\Admin\Properties\" />
-  </ItemGroup>
-
 </Project>
