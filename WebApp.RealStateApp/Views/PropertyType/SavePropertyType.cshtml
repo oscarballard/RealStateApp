@@ -1,0 +1,26 @@
+﻿@using RealStateApp.Core.Application.ViewModels.PropertyType;
+@model SavePropertyTypeViewModel;
+@{
+    bool editando = Model.Id == 0 ? false : true;
+    ViewData["Title"] = "Guardar Tipo";
+}
+<div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-controller="PropertyType" asp-action="@(editando? "Edit" : "Create")">
+            <div class="mb-3">
+                <label for="Nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="Nombre" asp-for="Nombre" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="Nombre" class="form-label">Nombre</label>
+                <textarea class="form-control" name="Descripcion" asp-for="Descripcion" ></textarea>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="mb-3 text-center">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a asp-controller="PropertyType" asp-action="Index" class="btn btn-warning">Volver atras</a>
+            </div>
+        </form>
+    </div>
+</div>
