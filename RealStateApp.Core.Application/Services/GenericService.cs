@@ -4,7 +4,7 @@ using RealStateApp.Core.Application.Interfaces.Services;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Application.Services
+namespace RealStateApp.Core.Application.Services
 {
     public class GenericService<SaveViewModel, ViewModel, Model> : IGenericService<SaveViewModel, ViewModel, Model>
         where SaveViewModel : class
