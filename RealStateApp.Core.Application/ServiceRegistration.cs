@@ -18,6 +18,8 @@ namespace RealStateApp.Infrastructure.Persistence
             #region Services
             services.AddTransient(typeof(IGenericService<,,>), typeof(GenericService<,,>));
             services.AddTransient<IPropertyTypeService, PropertyTypeService>();
+            services.AddTransient<ISalesTypeService, SalesTypeService>();
+            services.AddTransient<IImprovementsService, ImprovementsService>();
             #endregion
         }
     }
