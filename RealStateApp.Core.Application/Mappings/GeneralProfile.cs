@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using RealStateApp.Core.Application.ViewModels.Improvements;
 using RealStateApp.Core.Application.ViewModels.PropertyType;
 using RealStateApp.Core.Application.ViewModels.SalesType;
 using RealStateApp.Core.Domain.Entities;
@@ -17,7 +18,7 @@ namespace RealStateApp.Core.Application.Mappings
 
             CreateMap<PropertyType, PropertyTypeViewModel>()
                 .ForMember(dest => dest.CantPropiedades, opt => opt.Ignore())
-                .ReverseMap();
+                .ReverseMap(); 
 
             CreateMap<SalesType, SaveSalesTypeViewModel>()
                 .ReverseMap();
@@ -25,6 +26,14 @@ namespace RealStateApp.Core.Application.Mappings
             CreateMap<SalesType, SalesTypeViewModel>()
                 .ForMember(dest => dest.CantPropiedades, opt => opt.Ignore())
                 .ReverseMap();
+
+            CreateMap<Improvements, SaveImprovementsViewModel>()
+                .ReverseMap();
+
+            CreateMap<Improvements, ImprovementsViewModel>()
+                .ForMember(dest => dest.CantPropiedades, opt => opt.Ignore())
+                .ReverseMap();
+
         }
     }
 }
