@@ -28,14 +28,10 @@
                 @foreach (PropertyViewModel Property in ViewBag.Properties)
                 {
                     <tr>
-                        <th scope="row">@Property.Id</th>
-                        <td>@Property.Nombre</td>
-                        <td>@Property.Descripcion</td>
-                        <td>@Property.CantPropiedades</td>
                         <td>
                             <div class="btn-group">
-                                <a class="btn btn-primary" asp-controller="PropertyType" asp-action="Edit" asp-route-id="@Property.Id">Editar</a>
-                                <a class="btn btn-danger" asp-controller="PropertyType" asp-action="Delete" asp-route-id="@Property.Id">Eliminar</a>
+                                <a class="btn btn-primary" asp-controller="PropertyType" asp-action="Edit">Editar</a>
+                                <a class="btn btn-danger" asp-controller="PropertyType" asp-action="Delete">Eliminar</a>
                             </div>
                         </td>
                     </tr>

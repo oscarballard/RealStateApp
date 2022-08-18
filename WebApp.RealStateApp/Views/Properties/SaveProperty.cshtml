@@ -1,0 +1,49 @@
+﻿@using RealStateApp.Core.Application.ViewModels.Properties;
+@model SavePropertyViewModel;
+@{
+    //bool editando = Model.Id == 0 ? false : true;
+    ViewData["Title"] = "Guardar Tipo";
+}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        @*asp-action="@(editando? "Edit" : "Create")"*@
+        <form method="post" asp-controller="PropertyType">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">$</span>
+                </div>
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                <div class="input-group-append">
+                    <span class="input-group-text">RD</span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="Nombre" class="form-label">Descripcion</label>
+                <textarea class="form-control" name="Descripcion" asp-for="Descripcion"></textarea>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                <div class="input-group-append">
+                    <span class="input-group-text">Metros</span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="Nombre" class="form-label">Cant.Habitaciones</label>
+                <input type="number" class="form-control" name="CantHabitaciones" asp-for="CantHabitaciones" />
+                <span asp-validation-for="CantHabitaciones" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="Nombre" class="form-label">Cant.Baños</label>
+                <input type="number" class="form-control" name="CantLavabos" asp-for="CantLavabos" />
+                <span asp-validation-for="CantLavabos" class="text-danger"></span>
+            </div>
+            <div class="mb-3 text-center">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a asp-controller="PropertyType" asp-action="Index" class="btn btn-warning">Volver atras</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>
