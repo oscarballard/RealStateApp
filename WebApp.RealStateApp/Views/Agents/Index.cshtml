@@ -1,6 +1,70 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    int cont = 0;
 }
-<h1>Lista de Agentes</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+            Agregar Administrador
+        </button>
+        <span style="color:red;font-size:20px">@TempData["ErrorMessge"]</span>
+    </div>
+    <div class="col-md-12">
+        <br />
+        <h4>Beneficiarios</h4>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Nombre de Usuario</th>
+                    <th>Cédula</th>
+                    <th>correo</th>
+                    <th>
+                        --
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (RealStateApp.Core.Application.ViewModels.User.UsersViewModel user in ViewBag.admins)
+                {
+                    cont++;
+                    <tr>
+                        <td>@cont</td>
+                        <td>@user.FirstName</td>
+                        <td>@user.LastName</td>
+                        <td>@user.Username</td>
+                        <td>@user.Identification</td>
+                        <td>@user.Email</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+
+<script>
+    var el = document.getElementById('IdProducType');
+    var element = document.getElementById('limit');
+    var monto = document.getElementById('monto');
+    element.classList.add('hidden')
+
+    el.addEventListener('change', (e) => {
+        if (e.target.value == 2) {
+            element.classList.remove('hidden')
+            monto.classList.add('hidden')
+        } else {
+            element.classList.add('hidden')
+            monto.classList.remove('hidden')
+        }
+    })
+
+</script>

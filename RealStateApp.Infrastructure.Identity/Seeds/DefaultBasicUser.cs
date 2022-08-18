@@ -14,8 +14,8 @@ namespace RealStateApp.Infrastructure.Identity.Seeds
         public static async Task SeedAsync(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             ApplicationUser defaultUser = new();
-            defaultUser.UserName = "basicuser";
-            defaultUser.Email = "basicuser@email.com";
+            defaultUser.UserName = "Client";
+            defaultUser.Email = "Client@email.com";
             defaultUser.FirstName = "John";
             defaultUser.LastName = "Doe";
             defaultUser.EmailConfirmed = true;
@@ -27,7 +27,7 @@ namespace RealStateApp.Infrastructure.Identity.Seeds
                 if (user == null)
                 {
                     await userManager.CreateAsync(defaultUser, "123Pa$$word!");
-                    await userManager.AddToRoleAsync(defaultUser, Roles.Basic.ToString());
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Client.ToString());
                 }
             }
          

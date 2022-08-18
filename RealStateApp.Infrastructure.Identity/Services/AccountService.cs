@@ -1,52 +1,44 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.EntityFrameworkCore;
 using RealStateApp.Core.Application.Dtos.Account;
 using RealStateApp.Core.Application.Enums;
 using RealStateApp.Core.Application.Interfaces.Services;
-using RealStateApp.Core.Domain.Settings;
+using RealStateApp.Core.Application.ViewModels.Roles;
+using RealStateApp.Core.Application.ViewModels.User;
 using RealStateApp.Infrastructure.Identity.Entities;
 using System;
 using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using System.Security.Cryptography;
 
 namespace RealStateApp.Infrastructure.Identity.Services
 {
     public class AccountService : IAccountService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailService _emailService;
-        private readonly JWTSettings _jwtSettings;
 
-        public AccountService(
-              UserManager<ApplicationUser> userManager,            
-              SignInManager<ApplicationUser> signInManager, 
-              IEmailService emailService,
-              IOptions<JWTSettings> jwtSettings
-            )
+        public AccountService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, IEmailService emailService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _emailService = emailService;
-            _jwtSettings = jwtSettings.Value;
         }
 
         public async Task<AuthenticationResponse> AuthenticateAsync(AuthenticationRequest request)
         {
             AuthenticationResponse response = new();
 
-            var user = await _userManager.FindByEmailAsync(request.Email);
+            var user = await _userManager.FindByNameAsync(request.UserName);
             if (user == null)
             {
                 response.HasError = true;
-                response.Error = $"No Accounts registered with {request.Email}";
+                response.Error = $"No Hay Usuario Registrado Con Este Usuario: {request.UserName}";
                 return response;
             }
 
@@ -54,17 +46,9 @@ namespace RealStateApp.Infrastructure.Identity.Services
             if (!result.Succeeded)
             {
                 response.HasError = true;
-                response.Error = $"Invalid credentials for {request.Email}";
+                response.Error = $"Credenciales Invalidas {request.UserName}";
                 return response;
             }
-            if (!user.EmailConfirmed)
-            {
-                response.HasError = true;
-                response.Error = $"Account no confirmed for {request.Email}";
-                return response;
-            }
-
-            JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);
 
             response.Id = user.Id;
             response.Email = user.Email;
@@ -74,9 +58,6 @@ namespace RealStateApp.Infrastructure.Identity.Services
 
             response.Roles = rolesList.ToList();
             response.IsVerified = user.EmailConfirmed;
-            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-            var refreshToken = GenerateRefreshToken();
-            response.RefreshToken = refreshToken.Token;
 
             return response;
         }
@@ -86,6 +67,36 @@ namespace RealStateApp.Infrastructure.Identity.Services
             await _signInManager.SignOutAsync();
         }
 
+        public async Task<List<UsersViewModel>> GetUsersAsync()
+        {
+            var users = await _userManager.Users.Select(user => new UsersViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                estado = user.EmailConfirmed
+                //Identification = user.Identification
+            }).OrderBy(u => u.FirstName).ToListAsync();
+
+            foreach (var u in users)
+            {
+                var user = await _userManager.FindByIdAsync(u.Id);
+                u.Type = await _userManager.GetRolesAsync(user);
+            }
+
+            return users;
+        }
+
+        public async Task<UsersViewModel> GetUserByIdAsync(string Id)
+        {
+            var users = await _userManager.FindByIdAsync(Id);
+            UsersViewModel user = new();
+            user.Id = users.Id;
+            user.FirstName = users.FirstName;
+            user.LastName = users.LastName;
+            return user;
+        }
         public async Task<RegisterResponse> RegisterBasicUserAsync(RegisterRequest request, string origin)
         {
             RegisterResponse response = new()
@@ -97,7 +108,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             if (userWithSameUserName != null)
             {
                 response.HasError = true;
-                response.Error = $"username '{request.UserName}' is already taken.";
+                response.Error = $"El username '{request.UserName}' Ya Se Esta Usando.";
                 return response;
             }
 
@@ -116,20 +127,15 @@ namespace RealStateApp.Infrastructure.Identity.Services
                 LastName = request.LastName,
                 UserName = request.UserName
             };
-
+            user.EmailConfirmed = true;
             var result = await _userManager.CreateAsync(user, request.Password);
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, Roles.Basic.ToString());
-                var verificationUri = await SendVerificationEmailUri(user, origin);
-                await _emailService.SendAsync(new Core.Application.DTOs.Email.EmailRequest()
-                {
-                    To = user.Email,
-                    Body = $"Please confirm your account visiting this URL {verificationUri}",
-                    Subject = "Confirm registration"
-                });
-            }
-            else
+            var rolName = await _roleManager.FindByIdAsync(request.RolId);
+            //await _userManager.AddToRoleAsync(user, Roles.Client.ToString());
+            await _userManager.AddToRoleAsync(user, rolName.Name);
+            userWithSameUserName = await _userManager.FindByIdAsync(user.Id);
+
+
+            if (!result.Succeeded)
             {
                 response.HasError = true;
                 response.Error = $"An error occurred trying to register the user.";
@@ -139,6 +145,12 @@ namespace RealStateApp.Infrastructure.Identity.Services
             return response;
         }
 
+        public async Task Delete(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            user.EmailConfirmed = false;
+            await _userManager.UpdateAsync(user);
+        }
         public async Task<string> ConfirmAccountAsync(string userId, string token)
         {
             var user = await _userManager.FindByIdAsync(userId);
@@ -177,7 +189,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
 
             var verificationUri = await SendForgotPasswordUri(user, origin);
 
-            await _emailService.SendAsync(new Core.Application.DTOs.Email.EmailRequest()
+            await _emailService.SendAsync(new RealStateApp.Core.Application.DTOs.Email.EmailRequest()
             {
                 To = user.Email,
                 Body = $"Please reset your account visiting this URL {verificationUri}",
@@ -216,64 +228,6 @@ namespace RealStateApp.Infrastructure.Identity.Services
 
             return response;
         }
-
-        #region PrivateMethods
-      
-        private async Task<JwtSecurityToken> GenerateJWToken(ApplicationUser user)
-        {
-            var userClaims = await _userManager.GetClaimsAsync(user);
-            var roles = await _userManager.GetRolesAsync(user);
-
-            var roleClaims = new List<Claim>();
-
-            foreach(var role in roles)
-            {
-                roleClaims.Add(new Claim("roles", role));
-            }
-
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub,user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email,user.Email),
-                new Claim("uid", user.Id)
-            }
-            .Union(userClaims)
-            .Union(roleClaims);
-
-            var symmectricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
-            var signingCredetials = new SigningCredentials(symmectricSecurityKey, SecurityAlgorithms.HmacSha256);
-
-            var jwtSecurityToken = new JwtSecurityToken(
-                issuer: _jwtSettings.Issuer,
-                audience: _jwtSettings.Audience,
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
-                signingCredentials: signingCredetials);
-
-            return jwtSecurityToken;
-        }
-
-        private RefreshToken GenerateRefreshToken()
-        {
-            return new RefreshToken
-            {
-                Token = RandomTokenString(),
-                Expires = DateTime.UtcNow.AddDays(7),
-                Created = DateTime.UtcNow
-            };
-        }
-        
-        private string RandomTokenString()
-        {
-            using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
-            var ramdomBytes = new byte[40];
-            rngCryptoServiceProvider.GetBytes(ramdomBytes);
-
-            return BitConverter.ToString(ramdomBytes).Replace("-", "");
-        }
-
-
         private async Task<string> SendVerificationEmailUri(ApplicationUser user, string origin)
         {
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -296,7 +250,44 @@ namespace RealStateApp.Infrastructure.Identity.Services
             return verificationUri;
         }
 
-        #endregion
+        public async Task<List<RolesViewModel>> GetAllRoles()
+        {
+            var rolesList = await _roleManager.Roles.ToListAsync();
+            List<RolesViewModel> roles = new();
+            rolesList.ForEach(item => roles.Add(
+                new RolesViewModel()
+                {
+                    Id = item.Id,
+                    Name = item.Name
+                }
+            ));
+            return roles;
+        }
+
+        public async Task<RolesViewModel> GetRolByName(string roleName)
+        {
+            var role = await _roleManager.FindByNameAsync(roleName);
+            return new RolesViewModel()
+            {
+                Id = role.Id,
+                Name = role.Name
+            };
+        }
+
+        public async Task<List<UsersViewModel>> GetUserByRol(string roleName)
+        {
+            var users = await _userManager.GetUsersInRoleAsync(roleName);
+
+            return users.Select(user => new UsersViewModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                estado = user.EmailConfirmed
+                //Identification = user.Identification
+            }).OrderBy(u => u.FirstName).ToList();
+        }
     }
 
 
