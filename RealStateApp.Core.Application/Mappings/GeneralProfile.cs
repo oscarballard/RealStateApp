@@ -8,6 +8,7 @@ using RealStateApp.Core.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using RealStateApp.Core.Application.ViewModels.Properties;
 
 namespace RealStateApp.Core.Application.Mappings
 {
@@ -23,6 +24,8 @@ namespace RealStateApp.Core.Application.Mappings
             CreateMap<RegisterRequest, SaveUsersViewModel>()
                 .ForMember(x => x.HasError, opt => opt.Ignore())
                 .ForMember(x => x.Error, opt => opt.Ignore())
+                .ReverseMap();
+
             CreateMap<PropertyType, SavePropertyTypeViewModel>()
                .ReverseMap();
 
@@ -42,6 +45,16 @@ namespace RealStateApp.Core.Application.Mappings
 
             CreateMap<Improvements, ImprovementsViewModel>()
                 .ForMember(dest => dest.CantPropiedades, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<Property, SavePropertyViewModel>()
+                .ForMember(dest => dest.FileImagen1, opt => opt.Ignore())
+                .ForMember(dest => dest.FileImagen2, opt => opt.Ignore())
+                .ForMember(dest => dest.FileImagen3, opt => opt.Ignore())
+                .ForMember(dest => dest.FileImagen4, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<Property, PropertyViewModel>()
                 .ReverseMap();
 
         }
