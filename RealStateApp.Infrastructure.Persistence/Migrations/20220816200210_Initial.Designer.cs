@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RealStateApp.Infrastructure.Persistence.Contexts;
 
 namespace RealStateApp.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20220816200210_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -19,7 +21,6 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Mejoras", b =>
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Improvements", b =>
                 {
                     b.Property<int>("Id")
@@ -38,29 +39,6 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                     b.ToTable("Mejoras");
                 });
 
-            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.MejorasPropiedades", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("IdMejora")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdPropiedad")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdMejora");
-
-                    b.HasIndex("IdPropiedad");
-
-                    b.ToTable("MejorasPropiedades");
-                });
-
-            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Propiedades", b =>
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Property", b =>
                 {
                     b.Property<int>("Id")
@@ -121,7 +99,6 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                     b.ToTable("Propiedades");
                 });
 
-            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.TipoPropiedades", b =>
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.PropertyImprovements", b =>
                 {
                     b.Property<int>("Id")
@@ -162,7 +139,6 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                     b.ToTable("TipoPropiedades");
                 });
 
-            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.TipoVentas", b =>
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.SalesType", b =>
                 {
                     b.Property<int>("Id")
@@ -181,7 +157,6 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                     b.ToTable("TipoVentas");
                 });
 
-            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Usuarios", b =>
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Users", b =>
                 {
                     b.Property<int>("Id")
@@ -212,31 +187,6 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.MejorasPropiedades", b =>
-                {
-                    b.HasOne("RealStateApp.Core.Domain.Entities.Mejoras", "Mejora")
-                        .WithMany()
-                        .HasForeignKey("IdMejora")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RealStateApp.Core.Domain.Entities.Propiedades", "Propiedad")
-                        .WithMany()
-                        .HasForeignKey("IdPropiedad")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Mejora");
-
-                    b.Navigation("Propiedad");
-                });
-
-            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Propiedades", b =>
-                {
-                    b.HasOne("RealStateApp.Core.Domain.Entities.TipoPropiedades", "TipoPropiedad")
                     b.ToTable("Users");
                 });
 
@@ -248,14 +198,12 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RealStateApp.Core.Domain.Entities.TipoVentas", "TipoVenta")
                     b.HasOne("RealStateApp.Core.Domain.Entities.SalesType", "TipoVenta")
                         .WithMany("Propiedades")
                         .HasForeignKey("IdTipoVenta")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("RealStateApp.Core.Domain.Entities.Usuarios", "Usuario")
                     b.HasOne("RealStateApp.Core.Domain.Entities.Users", "Usuario")
                         .WithMany("Propiedades")
                         .HasForeignKey("UsuarioId");
@@ -267,7 +215,6 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                     b.Navigation("Usuario");
                 });
 
-            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.TipoPropiedades", b =>
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.PropertyImprovements", b =>
                 {
                     b.HasOne("RealStateApp.Core.Domain.Entities.Improvements", "Mejora")
@@ -292,13 +239,11 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                     b.Navigation("Propiedades");
                 });
 
-            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.TipoVentas", b =>
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.SalesType", b =>
                 {
                     b.Navigation("Propiedades");
                 });
 
-            modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Usuarios", b =>
             modelBuilder.Entity("RealStateApp.Core.Domain.Entities.Users", b =>
                 {
                     b.Navigation("Propiedades");

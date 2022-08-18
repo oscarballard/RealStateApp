@@ -1,0 +1,28 @@
+﻿@using RealStateApp.Core.Application.ViewModels.Improvements;
+@model SaveImprovementsViewModel;
+@{
+    bool editando = Model.Id == 0 ? false : true;
+    ViewData["Title"] = "Guardar Mejora";
+}
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <form method="post" asp-controller="SalesType" asp-action="@(editando? "Edit" : "Create")">
+            <div class="mb-3">
+                <label for="Nombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" name="Nombre" asp-for="Nombre" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label for="Nombre" class="form-label">Descripcion</label>
+                <textarea class="form-control" name="Descripcion" asp-for="Descripcion"></textarea>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="mb-3 text-center">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a asp-controller="SalesType" asp-action="Index" class="btn btn-warning">Volver atras</a>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>

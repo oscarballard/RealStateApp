@@ -23,6 +23,10 @@ namespace WebApp.RealStateApp.Controllers
             return View();
         }
 
+        public IActionResult indexAdmin()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();

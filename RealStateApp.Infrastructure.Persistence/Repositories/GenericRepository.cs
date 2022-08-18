@@ -4,7 +4,7 @@ using RealStateApp.Infrastructure.Persistence.Contexts;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Application.Repository
+namespace RealStateApp.Infrastructure.Persistence.Repositories
 {
     //Generics
     public class GenericRepository<Entity> : IGenericRepository<Entity> where Entity : class
