@@ -2,6 +2,7 @@
 using RealStateApp.Core.Application.ViewModels.Roles;
 using RealStateApp.Core.Application.ViewModels.User;
 using System.Collections.Generic;
+using RealStateApp.Core.Domain.Entities;
 using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Interfaces.Services
