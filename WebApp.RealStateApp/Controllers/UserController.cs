@@ -10,9 +10,9 @@ namespace WebApp.RealStateApp.Controllers
 {
     public class UserController : Controller
     {
-        private readonly IUserService _userService;
+        private readonly IUserServices _userService;
 
-        public UserController(IUserService userService)
+        public UserController(IUserServices userService)
         {
             _userService = userService;
         }
@@ -57,12 +57,12 @@ namespace WebApp.RealStateApp.Controllers
         [ServiceFilter(typeof(LoginAuthorize))]
         public IActionResult Register()
         {
-            return View(new SaveUserViewModel());
+            return View(new SaveUsersViewModel());
         }
 
         [ServiceFilter(typeof(LoginAuthorize))]
         [HttpPost]
-        public async Task<IActionResult> Register(SaveUserViewModel vm)
+        public async Task<IActionResult> Register(SaveUsersViewModel vm)
         {
             if (!ModelState.IsValid)
             {

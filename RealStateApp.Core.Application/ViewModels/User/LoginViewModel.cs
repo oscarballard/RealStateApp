@@ -1,14 +1,19 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.ViewModels.User
 {
     public class LoginViewModel
     {
-        [Required(ErrorMessage = "Debe colocar el correo del usuario")]
+        [Required(ErrorMessage = "Debe colocar su usuario")]
         [DataType(DataType.Text)]
-        public string Email { get; set; }
+        public string Username { get; set; }
 
-        [Required(ErrorMessage = "Debe colocar una contraseña")]
+        [Required(ErrorMessage = "Debe colocar su contraseña")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         public bool HasError { get; set; }
