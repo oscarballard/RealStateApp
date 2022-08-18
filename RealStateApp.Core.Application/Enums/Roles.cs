@@ -8,8 +8,9 @@ namespace RealStateApp.Core.Application.Enums
 {
     public enum Roles
     {
-        SuperAdmin,
+        Agent,
         Admin,
-        Basic
+        Dev,
+        Client
     }
 }

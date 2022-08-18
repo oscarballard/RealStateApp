@@ -17,6 +17,7 @@ namespace RealStateApp.Infrastructure.Persistence
             services.AddMediatR(Assembly.GetExecutingAssembly());
             #region Services
             services.AddTransient(typeof(IGenericService<,,>), typeof(GenericService<,,>));
+            services.AddTransient<IUserServices, UserServices>();
             services.AddTransient<IPropertyTypeService, PropertyTypeService>();
             services.AddTransient<ISalesTypeService, SalesTypeService>();
             services.AddTransient<IImprovementsService, ImprovementsService>();
