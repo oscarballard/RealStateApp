@@ -1,10 +1,11 @@
 ﻿using RealStateApp.Core.Application.Dtos.Account;
 using RealStateApp.Core.Application.ViewModels.User;
+using RealStateApp.Core.Domain.Entities;
 using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Interfaces.Services
 {
-    public interface IUserService
+    public interface IUserService 
     {
         Task<string> ConfirmEmailAsync(string userId, string token);
         Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordViewModel vm, string origin);
