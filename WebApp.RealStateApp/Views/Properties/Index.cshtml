@@ -1,6 +1,46 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<h1>Lista de Prpiedades</h1>
+﻿@using RealStateApp.Core.Application.ViewModels.Properties;
+@model PropertyViewModel;
+<style>
+    a {
+        text-decoration: none;
+        color: white;
+    }
+
+        a:hover {
+            text-decoration: none;
+            color: white;
+        }
+</style>
+<h1>Lista de tipos de propiedades</h1>
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripcion</th>
+                    <th scope="col">Cant. Popiedades</th>
+                    <th scope="col"> <a class="btn btn-success" asp-controller="PropertyType" asp-action="Create">Nuevo Tipo</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (PropertyViewModel Property in ViewBag.Properties)
+                {
+                    <tr>
+                        <th scope="row">@Property.Id</th>
+                        <td>@Property.Nombre</td>
+                        <td>@Property.Descripcion</td>
+                        <td>@Property.CantPropiedades</td>
+                        <td>
+                            <div class="btn-group">
+                                <a class="btn btn-primary" asp-controller="PropertyType" asp-action="Edit" asp-route-id="@Property.Id">Editar</a>
+                                <a class="btn btn-danger" asp-controller="PropertyType" asp-action="Delete" asp-route-id="@Property.Id">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
