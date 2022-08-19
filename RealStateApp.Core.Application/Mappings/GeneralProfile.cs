@@ -47,6 +47,11 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(dest => dest.CantPropiedades, opt => opt.Ignore())
                 .ReverseMap();
 
+            CreateMap<SaveClientAgentViewModel, SaveUsersViewModel>()
+                .ForMember(x => x.HasError, opt => opt.Ignore())
+                .ForMember(x => x.Error, opt => opt.Ignore())
+                .ForMember(x => x.Identification, opt => opt.Ignore())
+                .ReverseMap();
             CreateMap<Property, SavePropertyViewModel>()
                 .ForMember(dest => dest.FileImagen1, opt => opt.Ignore())
                 .ForMember(dest => dest.FileImagen2, opt => opt.Ignore())

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.ViewModels.User
 {
-    public class SaveUsersViewModel
+    public class SaveClientAgentViewModel
     {
         public int Id { get; set; }
 
@@ -21,9 +21,6 @@ namespace RealStateApp.Core.Application.ViewModels.User
         [DataType(DataType.Text)]
         public string LastName { get; set; }
 
-        [Required(ErrorMessage = "Debe colocar su número de cedula")]
-        [DataType(DataType.Text)]
-        public string Identification { get; set; }
 
         [Required(ErrorMessage = "Debe colocar un correo")]
         [DataType(DataType.EmailAddress)]

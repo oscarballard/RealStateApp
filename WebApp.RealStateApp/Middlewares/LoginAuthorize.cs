@@ -17,7 +17,7 @@ namespace WebApp.RealStateApp.Middlewares
         {
             if (_userSession.HasUser())
             {
-                var controller = (UserController)context.Controller;
+                var controller = (UsersController)context.Controller;
                 context.Result = controller.RedirectToAction("index", "home");
             }
             else

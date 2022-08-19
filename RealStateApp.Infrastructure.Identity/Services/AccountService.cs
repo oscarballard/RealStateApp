@@ -131,7 +131,6 @@ namespace RealStateApp.Infrastructure.Identity.Services
             var result = await _userManager.CreateAsync(user, request.Password);
             var rolName = await _roleManager.FindByIdAsync(request.RolId);
             //await _userManager.AddToRoleAsync(user, Roles.Client.ToString());
-            await _userManager.AddToRoleAsync(user, rolName.Name);
             userWithSameUserName = await _userManager.FindByIdAsync(user.Id);
 
 
@@ -141,6 +140,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
                 response.Error = $"An error occurred trying to register the user.";
                 return response;
             }
+            await _userManager.AddToRoleAsync(user, rolName.Name);
 
             return response;
         }

@@ -5,16 +5,22 @@ using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.Services;
 using RealStateApp.Core.Application.Dtos.Account;
 using WebApp.RealStateApp.Middlewares;
+using RealStateApp.Core.Application.Enums;
+using RealStateApp.Core.Application.ViewModels.Roles;
+using System.Collections.Generic;
+using AutoMapper;
 
 namespace WebApp.RealStateApp.Controllers
 {
-    public class UserController : Controller
+    public class UsersController : Controller
     {
         private readonly IUserServices _userService;
+        private readonly IMapper _mapper;
 
-        public UserController(IUserServices userService)
+        public UsersController(IUserServices userService, IMapper mapper)
         {
             _userService = userService;
+            _mapper = mapper;
         }
 
         [ServiceFilter(typeof(LoginAuthorize))]
@@ -55,28 +61,53 @@ namespace WebApp.RealStateApp.Controllers
         }
 
         [ServiceFilter(typeof(LoginAuthorize))]
-        public IActionResult Register()
+        [HttpGet]
+        public async Task<IActionResult> RegisterUser()
         {
-            return View(new SaveUsersViewModel());
+            SaveClientAgentViewModel vm = new();
+            List<RolesViewModel> RolesList = new();
+
+            RolesViewModel rolesVm = await _userService.GetRolByName("Client");
+            RolesList.Add(rolesVm);
+            rolesVm = await _userService.GetRolByName("Agent");
+            RolesList.Add(rolesVm);
+            vm.RolesList = RolesList;
+            return View(vm);
         }
 
         [ServiceFilter(typeof(LoginAuthorize))]
         [HttpPost]
-        public async Task<IActionResult> Register(SaveUsersViewModel vm)
+        public async Task<IActionResult> RegisterUser(SaveClientAgentViewModel vm)
         {
+            SaveUsersViewModel vmm = _mapper.Map<SaveUsersViewModel>(vm);
+
             if (!ModelState.IsValid)
             {
+                List<RolesViewModel> RolesList = new();
+                RolesViewModel rolesVm = await _userService.GetRolByName("Client");
+                RolesList.Add(rolesVm);
+                rolesVm = await _userService.GetRolByName("Agent");
+                RolesList.Add(rolesVm);
+                vm.RolesList = RolesList;
                 return View(vm);
             }
+            
+            
             var origin = Request.Headers["origin"];
-            RegisterResponse response = await _userService.RegisterAsync(vm, origin);
+            RegisterResponse response = await _userService.RegisterAsync(vmm, origin);
             if (response.HasError)
             {
+                List<RolesViewModel> RolesList = new();
+                RolesViewModel rolesVm = await _userService.GetRolByName("Client");
+                RolesList.Add(rolesVm);
+                rolesVm = await _userService.GetRolByName("Agent");
+                RolesList.Add(rolesVm);
+                vm.RolesList = RolesList;
                 vm.HasError = response.HasError;
                 vm.Error = response.Error;
                 return View(vm);
             }
-            return RedirectToRoute(new { controller = "User", action = "Index" });
+            return RedirectToRoute(new { controller = "Home", action = "Index" });
         }
 
         [ServiceFilter(typeof(LoginAuthorize))]

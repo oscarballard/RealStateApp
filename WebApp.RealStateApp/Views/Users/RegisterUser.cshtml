@@ -1,0 +1,79 @@
+﻿@using RealStateApp.Core.Application.ViewModels.User;
+@model SaveClientAgentViewModel;
+@{ ViewData["Title"] = "Guardar agente"; }
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-6 offset-3">
+            <div class="card">
+                <div class="card-header bg-dark text-light">
+                    <h4> "Creando un nuevo agente")</h4>
+
+                </div>
+                <div class="card-body">
+
+                    <form method="post" enctype="multipart/form-data" asp-controller="Users" asp-action="RegisterUser">
+                        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                        <div class="mb-3">
+                            <label asp-for="File" class="form-label">Foto de Perfil: </label>
+                            <input asp-for="File" class="form-control" required />
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="FirstName" class="form-label">Nombre: </label>
+                            <input type="text" asp-for="FirstName" class="form-control" />
+                            <span asp-validation-for="FirstName" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="LastName" class="form-label">Apellido: </label>
+                            <input type="text" asp-for="LastName" class="form-control" />
+                            <span asp-validation-for="LastName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Email" class="form-label">Correo: </label>
+                            <input type="text" asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Phone" class="form-label">Telefono: </label>
+                            <input type="text" asp-for="Phone" class="form-control" />
+                            <span asp-validation-for="Phone" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="Username" class="form-label">Nombre Usuario: </label>
+                            <input type="text" asp-for="Username" class="form-control" />
+                            <span asp-validation-for="Username" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="RolId" class="form-label">Tipo de usuario: </label>
+                            <select asp-for="RolId" asp-items="@(new SelectList(Model.RolesList,"Id","Name"))" class="form-select form-control" onchange="showMonto()" id="rol">
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="form-label">Contraseña: </label>
+                            <input type="password" asp-for="Password" class="form-control" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+                        <div class="mb-3">
+                            <label asp-for="ConfirmPassword" class="form-label">Repita su contraseña: </label>
+                            <input type="password" asp-for="ConfirmPassword" class="form-control" />
+                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                        </div>
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <button type="submit" class="btn btn-primary">Guardar</button>
+                        <a asp-controller="User" asp-action="Index" class="btn btn-warning">Volver atrás</a>
+
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>
