@@ -1,9 +1,8 @@
-﻿using Application.Services;
-using MediatR;
+﻿using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using RealStateApp.Core.Application.Interfaces.Repositories;
 using RealStateApp.Core.Application.Interfaces.Services;
+using RealStateApp.Core.Application.Services;
 using System.Reflection;
 
 namespace RealStateApp.Infrastructure.Persistence
@@ -19,6 +18,9 @@ namespace RealStateApp.Infrastructure.Persistence
             #region Services
             services.AddTransient(typeof(IGenericService<,,>), typeof(GenericService<,,>));
             services.AddTransient<IUserServices, UserServices>();
+            services.AddTransient<IPropertyTypeService, PropertyTypeService>();
+            services.AddTransient<ISalesTypeService, SalesTypeService>();
+            services.AddTransient<IImprovementsService, ImprovementsService>();
             #endregion
         }
     }
