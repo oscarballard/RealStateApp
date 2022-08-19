@@ -21,6 +21,11 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(x => x.Error, opt => opt.Ignore())
                 .ReverseMap();
 
+            CreateMap<SaveClientAgentViewModel, SaveUsersViewModel>()
+                .ForMember(x => x.HasError, opt => opt.Ignore())
+                .ForMember(x => x.Error, opt => opt.Ignore())
+                .ForMember(x => x.Identification, opt => opt.Ignore())
+                .ReverseMap();
         }
     }
 }
