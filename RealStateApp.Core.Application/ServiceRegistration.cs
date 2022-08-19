@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Application.Services;
+using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using RealStateApp.Core.Application.Interfaces.Services;
@@ -21,6 +22,7 @@ namespace RealStateApp.Infrastructure.Persistence
             services.AddTransient<IPropertyTypeService, PropertyTypeService>();
             services.AddTransient<ISalesTypeService, SalesTypeService>();
             services.AddTransient<IImprovementsService, ImprovementsService>();
+            services.AddTransient<IPropertyService, PropertyService>();
             #endregion
         }
     }
