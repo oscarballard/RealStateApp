@@ -95,6 +95,9 @@ namespace RealStateApp.Infrastructure.Identity.Services
             user.Id = users.Id;
             user.FirstName = users.FirstName;
             user.LastName = users.LastName;
+            user.Email = users.Email;
+            user.Phone = users.PhoneNumber;
+            user.Photo = users.photo;
             return user;
         }
         public async Task<RegisterResponse> RegisterBasicUserAsync(RegisterRequest request, string origin)
