@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using RealStateApp.Core.Application.ViewModels.Properties;
+using RealStateApp.Core.Application.ViewModels.PropertyImprovements;
 
 namespace RealStateApp.Core.Application.Mappings
 {
@@ -57,11 +58,23 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(dest => dest.FileImagen2, opt => opt.Ignore())
                 .ForMember(dest => dest.FileImagen3, opt => opt.Ignore())
                 .ForMember(dest => dest.FileImagen4, opt => opt.Ignore())
-                .ReverseMap();
+                .ForMember(dest => dest.Mejoras, opt => opt.Ignore())
+                .ReverseMap()
+                .ForMember(dest => dest.Usuario, opt => opt.Ignore())
+                .ForMember(dest => dest.TipoPropiedad, opt => opt.Ignore())
+                .ForMember(dest => dest.TipoVenta, opt => opt.Ignore())
+                .ForMember(dest => dest.Mejoras, opt => opt.Ignore());
 
             CreateMap<Property, PropertyViewModel>()
                 .ReverseMap();
 
+            CreateMap<PropertyImprovements, SavePropertyImprovementsViewModel> ()
+                .ReverseMap()
+                .ForMember(dest => dest.Propiedad, opt => opt.Ignore())
+                .ForMember(dest => dest.Mejora, opt => opt.Ignore());
+
+            CreateMap<PropertyImprovements, PropertyImprovementsViewModel>()
+                .ReverseMap();
         }
     }
 }

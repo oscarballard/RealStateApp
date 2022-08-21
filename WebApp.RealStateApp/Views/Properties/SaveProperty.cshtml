@@ -1,49 +1,170 @@
 ﻿@using RealStateApp.Core.Application.ViewModels.Properties;
 @model SavePropertyViewModel;
 @{
-    //bool editando = Model.Id == 0 ? false : true;
+    bool editando = Model.Id == 0 ? false : true;
     ViewData["Title"] = "Guardar Tipo";
 }
+
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
-        @*asp-action="@(editando? "Edit" : "Create")"*@
-        <form method="post" asp-controller="PropertyType">
+        <h2>Propiedad</h2>
+        <form method="post" asp-controller="Properties" asp-action="@(editando? "Edit" : "Create")"  enctype = "multipart/form-data">
             <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Precio</span>
+                </div>
                 <div class="input-group-prepend">
                     <span class="input-group-text">$</span>
                 </div>
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                <input type="number" class="form-control" name="Precio" asp-for="Precio" aria-label="Monto en Peso domincano">
                 <div class="input-group-append">
                     <span class="input-group-text">RD</span>
                 </div>
+                <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label for="Nombre" class="form-label">Descripcion</label>
-                <textarea class="form-control" name="Descripcion" asp-for="Descripcion"></textarea>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Descripcion</span>
+                    </div>
+                    <textarea class="form-control" aria-label="With textarea" name="Descripcion" asp-for="Descripcion"></textarea>
+                </div>
                 <span asp-validation-for="Descripcion" class="text-danger"></span>
             </div>
             <div class="input-group mb-3">
-                <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Tamaño</span>
+                </div>
+                <input type="number" class="form-control" name="Terreno" asp-for="Terreno" aria-label="Tamaño en Metros">
                 <div class="input-group-append">
                     <span class="input-group-text">Metros</span>
                 </div>
+                <span asp-validation-for="Terreno" class="text-danger"></span>
             </div>
-            <div class="mb-3">
-                <label for="Nombre" class="form-label">Cant.Habitaciones</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Cant.Habitaciones</span>
+                </div>
                 <input type="number" class="form-control" name="CantHabitaciones" asp-for="CantHabitaciones" />
                 <span asp-validation-for="CantHabitaciones" class="text-danger"></span>
             </div>
-            <div class="mb-3">
-                <label for="Nombre" class="form-label">Cant.Baños</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Cant.Baños</span>
+                </div>
                 <input type="number" class="form-control" name="CantLavabos" asp-for="CantLavabos" />
                 <span asp-validation-for="CantLavabos" class="text-danger"></span>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Tipo de Propiedad</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" name="IdTipoPropiedad" asp-for="IdTipoPropiedad" asp-items="@(new SelectList(ViewBag.PropertyType,"Id","Nombre"))">
+                    <option selected>Seleccione...</option>
+                </select>
+                <span asp-validation-for="IdTipoPropiedad" class="text-danger"></span>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Tipo de Venta </label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" name="IdTipoVenta" asp-for="IdTipoVenta" asp-items="@(new SelectList(ViewBag.SalesType,"Id","Nombre"))">
+                    <option selected>Seleccione...</option>
+                </select>
+                <span asp-validation-for="IdTipoVenta" class="text-danger"></span>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Mejoras</label>
+                </div>
+                <select class="custom-select js-example-basic-single" id="inputGroupSelect01" multiple="multiple" asp-for="Mejoras" asp-items="@(new SelectList(ViewBag.Mejoras,"Id","Nombre"))">
+                </select>
+                @*<span asp-validation-for="IdTipoPropiedad" class="text-danger"></span>*@
+            </div>
+            <div class="mb-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Imagen 1</span>
+                            </div>
+                            @if (editando)
+                            {
+                                <input class="form-control" asp-for="FileImagen1">
+                            }
+                            else
+                            {
+                                <input required class="form-control" asp-for="FileImagen1">
+                            }
+                        </div>
+                        <span asp-validation-for="FileImagen1" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Imagen 2</span>
+                            </div>
+                            @if (editando)
+                            {
+                                <input class="form-control" asp-for="FileImagen2">
+                            }
+                            else
+                            {
+                                <input required class="form-control" asp-for="FileImagen2">
+                            }
+                        </div>
+                        <span asp-validation-for="FileImagen2" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Imagen 3</span>
+                            </div>
+                            @if (editando)
+                            {
+                                <input class="form-control" asp-for="FileImagen3">
+                            }
+                            else
+                            {
+                                <input required class="form-control" asp-for="FileImagen3">
+                            }
+                        </div>
+                        <span asp-validation-for="FileImagen3" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupFileAddon01">Imagen 4</span>
+                            </div>
+                            @if (editando)
+                            {
+                                <input class="form-control" asp-for="FileImagen4">
+                            }
+                            else
+                            {
+                                <input required class="form-control" asp-for="FileImagen4">
+                            }
+                        </div>
+                        <span asp-validation-for="FileImagen4" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
             <div class="mb-3 text-center">
                 <button type="submit" class="btn btn-primary">Guardar</button>
                 <a asp-controller="PropertyType" asp-action="Index" class="btn btn-warning">Volver atras</a>
             </div>
+
+
+
         </form>
     </div>
     <div class="col-md-3"></div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.js-example-basic-single').select2({
+            placeholder: 'Seleccione'
+        });
+    });
+</script>
