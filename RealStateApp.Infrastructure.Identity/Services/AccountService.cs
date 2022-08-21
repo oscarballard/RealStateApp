@@ -151,20 +151,6 @@ namespace RealStateApp.Infrastructure.Identity.Services
             user.EmailConfirmed = false;
             await _userManager.UpdateAsync(user);
         }
-        public async Task Inactive(string userId)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-            user.IsActive = false;
-            await _userManager.UpdateAsync(user);
-        }
-
-        public async Task Active(string userId)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-            user.IsActive = true;
-            await _userManager.UpdateAsync(user);
-        }
-
         public async Task<string> ConfirmAccountAsync(string userId, string token)
         {
             var user = await _userManager.FindByIdAsync(userId);

@@ -1,14 +1,4 @@
-﻿@using Microsoft.AspNetCore.Http
-@using RealStateApp.Core.Application.Dtos.Account
-@using RealStateApp.Core.Application.Helpers;
-@using RealStateApp.Core.Application.ViewModels.User
-@inject IHttpContextAccessor httpContextAccessor
-@{
-    var User = httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
-    var isAdmin = User != null ? User.Roles.Any(r => r == "Admin") : false;
-    var isBasic = User != null ? User.Roles.Any(r => r == "Basic") : false;
-}
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -28,7 +18,6 @@
             height: 2.5rem;
             line-height: 2.5rem;
         }
-
         .stamp {
             color: #ffffff;
             background: #868e96;
@@ -45,37 +34,6 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebApp.RealStateApp</a>
-                @if (User != null)
-                {
-
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Agentes</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Unete a la App</a>
-                            </li>
-                            <li class="nav-item">
-                                <div class="dropdown" style="cursor:pointer;">
-                                    <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador</a>
-                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <a class="dropdown-item" asp-controller="Admins" asp-action="Index">Administradores</a>
-                                        <a class="dropdown-item" asp-controller="Agents" asp-action="Index">Agentes</a>
-                                        <a class="dropdown-item" asp-controller="Dev" asp-action="Index">Desarrolladores</a>
-                                        <a class="dropdown-item" asp-controller="Properties" asp-action="Index">Propiedades</a>
-                                        <a class="dropdown-item" asp-controller="PropertyType" asp-action="Index">Tipo de Propiedades</a>
-                                        <a class="dropdown-item" asp-controller="SalesType" asp-action="Index">Tipo de ventas</a>
-                                        <a class="dropdown-item" asp-controller="Improvements" asp-action="Index">Mejoras</a>
-                                    </div>
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">RealStateApp</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -106,14 +64,13 @@
                                     <a class="dropdown-item" asp-controller="SalesType" asp-action="Index">Tipo de ventas</a>
                                     <a class="dropdown-item" asp-controller="Improvements" asp-action="Index">Mejoras</a>
                                 </div>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Iniciar Sesion</a>
-                            </li>
-                        </ul>
-                    </div>
-                }
-
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Iniciar Sesion</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </nav>
     </header>

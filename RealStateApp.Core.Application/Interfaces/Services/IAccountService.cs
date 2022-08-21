@@ -20,7 +20,5 @@ namespace RealStateApp.Core.Application.Interfaces.Services
         Task<List<UsersViewModel>> GetUserByRol(string roleName);
         Task<UsersViewModel> GetUserByIdAsync(string Id);
         Task Delete(string id);
-        Task Active(string id);
-        Task Inactive(string id);
     }
 }
