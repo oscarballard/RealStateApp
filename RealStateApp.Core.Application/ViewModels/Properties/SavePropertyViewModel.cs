@@ -11,7 +11,7 @@ namespace RealStateApp.Core.Application.ViewModels.Properties
     public class SavePropertyViewModel
     {
         public int Id { get; set; }
-        public int Codigo { get; set; }
+        public string Codigo { get; set; }
         public int IdTipoPropiedad { get; set; }
         public int IdTipoVenta { get; set; }
         public float Precio { get; set; }
@@ -24,6 +24,7 @@ namespace RealStateApp.Core.Application.ViewModels.Properties
         public string Imagen2 { get; set; }
         public string Imagen3 { get; set; }
         public string Imagen4 { get; set; }
+        public List<int> Mejoras { get; set; }
 
         [DataType(DataType.Upload)]
         public IFormFile FileImagen1 { get; set; }
@@ -33,5 +34,6 @@ namespace RealStateApp.Core.Application.ViewModels.Properties
         public IFormFile FileImagen3 { get; set; }
         [DataType(DataType.Upload)]
         public IFormFile FileImagen4 { get; set; }
+
     }
 }

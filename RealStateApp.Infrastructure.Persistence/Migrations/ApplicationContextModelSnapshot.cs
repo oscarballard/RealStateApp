@@ -50,8 +50,8 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                     b.Property<int>("CantLavabos")
                         .HasColumnType("int");
 
-                    b.Property<int>("Codigo")
-                        .HasColumnType("int");
+                    b.Property<string>("Codigo")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");

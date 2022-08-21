@@ -9,7 +9,7 @@
     <div class="col-md-3"></div>
     <div class="col-md-6">
         <h2>Propiedad</h2>
-        <form method="post" asp-controller="PropertyType" asp-action="@(editando? "Edit" : "Create")">
+        <form method="post" asp-controller="Properties" asp-action="@(editando? "Edit" : "Create")"  enctype = "multipart/form-data">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Precio</span>
@@ -78,9 +78,9 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Mejoras</label>
                 </div>
-                <select class="custom-select js-example-basic-single" id="inputGroupSelect01" name="Mejoras[]" multiple="multiple" asp-items="@(new SelectList(ViewBag.Mejoras,"Id","Nombre"))">
+                <select class="custom-select js-example-basic-single" id="inputGroupSelect01" multiple="multiple" asp-for="Mejoras" asp-items="@(new SelectList(ViewBag.Mejoras,"Id","Nombre"))">
                 </select>
-                <span asp-validation-for="IdTipoPropiedad" class="text-danger"></span>
+                @*<span asp-validation-for="IdTipoPropiedad" class="text-danger"></span>*@
             </div>
             <div class="mb-3">
                 <div class="row">
@@ -89,7 +89,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroupFileAddon01">Imagen 1</span>
                             </div>
-                            <input class="form-control" type="file" name="" asp-for="FileImagen1">
+                            @if (editando)
+                            {
+                                <input class="form-control" asp-for="FileImagen1">
+                            }
+                            else
+                            {
+                                <input required class="form-control" asp-for="FileImagen1">
+                            }
                         </div>
                         <span asp-validation-for="FileImagen1" class="text-danger"></span>
                     </div>
@@ -98,7 +105,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroupFileAddon01">Imagen 2</span>
                             </div>
-                            <input class="form-control" type="file" name="" asp-for="FileImagen2">
+                            @if (editando)
+                            {
+                                <input class="form-control" asp-for="FileImagen2">
+                            }
+                            else
+                            {
+                                <input required class="form-control" asp-for="FileImagen2">
+                            }
                         </div>
                         <span asp-validation-for="FileImagen2" class="text-danger"></span>
                     </div>
@@ -107,7 +121,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroupFileAddon01">Imagen 3</span>
                             </div>
-                            <input class="form-control" type="file" name="" asp-for="FileImagen3">
+                            @if (editando)
+                            {
+                                <input class="form-control" asp-for="FileImagen3">
+                            }
+                            else
+                            {
+                                <input required class="form-control" asp-for="FileImagen3">
+                            }
                         </div>
                         <span asp-validation-for="FileImagen3" class="text-danger"></span>
                     </div>
@@ -116,7 +137,14 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroupFileAddon01">Imagen 4</span>
                             </div>
-                            <input class="form-control" type="file" name="" asp-for="FileImagen4">
+                            @if (editando)
+                            {
+                                <input class="form-control" asp-for="FileImagen4">
+                            }
+                            else
+                            {
+                                <input required class="form-control" asp-for="FileImagen4">
+                            }
                         </div>
                         <span asp-validation-for="FileImagen4" class="text-danger"></span>
                     </div>

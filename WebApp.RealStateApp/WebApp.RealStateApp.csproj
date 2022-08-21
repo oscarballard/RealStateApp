@@ -21,4 +21,8 @@
     <ProjectReference Include="..\RealStateApp.Infrastructure.Shared\RealStateApp.Infrastructure.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\Properties\" />
+  </ItemGroup>
+
 </Project>
