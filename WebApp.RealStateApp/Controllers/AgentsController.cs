@@ -27,5 +27,21 @@ namespace WebApp.RealStateApp.Controllers
             ViewBag.admins = await _userServices.GetUserByRol(Roles.Agent.ToString());
             return View("Index", vm);
         }
+
+        //public async Task<IActionResult> Active()
+        //{
+
+        //}
+
+        //public async Task<IActionResult> inactivate()
+        //{
+
+        //}
+
+        //public async Task<IActionResult> Delete()
+        //{
+
+        //}
+        
     }
 }
