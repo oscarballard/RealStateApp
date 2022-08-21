@@ -9,5 +9,6 @@ namespace RealStateApp.Core.Application.Interfaces.Repositories
 {
     public interface IPropertyImprovementsRepository : IGenericRepository<PropertyImprovements>
     {
+        Task DeleteAllAsync(int IdPropiedad);
     }
 }

@@ -67,6 +67,7 @@ namespace WebApp.RealStateApp.Controllers
             SavePropertyImprovementsViewModel mejoraVm = new();
             mejoraVm.IdPropiedad = propertyVm.Id;
 
+            await _propertyImprovementsService.DeleteAllAsync(propertyVm.Id);
             foreach (var Mejora in vm.Mejoras)
             {
                 mejoraVm.IdMejora = Mejora;

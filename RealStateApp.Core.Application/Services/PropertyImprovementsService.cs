@@ -29,5 +29,9 @@ namespace RealStateApp.Core.Application.Services
             _httpContextAccessor = httpContextAccessor;
             userViewModel = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
         }
+        public async Task DeleteAllAsync(int IdPropiedad)
+        {
+            await _propertyImprovementsRepository.DeleteAllAsync(IdPropiedad);
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace RealStateApp.Core.Application.Interfaces.Services
 {
     public interface IPropertyImprovementsService : IGenericService<SavePropertyImprovementsViewModel, PropertyImprovementsViewModel, PropertyImprovements>
     {
+        Task DeleteAllAsync(int IdPropiedad);
     }
 }

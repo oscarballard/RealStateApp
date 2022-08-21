@@ -17,5 +17,11 @@ namespace RealStateApp.Infrastructure.Persistence.Repositories
         {
             _dbContext = dbContext;
         }
+        public async Task DeleteAllAsync(int IdPropiedad)
+        {
+            _dbContext.Set<PropertyImprovements>().Where(p => p.IdPropiedad == IdPropiedad)
+              .ToList().ForEach(p => _dbContext.Set<PropertyImprovements>().Remove(p));
+            await _dbContext.SaveChangesAsync();
+        }
     }
 }
