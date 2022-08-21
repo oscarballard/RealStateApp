@@ -21,13 +21,23 @@ namespace RealStateApp.Core.Application.Services
         private readonly IPropertyRepository _propertyRepository;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IAccountService _accountService;
         private readonly UserViewModel userViewModel;
-        public PropertyService(IPropertyRepository propertyRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(propertyRepository , mapper)
+        public PropertyService(IAccountService accountService,IPropertyRepository propertyRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(propertyRepository , mapper)
         {
             _propertyRepository = propertyRepository;
             _mapper = mapper;
+            _accountService = accountService;
             _httpContextAccessor = httpContextAccessor;
             userViewModel = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
+        }
+        public async Task<PropertyViewModel> GetByIdViewModel(int Id)
+        {
+            var entity = await _propertyRepository.GetByIdWithIncludeAsync(Id);
+            PropertyViewModel vm = _mapper.Map<PropertyViewModel>(entity);
+            vm.Usuario = await _accountService.GetUserByIdAsync(vm.IdAgente);
+         
+            return vm;
         }
         public async Task<List<PropertyViewModel>> GetAllViewModelWithFilters(FilterPropertyViewModel filters)
         {
@@ -35,6 +45,7 @@ namespace RealStateApp.Core.Application.Services
 
             var listViewModels = productList.Select(prop => new PropertyViewModel
             {
+                Id = prop.Id,
                 Codigo = prop.Codigo,
                 TipoPropiedad = _mapper.Map<PropertyTypeViewModel>(prop.TipoPropiedad),
                 TipoVenta = _mapper.Map<SalesTypeViewModel>(prop.TipoVenta),

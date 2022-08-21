@@ -57,7 +57,7 @@
         @foreach (var Propiedad in Model)
         {
             <div class="col-md-3">
-                <div class="card" style="width: 18rem;">
+                <div class="card" style="width: 18rem;cursor:pointer" onclick=' window.location.href = "@Url.Action("Detalle","Home", new { Id = Propiedad.Id})"'>
                     @*<img src="..." class="card-img-top" alt="...">*@
                     <div id="carouselExampleIndicators" class="carousel slide card-img-top" data-ride="carousel">
                         <ol class="carousel-indicators">
