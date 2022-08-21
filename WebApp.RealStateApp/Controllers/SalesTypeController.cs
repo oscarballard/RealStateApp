@@ -11,12 +11,12 @@ namespace WebApp.RealStateApp.Controllers
 {
     public class SalesTypeController : Controller
     {
-        private readonly ISalesTypeService _propertyTypeService;
+        private readonly ISalesTypeService _salesTypeService;
         private readonly ValidateUserSession _validateUserSession;
         public SalesTypeController(ValidateUserSession validateUserSession, ISalesTypeService propertyTypeService)
         {
             _validateUserSession = validateUserSession;
-            _propertyTypeService = propertyTypeService;
+            _salesTypeService = propertyTypeService;
         }
         public async Task<IActionResult> Index()
         {
@@ -24,7 +24,7 @@ namespace WebApp.RealStateApp.Controllers
             //{
             //    return RedirectToRoute(new { controller = "Home", action = "Index" });
             //}
-            ViewBag.Tipos = await _propertyTypeService.GetAllWithIncludes();
+            ViewBag.Tipos = await _salesTypeService.GetAllWithIncludes();
             return View();
         }
 
@@ -40,31 +40,31 @@ namespace WebApp.RealStateApp.Controllers
             {
                 return View("SaveSalesType", vm);
             }
-            await _propertyTypeService.Add(vm);
+            await _salesTypeService.Add(vm);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int Id)
         {
-            return View("SaveSalesType", await _propertyTypeService.GetByIdSaveViewModel(Id));
+            return View("SaveSalesType", await _salesTypeService.GetByIdSaveViewModel(Id));
         }
         [HttpPost]
         public async Task<IActionResult> Edit(SaveSalesTypeViewModel vm)
         {
-            await _propertyTypeService.Update(vm,vm.Id);
+            await _salesTypeService.Update(vm,vm.Id);
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            return View(await _propertyTypeService.GetByIdSaveViewModel(id));
+            return View(await _salesTypeService.GetByIdSaveViewModel(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> DeletePost(int id)
         {
-            await _propertyTypeService.Delete(id);
+            await _salesTypeService.Delete(id);
 
             return RedirectToRoute(new { controller = "SalesType", action = "Index" });
         }

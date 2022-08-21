@@ -11,12 +11,12 @@ namespace WebApp.RealStateApp.Controllers
 {
     public class ImprovementsController : Controller
     {
-        private readonly IImprovementsService _propertyTypeService;
+        private readonly IImprovementsService _ImprovementsService;
         private readonly ValidateUserSession _validateUserSession;
-        public ImprovementsController(ValidateUserSession validateUserSession, IImprovementsService propertyTypeService)
+        public ImprovementsController(ValidateUserSession validateUserSession, IImprovementsService ImprovementsService)
         {
             _validateUserSession = validateUserSession;
-            _propertyTypeService = propertyTypeService;
+            _ImprovementsService = ImprovementsService;
         }
         public async Task<IActionResult> Index()
         {
@@ -24,7 +24,7 @@ namespace WebApp.RealStateApp.Controllers
             //{
             //    return RedirectToRoute(new { controller = "Home", action = "Index" });
             //}
-            ViewBag.Tipos = await _propertyTypeService.GetAllWithIncludes();
+            ViewBag.Tipos = await _ImprovementsService.GetAllWithIncludes();
             return View();
         }
 
@@ -40,31 +40,31 @@ namespace WebApp.RealStateApp.Controllers
             {
                 return View("SaveImprovements", vm);
             }
-            await _propertyTypeService.Add(vm);
+            await _ImprovementsService.Add(vm);
             return RedirectToAction("Index");
         }
 
         [HttpGet]
         public async Task<IActionResult> Edit(int Id)
         {
-            return View("SaveImprovements", await _propertyTypeService.GetByIdSaveViewModel(Id));
+            return View("SaveImprovements", await _ImprovementsService.GetByIdSaveViewModel(Id));
         }
         [HttpPost]
         public async Task<IActionResult> Edit(SaveImprovementsViewModel vm)
         {
-            await _propertyTypeService.Update(vm,vm.Id);
+            await _ImprovementsService.Update(vm,vm.Id);
             return RedirectToAction("Index");
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            return View(await _propertyTypeService.GetByIdSaveViewModel(id));
+            return View(await _ImprovementsService.GetByIdSaveViewModel(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> DeletePost(int id)
         {
-            await _propertyTypeService.Delete(id);
+            await _ImprovementsService.Delete(id);
 
             return RedirectToRoute(new { controller = "Improvements", action = "Index" });
         }
