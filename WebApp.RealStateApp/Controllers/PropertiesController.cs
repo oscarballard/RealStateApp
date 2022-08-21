@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.Services;
 using RealStateApp.Core.Application.ViewModels.Properties;
+using RealStateApp.Core.Application.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,13 +19,16 @@ namespace WebApp.RealStateApp.Controllers
         private readonly IPropertyService _propertyService;
         private readonly ISalesTypeService _salesTypeService;
         private readonly IImprovementsService _improvementsService;
-        public PropertiesController(IPropertyService propertyService, IPropertyImprovementsService propertyImprovementsService,ISalesTypeService salesTypeService, IPropertyTypeService propertyTypeService, IImprovementsService improvementsService)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly UserViewModel userViewModel;
+        public PropertiesController(IPropertyService propertyService, IPropertyImprovementsService propertyImprovementsService,ISalesTypeService salesTypeService, IPropertyTypeService propertyTypeService, IImprovementsService improvementsService, IHttpContextAccessor httpContextAccessor)
         {
             _propertyTypeService = propertyTypeService;
             _salesTypeService = salesTypeService;
             _improvementsService = improvementsService;
             _propertyImprovementsService = propertyImprovementsService;
             _propertyService = propertyService;
+            userViewModel = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
         }
         public IActionResult Index()
         {
