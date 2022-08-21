@@ -45,7 +45,9 @@ namespace RealStateApp.Core.Application.Services
                 Imagen1 = prop.Imagen1,
                 Imagen2 = prop.Imagen2,
                 Imagen3 = prop.Imagen3,
-                Imagen4 = prop.Imagen4
+                Imagen4 = prop.Imagen4,
+                IdTipoPropiedad = prop.TipoPropiedad.Id,
+                Precio = prop.Precio
             }).ToList();
 
             if (filters.Tipo != null)
