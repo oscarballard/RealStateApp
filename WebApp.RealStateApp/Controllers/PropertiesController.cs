@@ -23,7 +23,7 @@ namespace WebApp.RealStateApp.Controllers
         private readonly ISalesTypeService _salesTypeService;
         private readonly IImprovementsService _improvementsService;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserViewModel userViewModel;
+        private readonly UsersViewModel userViewModel;
         public PropertiesController(IPropertyService propertyService, IPropertyImprovementsService propertyImprovementsService,ISalesTypeService salesTypeService, IPropertyTypeService propertyTypeService, IImprovementsService improvementsService, IHttpContextAccessor httpContextAccessor)
         {
             _propertyTypeService = propertyTypeService;
@@ -32,7 +32,7 @@ namespace WebApp.RealStateApp.Controllers
             _propertyImprovementsService = propertyImprovementsService;
             _propertyService = propertyService;
             _httpContextAccessor = httpContextAccessor;
-            userViewModel = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
+            userViewModel = _httpContextAccessor.HttpContext.Session.Get<UsersViewModel>("user");
         }
         public async Task<IActionResult> Index(FilterPropertyViewModel vm)
         {
