@@ -1,4 +1,5 @@
-﻿using RealStateApp.Core.Application.ViewModels.PropertyImprovements;
+﻿using RealStateApp.Core.Application.ViewModels.Improvements;
+using RealStateApp.Core.Application.ViewModels.PropertyImprovements;
 using RealStateApp.Core.Application.ViewModels.PropertyType;
 using RealStateApp.Core.Application.ViewModels.SalesType;
 using RealStateApp.Core.Application.ViewModels.User;
@@ -31,6 +32,6 @@ namespace RealStateApp.Core.Application.ViewModels.Properties
         public SalesTypeViewModel TipoVenta { get; set; }
         public PropertyTypeViewModel TipoPropiedad { get; set; }
         public UsersViewModel Usuario { get; set; }
-        public ICollection<PropertyImprovementsViewModel> Mejoras { get; set; }
+        public ICollection<ImprovementsViewModel> Mejoras { get; set; }
     }
 }

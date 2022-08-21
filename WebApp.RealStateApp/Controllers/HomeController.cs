@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RealStateApp.Core.Application.Interfaces.Services;
 using RealStateApp.Core.Application.ViewModels.Properties;
@@ -16,17 +17,24 @@ namespace WebApp.RealStateApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IPropertyService _propertyService;
         private readonly IPropertyTypeService _propertyTypeService;
-        public HomeController(IPropertyTypeService propertyTypeService,IPropertyService propertyService, ILogger<HomeController> logger)
+        private readonly IMapper _mapper;
+        public HomeController(IMapper mapper,IPropertyTypeService propertyTypeService,IPropertyService propertyService, ILogger<HomeController> logger)
         {
             _logger = logger;
             _propertyService = propertyService;
             _propertyTypeService = propertyTypeService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index(FilterPropertyViewModel vm)
         {
             ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
             return View(await _propertyService.GetAllViewModelWithFilters(vm));
+        }
+        public async Task<IActionResult> Detalle(int Id)
+        {
+            PropertyViewModel vm = await _propertyService.GetByIdViewModel(Id);
+            return View("PropertyDetail",vm);
         }
 
         public IActionResult indexAdmin()
