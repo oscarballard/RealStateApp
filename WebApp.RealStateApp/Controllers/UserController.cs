@@ -57,7 +57,7 @@ namespace WebApp.RealStateApp.Controllers
         {
             await _userService.SignOutAsync();
             HttpContext.Session.Remove("user");
-            return RedirectToRoute(new { controller = "User", action = "Index" });
+            return RedirectToRoute(new { controller = "Users", action = "Index" });
         }
 
         [ServiceFilter(typeof(LoginAuthorize))]
