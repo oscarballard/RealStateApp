@@ -5,6 +5,7 @@ using RealStateApp.Core.Application.Interfaces.Repositories;
 using RealStateApp.Core.Application.Interfaces.Services;
 using RealStateApp.Core.Application.ViewModels.Properties;
 using RealStateApp.Core.Application.ViewModels.PropertyType;
+using RealStateApp.Core.Application.ViewModels.SalesType;
 using RealStateApp.Core.Application.ViewModels.User;
 using RealStateApp.Core.Domain.Entities;
 using System;
@@ -27,6 +28,51 @@ namespace RealStateApp.Core.Application.Services
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
             userViewModel = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
+        }
+        public async Task<List<PropertyViewModel>> GetAllViewModelWithFilters(FilterPropertyViewModel filters)
+        {
+            var productList = await _propertyRepository.GetAllWithIncludeAsync(new List<string> { "TipoVenta", "TipoPropiedad"});
+
+            var listViewModels = productList.Select(prop => new PropertyViewModel
+            {
+                Codigo = prop.Codigo,
+                TipoPropiedad = _mapper.Map<PropertyTypeViewModel>(prop.TipoPropiedad),
+                TipoVenta = _mapper.Map<SalesTypeViewModel>(prop.TipoVenta),
+                Descripcion = prop.Descripcion,
+                CantHabitaciones = prop.CantHabitaciones,
+                CantLavabos = prop.CantLavabos,
+                Terreno = prop.Terreno,
+                Imagen1 = prop.Imagen1,
+                Imagen2 = prop.Imagen2,
+                Imagen3 = prop.Imagen3,
+                Imagen4 = prop.Imagen4
+            }).ToList();
+
+            if (filters.Tipo != null)
+            {
+                listViewModels = listViewModels.Where(product => product.IdTipoPropiedad == filters.Tipo.Value).ToList();
+            }
+            if (filters.CantHabitaciones != null)
+            {
+                listViewModels = listViewModels.Where(product => product.CantHabitaciones == filters.CantHabitaciones.Value).ToList();
+            }
+
+            if (filters.CantLavabos != null)
+            {
+                listViewModels = listViewModels.Where(product => product.CantLavabos == filters.CantLavabos.Value).ToList();
+            }
+
+            if (filters.MinPrecio != null)
+            {
+                listViewModels = listViewModels.Where(product => product.Precio >= filters.MinPrecio.Value).ToList();
+            }
+
+            if (filters.MaxPrecio != null)
+            {
+                listViewModels = listViewModels.Where(product => product.Precio <= filters.MaxPrecio.Value).ToList();
+            }
+
+            return listViewModels;
         }
     }
 }

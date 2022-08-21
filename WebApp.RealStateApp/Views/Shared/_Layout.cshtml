@@ -5,8 +5,9 @@
 @inject IHttpContextAccessor httpContextAccessor
 @{
     var User = httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
-    var isAdmin = User != null ? User.Roles.Any(r => r == "Admin") : false;
+    var isAdmin = User != null ? User.Roles.Any(r => r == "Admin") : false; 
     var isBasic = User != null ? User.Roles.Any(r => r == "Basic") : false;
+    var isAgent = User != null ? User.Roles.Any(r => r == "Agent") : false;
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +19,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
@@ -29,6 +31,11 @@
             line-height: 2.5rem;
         }
 
+        .stamp-sm {
+            min-width: 2.5rem;
+            height: 2.5rem;
+            line-height: 2.5rem;
+        }
         .stamp {
             color: #ffffff;
             background: #868e96;
@@ -46,28 +53,51 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">WebApp.RealStateApp</a>
-                @if (User != null)
-                {
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
 
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                            aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                        <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Agentes</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Unete a la App</a>
+                        </li>
+                        @if (User != null && isAgent)
+                        {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="properties" asp-action="Index">Mant.Propiedades</a>
                             </li>
+                        }
+                        @if (User != null && isAdmin)
+                        {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Agentes</a>
+                                <div class="dropdown" style="cursor:pointer;">
+                                    <a class="nav-link text-dark dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Administrador</a>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" asp-controller="Admins" asp-action="Index">Administradores</a>
+                                        <a class="dropdown-item" asp-controller="Agents" asp-action="Index">Agentes</a>
+                                        <a class="dropdown-item" asp-controller="Dev" asp-action="Index">Desarrolladores</a>
+                                        <a class="dropdown-item" asp-controller="PropertyType" asp-action="Index">Tipo de Propiedades</a>
+                                        <a class="dropdown-item" asp-controller="SalesType" asp-action="Index">Tipo de ventas</a>
+                                        <a class="dropdown-item" asp-controller="Improvements" asp-action="Index">Mejoras</a>
+                                    </div>
+                                </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Unete a la App</a>
-                            </li>
-                        </ul>
-                    </div>
-                }
-            </nav>
+                        }
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Iniciar Sesion</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </header>
     <div class="container">
         <main role="main" class="pb-3">

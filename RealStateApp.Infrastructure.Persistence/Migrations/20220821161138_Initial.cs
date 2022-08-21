@@ -81,7 +81,7 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                     CantHabitaciones = table.Column<int>(type: "int", nullable: false),
                     CantLavabos = table.Column<int>(type: "int", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdAgente = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IdAgente = table.Column<int>(type: "int", nullable: false),
                     Imagen1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Imagen2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Imagen3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
