@@ -15,14 +15,17 @@ namespace WebApp.RealStateApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IPropertyService _propertyService;
-        public HomeController(IPropertyService propertyService, ILogger<HomeController> logger)
+        private readonly IPropertyTypeService _propertyTypeService;
+        public HomeController(IPropertyTypeService propertyTypeService,IPropertyService propertyService, ILogger<HomeController> logger)
         {
             _logger = logger;
             _propertyService = propertyService;
+            _propertyTypeService = propertyTypeService;
         }
 
         public async Task<IActionResult> Index(FilterPropertyViewModel vm)
         {
+            ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
             return View(await _propertyService.GetAllViewModelWithFilters(vm));
         }
 

@@ -5,13 +5,58 @@
 }
 
 <div class="row">
+    <div class="col-md-12">
+        <form method="post" asp-controller="Home" asp-action="Index">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Tipo</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01" name="Tipo" asp-items="@(new SelectList(ViewBag.PropertyType,"Id","Nombre"))">
+                            <option selected>Seleccione...</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">$</span>
+                            <span class="input-group-text" id="basic-addon3">Desde</span>
+                        </div>
+                        <input type="number" min="0" class="form-control" name="MinPrecio" id="basic-url" aria-describedby="basic-addon3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon3">Hasta</span>
+                        </div>
+                        <input type="number" class="form-control" name="MaxPrecio" id="basic-url" aria-describedby="basic-addon3">
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Cuartos</span>
+                        </div>
+                        <input type="number" min="0"class="form-control" name="CantHabitaciones" />
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Baños</span>
+                        </div>
+                        <input type="number" min="0" class="form-control" name="CantLavabos" />
+                    </div>
+                </div>
+                <div class="col-md-2"><button type="submit" class="btn btn-primary">Filtrar</button></div>
+
+                </div>
+        </form>
+    </div>
     @if (Model != null)
     {
         @foreach (var Propiedad in Model)
         {
-
-
-<div class="col-md-3">
+            <div class="col-md-3">
                 <div class="card" style="width: 18rem;">
                     @*<img src="..." class="card-img-top" alt="...">*@
                     <div id="carouselExampleIndicators" class="carousel slide card-img-top" data-ride="carousel">
