@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RealStateApp.Core.Application.Interfaces.Services;
+using RealStateApp.Core.Application.ViewModels.Properties;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,15 +14,16 @@ namespace WebApp.RealStateApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly IPropertyService _propertyService;
+        public HomeController(IPropertyService propertyService, ILogger<HomeController> logger)
         {
             _logger = logger;
+            _propertyService = propertyService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index(FilterPropertyViewModel vm)
         {
-            return View();
+            return View(await _propertyService.GetAllViewModelWithFilters(vm));
         }
 
         public IActionResult indexAdmin()

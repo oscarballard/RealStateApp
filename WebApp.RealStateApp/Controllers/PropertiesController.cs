@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.Services;
 using RealStateApp.Core.Application.ViewModels.Properties;
+using RealStateApp.Core.Application.ViewModels.PropertyImprovements;
 using RealStateApp.Core.Application.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -12,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace WebApp.RealStateApp.Controllers
 {
+    //[Authorize(Roles = "Agent")]
     public class PropertiesController : Controller
     {
         private readonly IPropertyTypeService _propertyTypeService;
@@ -28,11 +31,13 @@ namespace WebApp.RealStateApp.Controllers
             _improvementsService = improvementsService;
             _propertyImprovementsService = propertyImprovementsService;
             _propertyService = propertyService;
+            _httpContextAccessor = httpContextAccessor;
             userViewModel = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index(FilterPropertyViewModel vm)
         {
-            return View();
+            ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
+            return View(await _propertyService.GetAllViewModelWithFilters(vm));
         }
         public async Task<IActionResult> Create()
         {
@@ -48,6 +53,7 @@ namespace WebApp.RealStateApp.Controllers
         {
             SavePropertyViewModel propertyVm = await _propertyService.Add(vm);
             propertyVm.Codigo = propertyVm.Id.ToString().PadLeft(6, '0');
+            propertyVm.IdAgente = userViewModel.Id;
             if (propertyVm.Id != 0 && propertyVm != null)
             {
                 propertyVm.Imagen1 = UploadFile(vm.FileImagen1, propertyVm.Id);
@@ -55,7 +61,17 @@ namespace WebApp.RealStateApp.Controllers
                 propertyVm.Imagen3 = UploadFile(vm.FileImagen3, propertyVm.Id);
                 propertyVm.Imagen4 = UploadFile(vm.FileImagen4, propertyVm.Id);
             }
+
             await _propertyService.Update(propertyVm, propertyVm.Id);
+
+            SavePropertyImprovementsViewModel mejoraVm = new();
+            mejoraVm.IdPropiedad = propertyVm.Id;
+
+            foreach (var Mejora in vm.Mejoras)
+            {
+                mejoraVm.IdMejora = Mejora;
+                await _propertyImprovementsService.Add(mejoraVm);
+            }
 
             return RedirectToAction("Create");
         }

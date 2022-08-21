@@ -10,8 +10,8 @@ using RealStateApp.Infrastructure.Persistence.Contexts;
 namespace RealStateApp.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20220821013815_Initial")]
-    partial class Initial
+    [Migration("20220821162426_Initial2")]
+    partial class Initial2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -58,8 +58,8 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("IdAgente")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("IdAgente")
+                        .HasColumnType("int");
 
                     b.Property<int>("IdTipoPropiedad")
                         .HasColumnType("int");
