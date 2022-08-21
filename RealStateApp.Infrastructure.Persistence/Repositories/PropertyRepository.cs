@@ -1,4 +1,6 @@
-﻿using RealStateApp.Core.Application.Interfaces.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using RealStateApp.Core.Application.Interfaces.Repositories;
+using RealStateApp.Core.Application.ViewModels.Properties;
 using RealStateApp.Core.Domain.Entities;
 using RealStateApp.Infrastructure.Persistence.Contexts;
 using RealStateApp.Infrastructure.Persistence.Repositories;
@@ -16,6 +18,12 @@ namespace RealStateApp.Infrastructure.Persistence.Repositories
         public PropertyRepository(ApplicationContext dbContext) : base(dbContext)
         {
             _dbContext = dbContext;
+        }
+        public virtual async Task<Property> GetByIdWithIncludeAsync(int Id)
+        {
+            var property = await _dbContext.Set<Property>().Include(i => i.TipoVenta).Include(i => i.TipoPropiedad).Include(i => i.Usuario).Include(i => i.Mejoras)
+                    .FirstOrDefaultAsync(i => i.Id == Id);
+            return property;
         }
     }
 }

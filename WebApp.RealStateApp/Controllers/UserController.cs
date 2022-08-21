@@ -139,7 +139,7 @@ namespace WebApp.RealStateApp.Controllers
                 vm.Error = response.Error;
                 return View(vm);
             }
-            return RedirectToRoute(new { controller = "User", action = "Index" });
+            return RedirectToRoute(new { controller = "Users", action = "Index" });
         }
 
         [ServiceFilter(typeof(LoginAuthorize))]
@@ -164,7 +164,7 @@ namespace WebApp.RealStateApp.Controllers
                 vm.Error = response.Error;
                 return View(vm);
             }
-            return RedirectToRoute(new { controller = "User", action = "Index" });
+            return RedirectToRoute(new { controller = "Users", action = "Index" });
         }
 
         public IActionResult AccessDenied()

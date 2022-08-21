@@ -9,7 +9,7 @@ namespace RealStateApp.Core.Domain.Entities
     public class Property
     {
         public int Id { get; set; }
-        public int Codigo { get; set; }
+        public string Codigo { get; set; }
         public int IdTipoPropiedad { get; set; }
         public int IdTipoVenta { get; set; }
         public float Precio { get; set; }

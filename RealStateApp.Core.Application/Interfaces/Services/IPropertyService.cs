@@ -10,5 +10,7 @@ namespace RealStateApp.Core.Application.Interfaces.Services
 {
     public interface IPropertyService : IGenericService<SavePropertyViewModel, PropertyViewModel, Property>
     {
+        Task<List<PropertyViewModel>> GetAllViewModelWithFilters(FilterPropertyViewModel filters);
+        Task<PropertyViewModel> GetByIdViewModel(int Id);
     }
 }

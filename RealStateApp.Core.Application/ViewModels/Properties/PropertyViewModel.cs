@@ -1,4 +1,9 @@
-﻿using System;
+﻿using RealStateApp.Core.Application.ViewModels.Improvements;
+using RealStateApp.Core.Application.ViewModels.PropertyImprovements;
+using RealStateApp.Core.Application.ViewModels.PropertyType;
+using RealStateApp.Core.Application.ViewModels.SalesType;
+using RealStateApp.Core.Application.ViewModels.User;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,7 +14,7 @@ namespace RealStateApp.Core.Application.ViewModels.Properties
     public class PropertyViewModel
     {
         public int Id { get; set; }
-        public int Codigo { get; set; }
+        public string Codigo { get; set; }
         public int IdTipoPropiedad { get; set; }
         public int IdTipoVenta { get; set; }
         public float Precio { get; set; }
@@ -22,5 +27,11 @@ namespace RealStateApp.Core.Application.ViewModels.Properties
         public string Imagen2 { get; set; }
         public string Imagen3 { get; set; }
         public string Imagen4 { get; set; }
+
+        //NAVIGATION PROPERTTY
+        public SalesTypeViewModel TipoVenta { get; set; }
+        public PropertyTypeViewModel TipoPropiedad { get; set; }
+        public UsersViewModel Usuario { get; set; }
+        public ICollection<ImprovementsViewModel> Mejoras { get; set; }
     }
 }
