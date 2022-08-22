@@ -38,7 +38,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             if (user == null)
             {
                 response.HasError = true;
-                response.Error = $"No Hay Usuario Registrado Con Este Usuario: {request.UserName}";
+                response.Error = $"No hay usuario registrado con este usuario: {request.UserName}";
                 return response;
             }
 
@@ -46,7 +46,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             if (!result.Succeeded)
             {
                 response.HasError = true;
-                response.Error = $"Credenciales Invalidas {request.UserName}";
+                response.Error = $"Credenciales invalidas {request.UserName}";
                 return response;
             }
 
@@ -108,7 +108,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             if (userWithSameUserName != null)
             {
                 response.HasError = true;
-                response.Error = $"El username '{request.UserName}' Ya Se Esta Usando.";
+                response.Error = $"El username '{request.UserName}' Ya se está usando.";
                 return response;
             }
 

@@ -2,7 +2,7 @@
 
 namespace RealStateApp.Infrastructure.Persistence.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -49,25 +49,6 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Foto = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Correo = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Clave = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdTipoUsuario = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Propiedades",
                 columns: table => new
                 {
@@ -81,12 +62,11 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                     CantHabitaciones = table.Column<int>(type: "int", nullable: false),
                     CantLavabos = table.Column<int>(type: "int", nullable: false),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    IdAgente = table.Column<int>(type: "int", nullable: false),
+                    IdAgente = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Imagen1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Imagen2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Imagen3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Imagen4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioId = table.Column<int>(type: "int", nullable: true)
+                    Imagen4 = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -103,12 +83,6 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                         principalTable: "TipoVentas",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Propiedades_Users_UsuarioId",
-                        column: x => x.UsuarioId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -156,11 +130,6 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                 name: "IX_Propiedades_IdTipoVenta",
                 table: "Propiedades",
                 column: "IdTipoVenta");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Propiedades_UsuarioId",
-                table: "Propiedades",
-                column: "UsuarioId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -179,9 +148,6 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "TipoVentas");
-
-            migrationBuilder.DropTable(
-                name: "Users");
         }
     }
 }

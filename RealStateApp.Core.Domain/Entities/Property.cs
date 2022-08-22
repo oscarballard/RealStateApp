@@ -26,7 +26,6 @@ namespace RealStateApp.Core.Domain.Entities
         //NAVIGATION PROPERTTY
         public SalesType TipoVenta { get; set; }
         public PropertyType TipoPropiedad { get; set; }
-        public Users Usuario { get; set; }
         public ICollection<Improvements> Mejoras { get; set; }
     }
 }

@@ -19,13 +19,13 @@ namespace RealStateApp.Core.Application.Services
         private readonly ISalesTypeRepository _propertyTypeRepository;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserViewModel userViewModel;
+        private readonly UsersViewModel userViewModel;
         public AgentsService(ISalesTypeRepository propertyTypeRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(propertyTypeRepository , mapper)
         {
             _propertyTypeRepository = propertyTypeRepository;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
-            userViewModel = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
+            userViewModel = _httpContextAccessor.HttpContext.Session.Get<UsersViewModel>("user");
         }
 
         public async Task<List<SalesTypeViewModel>> GetAllWithIncludes()

@@ -22,14 +22,14 @@ namespace RealStateApp.Core.Application.Services
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IAccountService _accountService;
-        private readonly UserViewModel userViewModel;
+        private readonly UsersViewModel userViewModel;
         public PropertyService(IAccountService accountService,IPropertyRepository propertyRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(propertyRepository , mapper)
         {
             _propertyRepository = propertyRepository;
             _mapper = mapper;
             _accountService = accountService;
             _httpContextAccessor = httpContextAccessor;
-            userViewModel = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
+            userViewModel = _httpContextAccessor.HttpContext.Session.Get<UsersViewModel>("user");
         }
         public async Task<PropertyViewModel> GetByIdViewModel(int Id)
         {

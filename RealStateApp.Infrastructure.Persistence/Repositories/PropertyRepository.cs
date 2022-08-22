@@ -21,7 +21,7 @@ namespace RealStateApp.Infrastructure.Persistence.Repositories
         }
         public virtual async Task<Property> GetByIdWithIncludeAsync(int Id)
         {
-            var property = await _dbContext.Set<Property>().Include(i => i.TipoVenta).Include(i => i.TipoPropiedad).Include(i => i.Usuario).Include(i => i.Mejoras)
+            var property = await _dbContext.Set<Property>().Include(i => i.TipoVenta).Include(i => i.TipoPropiedad).Include(i => i.Mejoras)
                     .FirstOrDefaultAsync(i => i.Id == Id);
             return property;
         }

@@ -49,7 +49,8 @@ namespace RealStateApp.Core.Application.ViewModels.User
         [RegularExpression(@"^\(?([0-9]{3})\)?[-.●]?([0-9]{3})[-.●]?([0-9]{4})$", ErrorMessage = "Este número no es válido")]
         public string Phone { get; set; }
 
-        public float Amount { get; set; }
+        [Required(ErrorMessage = "Debe colocar una foto")]
+        public string Photo { get; set; }
 
         [DataType(DataType.Upload)]
         public IFormFile File { get; set; }
