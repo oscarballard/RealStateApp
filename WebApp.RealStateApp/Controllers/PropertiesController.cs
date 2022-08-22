@@ -75,6 +75,23 @@ namespace WebApp.RealStateApp.Controllers
 
             return RedirectToAction("Create");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int Id)
+        {
+            ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
+            ViewBag.SalesType = await _salesTypeService.GetAllViewModel();
+            ViewBag.Mejoras = await _improvementsService.GetAllViewModel();
+            SavePropertyViewModel vm = await _propertyService.GetByIdSaveViewModel(Id);
+            return View("SaveProperty", vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(SavePropertyViewModel vm)
+        {
+            await _propertyService.Update(vm, vm.Id);
+            return RedirectToAction("Index");
+        }
+
         public string GenerateSequence(int Id)
         {
             var sequence = Id.ToString().PadLeft(9, '0');

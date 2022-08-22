@@ -13,5 +13,6 @@ namespace RealStateApp.Core.Application.ViewModels.Properties
         public float? MaxPrecio { get; set; }
         public int? CantHabitaciones { get; set; }
         public int? CantLavabos { get; set; }
+        public int? IdAgent { get; set; }
     }
 }

@@ -35,6 +35,7 @@ namespace RealStateApp.Core.Application.Services
 
             var listViewModels = productList.Select(prop => new PropertyViewModel
             {
+                Id = prop.Id,
                 Codigo = prop.Codigo,
                 TipoPropiedad = _mapper.Map<PropertyTypeViewModel>(prop.TipoPropiedad),
                 TipoVenta = _mapper.Map<SalesTypeViewModel>(prop.TipoVenta),
@@ -49,6 +50,7 @@ namespace RealStateApp.Core.Application.Services
                 IdTipoPropiedad = prop.TipoPropiedad.Id,
                 Precio = prop.Precio
             }).ToList();
+
 
             if (filters.Tipo != null)
             {
@@ -73,6 +75,12 @@ namespace RealStateApp.Core.Application.Services
             {
                 listViewModels = listViewModels.Where(product => product.Precio <= filters.MaxPrecio.Value).ToList();
             }
+
+
+            //if (filters.IdAgent != null)
+            //{
+            //    listViewModels = listViewModels.Where(product => product.IdAgente == filters.IdAgent.Value).ToList();
+            //}
 
             return listViewModels;
         }
