@@ -69,7 +69,7 @@ namespace WebApp.RealStateApp.Controllers
 
             foreach (var Mejora in vm.Mejoras)
             {
-                mejoraVm.IdMejora = Mejora;
+                mejoraVm.IdMejora = Mejora.Id;
                 await _propertyImprovementsService.Add(mejoraVm);
             }
 
