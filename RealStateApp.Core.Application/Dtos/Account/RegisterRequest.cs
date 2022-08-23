@@ -1,4 +1,5 @@
-﻿using RealStateApp.Core.Application.ViewModels.Roles;
+﻿using Microsoft.AspNetCore.Http;
+using RealStateApp.Core.Application.ViewModels.Roles;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace RealStateApp.Core.Application.Dtos.Account
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string Phone { get; set; }
+        public IFormFile File { get; set; }
         public float Amount { get; set; }
         public string RolId { get; set; }
     }
