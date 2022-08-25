@@ -21,13 +21,13 @@ namespace RealStateApp.Core.Application.Services
         private readonly IPropertyImprovementsRepository _propertyImprovementsRepository;
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private readonly UserViewModel userViewModel;
+        private readonly UsersViewModel userViewModel;
         public PropertyImprovementsService(IPropertyImprovementsRepository propertyImprovementsRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(propertyImprovementsRepository, mapper)
         {
             _propertyImprovementsRepository = propertyImprovementsRepository;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
-            userViewModel = _httpContextAccessor.HttpContext.Session.Get<UserViewModel>("user");
+            userViewModel = _httpContextAccessor.HttpContext.Session.Get<UsersViewModel>("user");
         }
         public async Task DeleteAllAsync(int IdPropiedad)
         {

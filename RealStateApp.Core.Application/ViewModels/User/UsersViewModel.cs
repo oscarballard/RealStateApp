@@ -15,6 +15,7 @@ namespace RealStateApp.Core.Application.ViewModels.User
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string Email { get; set; }
+        public string Photo { get; set; }
         public string Identification { get; set; }
         public IList<string> Type { get; set; }
         public string Phone { get; set; }
