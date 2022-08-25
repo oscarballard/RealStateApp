@@ -61,6 +61,7 @@ namespace RealStateApp.Core.Application.Services
                 Precio = prop.Precio
             }).ToList();
 
+
             if (filters.Tipo != null)
             {
                 listViewModels = listViewModels.Where(product => product.IdTipoPropiedad == filters.Tipo.Value).ToList();
@@ -84,6 +85,12 @@ namespace RealStateApp.Core.Application.Services
             {
                 listViewModels = listViewModels.Where(product => product.Precio <= filters.MaxPrecio.Value).ToList();
             }
+
+
+            //if (filters.IdAgent != null)
+            //{
+            //    listViewModels = listViewModels.Where(product => product.IdAgente == filters.IdAgent.Value).ToList();
+            //}
 
             return listViewModels;
         }

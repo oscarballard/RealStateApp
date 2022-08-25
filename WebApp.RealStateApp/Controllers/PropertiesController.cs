@@ -45,7 +45,10 @@ namespace WebApp.RealStateApp.Controllers
             ViewBag.SalesType = await _salesTypeService.GetAllViewModel();
             ViewBag.Mejoras = await _improvementsService.GetAllViewModel();
 
-            return View("SaveProperty", new SavePropertyViewModel());
+            SavePropertyViewModel vm = new SavePropertyViewModel();
+            vm.Mejoras = ViewBag.Mejoras;
+
+            return View("SaveProperty", vm);
         }
 
         [HttpPost]
@@ -70,12 +73,29 @@ namespace WebApp.RealStateApp.Controllers
             await _propertyImprovementsService.DeleteAllAsync(propertyVm.Id);
             foreach (var Mejora in vm.Mejoras)
             {
-                mejoraVm.IdMejora = Mejora;
+                mejoraVm.IdMejora = Mejora.Id;
                 await _propertyImprovementsService.Add(mejoraVm);
             }
 
             return RedirectToAction("Create");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int Id)
+        {
+            ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
+            ViewBag.SalesType = await _salesTypeService.GetAllViewModel();
+            ViewBag.Mejoras = await _improvementsService.GetAllViewModel();
+            SavePropertyViewModel vm = await _propertyService.GetByIdSaveViewModel(Id);
+            return View("SaveProperty", vm);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(SavePropertyViewModel vm)
+        {
+            await _propertyService.Update(vm, vm.Id);
+            return RedirectToAction("Index");
+        }
+
         public string GenerateSequence(int Id)
         {
             var sequence = Id.ToString().PadLeft(9, '0');

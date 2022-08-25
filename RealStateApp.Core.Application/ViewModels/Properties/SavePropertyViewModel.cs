@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using RealStateApp.Core.Application.ViewModels.Improvements;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +25,7 @@ namespace RealStateApp.Core.Application.ViewModels.Properties
         public string Imagen2 { get; set; }
         public string Imagen3 { get; set; }
         public string Imagen4 { get; set; }
-        public List<int> Mejoras { get; set; }
+        public List<ImprovementsViewModel> Mejoras { get; set; }
 
         [DataType(DataType.Upload)]
         public IFormFile FileImagen1 { get; set; }
