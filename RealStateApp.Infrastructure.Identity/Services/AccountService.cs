@@ -132,13 +132,18 @@ namespace RealStateApp.Infrastructure.Identity.Services
             };
             user.EmailConfirmed = true;
 
-            user.Photo = UploadFile(request.File, 1);
-
             var result = await _userManager.CreateAsync(user, request.Password);
+
             var rolName = await _roleManager.FindByIdAsync(request.RolId);
             //await _userManager.AddToRoleAsync(user, Roles.Client.ToString());
             userWithSameUserName = await _userManager.FindByIdAsync(user.Id);
 
+            if (user.Id != "" && user != null)
+            {
+                request.Photo = UploadFile(request.File, user.Id);
+                //request.Photo = new 
+                //await this.UpdateUser(user);
+            }
 
             if (!result.Succeeded)
             {
@@ -149,6 +154,43 @@ namespace RealStateApp.Infrastructure.Identity.Services
             await _userManager.AddToRoleAsync(user, rolName.Name);
 
             return response;
+        }
+
+        public async Task<RegisterResponse> UpdateUser(RegisterRequest request)
+        {
+            RegisterResponse response = new()
+            {
+                HasError = false
+            };
+
+            var userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
+
+            var user = new ApplicationUser
+            {
+                Email = request.Email,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                UserName = request.UserName
+            };
+
+           var result = await _userManager.UpdateAsync(user);
+
+            if (userWithSameUserName == null)
+            {
+                response.HasError = true;
+                response.Error = $"El username '{request.UserName}' no se encuentra registrado.";
+                return response;
+            }
+
+            if (!result.Succeeded)
+            {
+                response.HasError = true;
+                response.Error = $"An error occurred trying to register the user.";
+                return response;
+            }
+
+            return response;
+
         }
 
         public async Task Delete(string userId)
@@ -309,7 +351,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             }).OrderBy(u => u.FirstName).ToList();
         }
 
-        private string UploadFile(IFormFile file, int id, bool isEditMode = false, string imagePath = "")
+        private string UploadFile(IFormFile file, string id, bool isEditMode = false, string imagePath = "")
         {
             if (isEditMode)
             {

@@ -17,6 +17,7 @@ namespace RealStateApp.Core.Application.Dtos.Account
         public string Password { get; set; }
         public string ConfirmPassword { get; set; }
         public string Phone { get; set; }
+        public string Photo { get; set; }
         public IFormFile File { get; set; }
         public float Amount { get; set; }
         public string RolId { get; set; }
