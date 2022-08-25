@@ -78,8 +78,10 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Mejoras</label>
                 </div>
-                <select class="custom-select js-example-basic-single" id="inputGroupSelect01" multiple="multiple" asp-for="Mejoras" asp-items="@(new SelectList(ViewBag.Mejoras,"Id","Nombre"))">
-                </select>
+                @Html.DropDownListFor(m => m.Mejoras, new SelectList(ViewBag.Mejoras, "Id", "Nombre"), new { multiple = "true", @class = "custom-select js-example-basic-single" })
+
+                @*<select class="custom-select js-example-basic-single" id="inputGroupSelect01" multiple="multiple" asp-for="Mejoras" asp-items="@(new SelectList(ViewBag.Mejoras,"Id","Nombre"))">
+                </select>*@
                 @*<span asp-validation-for="IdTipoPropiedad" class="text-danger"></span>*@
             </div>
             <div class="mb-3">

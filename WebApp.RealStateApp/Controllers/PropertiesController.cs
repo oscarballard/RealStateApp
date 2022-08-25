@@ -45,7 +45,10 @@ namespace WebApp.RealStateApp.Controllers
             ViewBag.SalesType = await _salesTypeService.GetAllViewModel();
             ViewBag.Mejoras = await _improvementsService.GetAllViewModel();
 
-            return View("SaveProperty", new SavePropertyViewModel());
+            SavePropertyViewModel vm = new SavePropertyViewModel();
+            vm.Mejoras = ViewBag.Mejoras;
+
+            return View("SaveProperty", vm);
         }
 
         [HttpPost]
