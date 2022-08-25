@@ -12,6 +12,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
+using System;
+using Microsoft.AspNetCore.Http;
 
 namespace RealStateApp.Infrastructure.Identity.Services
 {
@@ -38,7 +41,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             if (user == null)
             {
                 response.HasError = true;
-                response.Error = $"No Hay Usuario Registrado Con Este Usuario: {request.UserName}";
+                response.Error = $"No hay usuario registrado con este usuario: {request.UserName}";
                 return response;
             }
 
@@ -46,7 +49,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             if (!result.Succeeded)
             {
                 response.HasError = true;
-                response.Error = $"Credenciales Invalidas {request.UserName}";
+                response.Error = $"Credenciales invalidas {request.UserName}";
                 return response;
             }
 
@@ -111,7 +114,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             if (userWithSameUserName != null)
             {
                 response.HasError = true;
-                response.Error = $"El username '{request.UserName}' Ya Se Esta Usando.";
+                response.Error = $"El username '{request.UserName}' Ya se está usando.";
                 return response;
             }
 
@@ -131,11 +134,18 @@ namespace RealStateApp.Infrastructure.Identity.Services
                 UserName = request.UserName
             };
             user.EmailConfirmed = true;
+
             var result = await _userManager.CreateAsync(user, request.Password);
+
             var rolName = await _roleManager.FindByIdAsync(request.RolId);
             //await _userManager.AddToRoleAsync(user, Roles.Client.ToString());
             userWithSameUserName = await _userManager.FindByIdAsync(user.Id);
 
+            if (user.Id != "" && user != null)
+            {
+                request.Photo = UploadFile(request.File, user.Id);
+                await this.UpdateUser(request, user.Id);
+            }
 
             if (!result.Succeeded)
             {
@@ -146,6 +156,41 @@ namespace RealStateApp.Infrastructure.Identity.Services
             await _userManager.AddToRoleAsync(user, rolName.Name);
 
             return response;
+        }
+
+        public async Task<RegisterResponse> UpdateUser(RegisterRequest request, string Id)
+        {
+            RegisterResponse response = new()
+            {
+                HasError = false
+            };
+
+            var userWithSameUserName = await _userManager.FindByIdAsync(Id);
+
+            userWithSameUserName.Email = request.Email;
+            userWithSameUserName.FirstName = request.FirstName;
+            userWithSameUserName.LastName = request.LastName;
+            userWithSameUserName.UserName = request.UserName;
+            userWithSameUserName.Photo = request.Photo; 
+
+           var result = await _userManager.UpdateAsync(userWithSameUserName);
+
+            if (userWithSameUserName == null)
+            {
+                response.HasError = true;
+                response.Error = $"El username '{request.UserName}' no se encuentra registrado.";
+                return response;
+            }
+
+            if (!result.Succeeded)
+            {
+                response.HasError = true;
+                response.Error = $"An error occurred trying to register the user.";
+                return response;
+            }
+
+            return response;
+
         }
 
         public async Task Delete(string userId)
@@ -305,6 +350,51 @@ namespace RealStateApp.Infrastructure.Identity.Services
                 //Identification = user.Identification
             }).OrderBy(u => u.FirstName).ToList();
         }
+
+        private string UploadFile(IFormFile file, string id, bool isEditMode = false, string imagePath = "")
+        {
+            if (isEditMode)
+            {
+                if (file == null)
+                {
+                    return imagePath;
+                }
+            }
+            string basePath = $"/Images/Users/{id}";
+            string path = Path.Combine(Directory.GetCurrentDirectory(), $"wwwroot{basePath}");
+
+            //create folder if not exist
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            //get file extension
+            Guid guid = Guid.NewGuid();
+            FileInfo fileInfo = new(file.FileName);
+            string fileName = guid + fileInfo.Extension;
+
+            string fileNameWithPath = Path.Combine(path, fileName);
+
+            using (var stream = new FileStream(fileNameWithPath, FileMode.Create))
+            {
+                file.CopyTo(stream);
+            }
+
+            if (isEditMode)
+            {
+                string[] oldImagePart = imagePath.Split("/");
+                string oldImagePath = oldImagePart[^1];
+                string completeImageOldPath = Path.Combine(path, oldImagePath);
+
+                if (System.IO.File.Exists(completeImageOldPath))
+                {
+                    System.IO.File.Delete(completeImageOldPath);
+                }
+            }
+            return $"{basePath}/{fileName}";
+        }
+
     }
 
 

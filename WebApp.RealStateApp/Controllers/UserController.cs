@@ -8,7 +8,10 @@ using WebApp.RealStateApp.Middlewares;
 using RealStateApp.Core.Application.Enums;
 using RealStateApp.Core.Application.ViewModels.Roles;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 using AutoMapper;
+using System;
 
 namespace WebApp.RealStateApp.Controllers
 {
@@ -72,6 +75,7 @@ namespace WebApp.RealStateApp.Controllers
             rolesVm = await _userService.GetRolByName("Agent");
             RolesList.Add(rolesVm);
             vm.RolesList = RolesList;
+
             return View(vm);
         }
 
@@ -91,8 +95,7 @@ namespace WebApp.RealStateApp.Controllers
                 vm.RolesList = RolesList;
                 return View(vm);
             }
-            
-            
+
             var origin = Request.Headers["origin"];
             RegisterResponse response = await _userService.RegisterAsync(vmm, origin);
             if (response.HasError)
