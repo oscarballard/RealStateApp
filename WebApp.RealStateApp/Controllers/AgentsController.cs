@@ -28,6 +28,13 @@ namespace WebApp.RealStateApp.Controllers
             return View("Index", vm);
         }
 
+        public async Task<IActionResult> MiPerfil()
+        {
+            UsersViewModel vm = new();
+            vm = await _userServices.GetUserById();
+            return View(vm);
+        }
+
         //public async Task<IActionResult> Active()
         //{
 
@@ -42,6 +49,6 @@ namespace WebApp.RealStateApp.Controllers
         //{
 
         //}
-        
+
     }
 }

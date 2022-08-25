@@ -13,7 +13,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using System;
 using Microsoft.AspNetCore.Http;
 
 namespace RealStateApp.Infrastructure.Identity.Services
@@ -326,20 +325,20 @@ namespace RealStateApp.Infrastructure.Identity.Services
             return roles;
         }
 
-        public async Task<RolesViewModel> GetUserById(string Id)
-        {
-            var rolesList = await _userManager.GetUserAsync(Id);
+        //public async Task<RolesViewModel> GetUserById(string Id)
+        //{
+        //    var rolesList = await _userManager.GetUserAsync(Id);
 
-            List<RolesViewModel> roles = new();
-            rolesList.ForEach(item => roles.Add(
-                new RolesViewModel()
-                {
-                    Id = item.Id,
-                    Name = item.Name
-                }
-            ));
-            return roles;
-        }
+        //    List<RolesViewModel> roles = new();
+        //    rolesList.ForEach(item => roles.Add(
+        //        new RolesViewModel()
+        //        {
+        //            Id = item.Id,
+        //            Name = item.Name
+        //        }
+        //    ));
+        //    return roles;
+        //}
 
         public async Task<RolesViewModel> GetRolByName(string roleName)
         {
