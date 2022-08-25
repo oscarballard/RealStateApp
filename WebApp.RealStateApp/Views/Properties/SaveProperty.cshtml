@@ -1,15 +1,29 @@
 ﻿@using RealStateApp.Core.Application.ViewModels.Properties;
+@using RealStateApp.Core.Application.ViewModels.Improvements;
 @model SavePropertyViewModel;
 @{
+    List<int> ListaMejoras = new List<int>();
     bool editando = Model.Id == 0 ? false : true;
     ViewData["Title"] = "Guardar Tipo";
+
+    if (Model.Mejoras != null)
+    {
+        foreach (ImprovementsViewModel Mejora in Model.Mejoras)
+        {
+            ListaMejoras.Add(Mejora.Id);
+        }
+    }
 }
 
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">
         <h2>Propiedad</h2>
-        <form method="post" asp-controller="Properties" asp-action="@(editando? "Edit" : "Create")"  enctype = "multipart/form-data">
+        <form method="post" asp-controller="Properties" asp-action="@(editando? "Edit" : "Create")" enctype="multipart/form-data">
+            <input type="hidden" class="form-control" name="Id" asp-for="Id">
+            <input type="hidden" class="form-control" name="Codigo" asp-for="Codigo">
+            <input type="hidden" class="form-control" name="IdAgente" asp-for="IdAgente">
+
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Precio</span>
@@ -78,10 +92,20 @@
                 <div class="input-group-prepend">
                     <label class="input-group-text" for="inputGroupSelect01">Mejoras</label>
                 </div>
-                @Html.DropDownListFor(m => m.Mejoras, new SelectList(ViewBag.Mejoras, "Id", "Nombre"), new { multiple = "true", @class = "custom-select js-example-basic-single" })
+                <select class="custom-select js-example-basic-single" id="inputGroupSelect01" multiple="multiple" asp-for="MejorasId">
+                    @foreach (ImprovementsViewModel Mejora in ViewBag.Mejoras)
+                    {
+                        @if (ListaMejoras.Contains(Mejora.Id))
+                        {
+                            <option value="@Mejora.Id" selected>@Mejora.Nombre</option>
+                        }
+                        else
+                        {
+                            <option value="@Mejora.Id">@Mejora.Nombre</option>
+                        }
 
-                @*<select class="custom-select js-example-basic-single" id="inputGroupSelect01" multiple="multiple" asp-for="Mejoras" asp-items="@(new SelectList(ViewBag.Mejoras,"Id","Nombre"))">
-                </select>*@
+                    }
+                </select>
                 @*<span asp-validation-for="IdTipoPropiedad" class="text-danger"></span>*@
             </div>
             <div class="mb-3">

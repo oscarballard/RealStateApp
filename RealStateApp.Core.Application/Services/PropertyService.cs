@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.Repositories;
 using RealStateApp.Core.Application.Interfaces.Services;
+using RealStateApp.Core.Application.ViewModels.Improvements;
 using RealStateApp.Core.Application.ViewModels.Properties;
 using RealStateApp.Core.Application.ViewModels.PropertyType;
 using RealStateApp.Core.Application.ViewModels.SalesType;
@@ -37,6 +38,14 @@ namespace RealStateApp.Core.Application.Services
             PropertyViewModel vm = _mapper.Map<PropertyViewModel>(entity);
             vm.Usuario = await _accountService.GetUserByIdAsync(vm.IdAgente);
          
+            return vm;
+        }
+
+        public override async Task<SavePropertyViewModel> GetByIdSaveViewModel(int Id)
+        {
+            var entity = await _propertyRepository.GetByIdWithIncludeAsync(Id);
+            SavePropertyViewModel vm = _mapper.Map<SavePropertyViewModel>(entity);
+
             return vm;
         }
         public async Task<List<PropertyViewModel>> GetAllViewModelWithFilters(FilterPropertyViewModel filters)
