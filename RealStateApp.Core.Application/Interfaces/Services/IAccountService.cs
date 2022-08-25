@@ -13,7 +13,7 @@ namespace RealStateApp.Core.Application.Interfaces.Services
         Task<string> ConfirmAccountAsync(string userId, string token);
         Task<ForgotPasswordResponse> ForgotPasswordAsync(ForgotPasswordRequest request, string origin);
         Task<RegisterResponse> RegisterBasicUserAsync(RegisterRequest request, string origin);
-        Task<RegisterResponse> UpdateUser(RegisterRequest request);
+        Task<RegisterResponse> UpdateUser(RegisterRequest request, string Id);
         Task<ResetPasswordResponse> ResetPasswordAsync(ResetPasswordRequest request);
         Task SignOutAsync();
         Task<List<RolesViewModel>> GetAllRoles();

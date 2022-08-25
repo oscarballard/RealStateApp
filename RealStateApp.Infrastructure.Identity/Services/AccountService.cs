@@ -141,8 +141,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             if (user.Id != "" && user != null)
             {
                 request.Photo = UploadFile(request.File, user.Id);
-                //request.Photo = new 
-                //await this.UpdateUser(user);
+                await this.UpdateUser(request, user.Id);
             }
 
             if (!result.Succeeded)
@@ -156,24 +155,22 @@ namespace RealStateApp.Infrastructure.Identity.Services
             return response;
         }
 
-        public async Task<RegisterResponse> UpdateUser(RegisterRequest request)
+        public async Task<RegisterResponse> UpdateUser(RegisterRequest request, string Id)
         {
             RegisterResponse response = new()
             {
                 HasError = false
             };
 
-            var userWithSameUserName = await _userManager.FindByNameAsync(request.UserName);
+            var userWithSameUserName = await _userManager.FindByIdAsync(Id);
 
-            var user = new ApplicationUser
-            {
-                Email = request.Email,
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                UserName = request.UserName
-            };
+            userWithSameUserName.Email = request.Email;
+            userWithSameUserName.FirstName = request.FirstName;
+            userWithSameUserName.LastName = request.LastName;
+            userWithSameUserName.UserName = request.UserName;
+            userWithSameUserName.Photo = request.Photo; 
 
-           var result = await _userManager.UpdateAsync(user);
+           var result = await _userManager.UpdateAsync(userWithSameUserName);
 
             if (userWithSameUserName == null)
             {
