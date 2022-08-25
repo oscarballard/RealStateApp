@@ -100,7 +100,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             user.LastName = users.LastName;
             user.Email = users.Email;
             user.Phone = users.PhoneNumber;
-            user.Photo = users.photo;
+            user.Photo = users.Photo;
             return user;
         }
         public async Task<RegisterResponse> RegisterBasicUserAsync(RegisterRequest request, string origin)
@@ -315,6 +315,21 @@ namespace RealStateApp.Infrastructure.Identity.Services
         public async Task<List<RolesViewModel>> GetAllRoles()
         {
             var rolesList = await _roleManager.Roles.ToListAsync();
+            List<RolesViewModel> roles = new();
+            rolesList.ForEach(item => roles.Add(
+                new RolesViewModel()
+                {
+                    Id = item.Id,
+                    Name = item.Name
+                }
+            ));
+            return roles;
+        }
+
+        public async Task<RolesViewModel> GetUserById(string Id)
+        {
+            var rolesList = await _userManager.GetUserAsync(Id);
+
             List<RolesViewModel> roles = new();
             rolesList.ForEach(item => roles.Add(
                 new RolesViewModel()

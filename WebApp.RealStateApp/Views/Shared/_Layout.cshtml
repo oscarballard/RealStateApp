@@ -1,13 +1,14 @@
-@using Microsoft.AspNetCore.Http
+﻿@using Microsoft.AspNetCore.Http
 @using RealStateApp.Core.Application.Dtos.Account
 @using RealStateApp.Core.Application.Helpers;
 @using RealStateApp.Core.Application.ViewModels.User
 @inject IHttpContextAccessor httpContextAccessor
 @{
     var User = httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
-    var isAdmin = User != null ? User.Roles.Any(r => r == "Admin") : false; 
+    var isAdmin = User != null ? User.Roles.Any(r => r == "Admin") : false;
     var isBasic = User != null ? User.Roles.Any(r => r == "Basic") : false;
     var isAgent = User != null ? User.Roles.Any(r => r == "Agent") : false;
+    var foto = User != null ? User.Photo : "https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -47,6 +48,15 @@
             text-align: center;
             border-radius: 3px;
             font-weight: 600;
+        }
+
+        .img-perfil {
+            float: left;
+            width: 30px;
+            height: 30px;
+            margin: -5px 10px -5px 0;
+            -webkit-border-radius: 30px;
+            border-radius: 30px;
         }
     </style>
     <header>
@@ -91,10 +101,31 @@
                                 </div>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Iniciar Sesion</a>
+                        @*<li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Iniciar Sesion</a>
+            </li>*@
+                    </ul>
+                    <ul class="navbar-nav navbar-right">
+                        <li class="dropdown navbar-user">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img src="@foto" class="img-perfil">
+                                <span class="d-none d-md-inline">Adam Schwartz</span> <b class="caret"></b>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="javascript:;" class="dropdown-item">Mi Perfil</a>
+                                <div class="dropdown-divider"></div>
+                                @if (User != null)
+                                {
+                                    <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="LogOut">Salir</a>
+                                }
+                                else
+                                {
+                                    <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index">Iniciar Sesion</a>
+                                }
+                            </div>
                         </li>
                     </ul>
+
                 </div>
             </div>
         </nav>
