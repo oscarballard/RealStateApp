@@ -11,14 +11,22 @@ namespace RealStateApp.Core.Application.ViewModels.Properties
 {
     public class SavePropertyViewModel
     {
+
         public int Id { get; set; }
         public string Codigo { get; set; }
+        [Required(ErrorMessage = "Debe Colocar un tipo")]
         public int IdTipoPropiedad { get; set; }
+        [Required(ErrorMessage = "Debe Colocar un tipo")]
         public int IdTipoVenta { get; set; }
+        [Required(ErrorMessage = "Debe Colocar un precio")]
         public float Precio { get; set; }
+        [Required(ErrorMessage = "Debe el Tamaño")]
         public float Terreno { get; set; }
+        [Required(ErrorMessage = "Debe Colocar la cantidad de habitaciones")]
         public int CantHabitaciones { get; set; }
+        [Required(ErrorMessage = "Debe Colocar la cantidad de baños")]
         public int CantLavabos { get; set; }
+        [Required(ErrorMessage = "Debe Colocar la descripcion")]
         public string Descripcion { get; set; }
         public string IdAgente { get; set; }
         public string Imagen1 { get; set; }
