@@ -35,13 +35,14 @@ namespace WebApi.RealStateApp
             services.AddIdentityInfrastructure(Configuration);
             services.AddApplicationLayer(Configuration);
             services.AddSharedInfrastructure(Configuration);
+
             services.AddControllers();
             services.AddHealthChecks();
             services.AddSwaggerExtension();
             services.AddApiVersioningExtension();
+
             services.AddDistributedMemoryCache();
             services.AddSession();
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 

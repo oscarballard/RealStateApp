@@ -25,5 +25,12 @@ namespace RealStateApp.Infrastructure.Persistence.Repositories
                     .FirstOrDefaultAsync(i => i.Id == Id);
             return property;
         }
+        public virtual async Task<Property> GetByCodeWithIncludeAsync(string Code)
+        {
+            var property = await _dbContext.Set<Property>().Include(i => i.Mejoras)
+                    .FirstOrDefaultAsync(i => i.Codigo == Code);
+            return property;
+        }
     }
+    
 }
