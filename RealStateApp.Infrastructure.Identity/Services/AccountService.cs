@@ -80,9 +80,6 @@ namespace RealStateApp.Infrastructure.Identity.Services
 
             response.Roles = rolesList.ToList();
             response.IsVerified = user.EmailConfirmed;
-            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-            var refreshToken = GenerateRefreshToken();
-            response.RefreshToken = refreshToken.Token;
 
             response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
             var refreshToken = GenerateRefreshToken();
@@ -317,6 +314,8 @@ namespace RealStateApp.Infrastructure.Identity.Services
             return response;
         }
 
+        #region PrivateMethods
+
         private async Task<JwtSecurityToken> GenerateJWToken(ApplicationUser user)
         {
             var userClaims = await _userManager.GetClaimsAsync(user);
@@ -394,6 +393,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             return verificationUri;
         }
 
+        #endregion
         public async Task<List<RolesViewModel>> GetAllRoles()
         {
             var rolesList = await _roleManager.Roles.ToListAsync();
@@ -407,64 +407,6 @@ namespace RealStateApp.Infrastructure.Identity.Services
             ));
             return roles;
         }
-
-        #region PrivateMethods
-
-        private async Task<JwtSecurityToken> GenerateJWToken(ApplicationUser user)
-        {
-            var userClaims = await _userManager.GetClaimsAsync(user);
-            var roles = await _userManager.GetRolesAsync(user);
-
-            var roleClaims = new List<Claim>();
-
-            foreach (var role in roles)
-            {
-                roleClaims.Add(new Claim("roles", role));
-            }
-
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub,user.UserName),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email,user.Email),
-                new Claim("uid", user.Id)
-            }
-            .Union(userClaims)
-            .Union(roleClaims);
-
-            var symmectricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.Key));
-            var signingCredetials = new SigningCredentials(symmectricSecurityKey, SecurityAlgorithms.HmacSha256);
-
-            var jwtSecurityToken = new JwtSecurityToken(
-                issuer: _jwtSettings.Issuer,
-                audience: _jwtSettings.Audience,
-                claims: claims,
-                expires: DateTime.UtcNow.AddMinutes(_jwtSettings.DurationInMinutes),
-                signingCredentials: signingCredetials);
-
-            return jwtSecurityToken;
-        }
-
-        private RefreshToken GenerateRefreshToken()
-        {
-            return new RefreshToken
-            {
-                Token = RandomTokenString(),
-                Expires = DateTime.UtcNow.AddDays(7),
-                Created = DateTime.UtcNow
-            };
-        }
-
-        private string RandomTokenString()
-        {
-            using var rngCryptoServiceProvider = new RNGCryptoServiceProvider();
-            var ramdomBytes = new byte[40];
-            rngCryptoServiceProvider.GetBytes(ramdomBytes);
-
-            return BitConverter.ToString(ramdomBytes).Replace("-", "");
-        }
-
-        #endregion
 
         public async Task<RolesViewModel> GetRolByName(string roleName)
         {
