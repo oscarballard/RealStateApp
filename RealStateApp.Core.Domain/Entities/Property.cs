@@ -27,5 +27,6 @@ namespace RealStateApp.Core.Domain.Entities
         public SalesType TipoVenta { get; set; }
         public PropertyType TipoPropiedad { get; set; }
         public ICollection<Improvements> Mejoras { get; set; }
+        public ICollection<ClientLike> ClientLikes { get; set; }
     }
 }

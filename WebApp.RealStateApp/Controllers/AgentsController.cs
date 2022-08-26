@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using RealStateApp.Core.Application.Dtos.Account;
 using RealStateApp.Core.Application.Enums;
 using RealStateApp.Core.Application.Interfaces.Services;
+using RealStateApp.Core.Application.ViewModels.Roles;
 using RealStateApp.Core.Application.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -14,10 +17,12 @@ namespace WebApp.RealStateApp.Controllers
     public class AgentsController : Controller
     {
         private readonly IUserServices _userServices;
+        private readonly IMapper _mapper;
 
-        public AgentsController(IUserServices userService)
+        public AgentsController(IUserServices userService, IMapper mapper)
         {
             _userServices = userService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
@@ -30,8 +35,9 @@ namespace WebApp.RealStateApp.Controllers
 
         public async Task<IActionResult> MiPerfil()
         {
-            UsersViewModel vm = new();
-            vm = await _userServices.GetUserById();
+            SaveClientAgentViewModel vm = new();
+            vm = _mapper.Map<SaveClientAgentViewModel>(await _userServices.GetUserById());
+            List<RolesViewModel> RolesList = new();
             return View(vm);
         }
 

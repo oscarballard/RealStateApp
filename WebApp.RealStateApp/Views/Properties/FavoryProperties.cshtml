@@ -155,43 +155,12 @@
                         {
                             <div class="d-flex align-items-center @(Propiedad.ClientLikes.Count > 0 ? "text-danger":"") " onclick="Like(this, @Propiedad.Id)">
                                 <span class="mr-2">
-                                    <i  class="fa-solid fa-heart"></i>
+                                    <i class="fa-solid fa-heart"></i>
                                 </span>
                             </div>
                         }
 
-                        @*<div class="row">
-            <div class="col-lg-6 col-xl-4 col-sm-6 col-md-6">
-                <div class="d-flex align-items-center">
-                    <span class="mr-2">
-                        <i class="fa-solid fa-bath"></i>
-                    </span>
-                    <div>
-                        <h4 class="m-0"><strong>@Propiedad.CantLavabos</strong></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4 col-sm-6 col-md-6">
-                <div class="d-flex align-items-center">
-                    <span class="mr-2">
-                        <i class="fa-solid fa-bed"></i>
-                    </span>
-                    <div>
-                        <h4 class="m-0"><strong>@Propiedad.CantHabitaciones</strong></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4 col-sm-6 col-md-6">
-                <div class="d-flex align-items-center">
-                    <span class="mr-2">
-                        <i class="fa-solid fa-people-roof"></i>
-                    </span>
-                    <div>
-                        <h4 class="m-0"><strong>@Propiedad.Terreno M</strong></h4>
-                    </div>
-                </div>
-            </div>
-        </div>*@
+   
                     </div>
                 </div>
             </div>
@@ -204,9 +173,9 @@
     function Like(el, id) {
         $.post("/Client/ManageLike", { Id: id }, (res) => {
             if (res == 1) {
-                $(el).removeClass("text-danger"); 
+                $(el).removeClass("text-danger");
             } else {
-                $(el).addClass("text-danger"); 
+                $(el).addClass("text-danger");
             }
         })
     }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.Repositories;
 using RealStateApp.Core.Application.Interfaces.Services;
+using RealStateApp.Core.Application.ViewModels.ClientLike;
 using RealStateApp.Core.Application.ViewModels.Properties;
 using RealStateApp.Core.Application.ViewModels.PropertyType;
 using RealStateApp.Core.Application.ViewModels.SalesType;
@@ -22,10 +23,12 @@ namespace RealStateApp.Core.Application.Services
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IAccountService _accountService;
+        private readonly IClientLikeService _clientLikeService;
         private readonly UsersViewModel userViewModel;
-        public PropertyService(IAccountService accountService,IPropertyRepository propertyRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(propertyRepository , mapper)
+        public PropertyService(IAccountService accountService,IPropertyRepository propertyRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor, IClientLikeService clientLikeService) : base(propertyRepository , mapper)
         {
             _propertyRepository = propertyRepository;
+            _clientLikeService = clientLikeService;
             _mapper = mapper;
             _accountService = accountService;
             _httpContextAccessor = httpContextAccessor;
@@ -91,6 +94,31 @@ namespace RealStateApp.Core.Application.Services
             //{
             //    listViewModels = listViewModels.Where(product => product.IdAgente == filters.IdAgent.Value).ToList();
             //}
+            if (userViewModel != null)
+            {
+                List<PropertyViewModel> ListLikeWithLike = new();
+                ClientLikeViewModel likes = new();
+                foreach (PropertyViewModel p in listViewModels)
+                {
+                    if (filters.IdClient != null)
+                    {
+                        p.ClientLikes = await _clientLikeService.GetByPropertyAndClient(p.Id);
+                        if (p.ClientLikes.Count > 0)
+                        {
+                            ListLikeWithLike.Add(p);
+                        }
+                    }
+                    else
+                    {
+                        p.ClientLikes = await _clientLikeService.GetByPropertyAndClient(p.Id);
+                        ListLikeWithLike.Add(p);
+                    }
+                }
+
+
+
+                return ListLikeWithLike;
+            }
 
             return listViewModels;
         }

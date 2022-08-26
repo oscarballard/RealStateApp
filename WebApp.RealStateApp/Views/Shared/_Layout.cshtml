@@ -6,7 +6,7 @@
 @{
     var User = httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
     var isAdmin = User != null ? User.Roles.Any(r => r == "Admin") : false;
-    var isBasic = User != null ? User.Roles.Any(r => r == "Basic") : false;
+    var isClient = User != null ? User.Roles.Any(r => r == "Client") : false;
     var isAgent = User != null ? User.Roles.Any(r => r == "Agent") : false;
     var foto = User != null ? User.Photo : "https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg";
 }
@@ -79,6 +79,12 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="RegisterUser">Unete a la App</a>
                         </li>
+                        @if (User != null && isClient)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="properties" asp-action="FavoryProperties">Mis Propiedades</a>
+                            </li>
+                        }
                         @if (User != null && isAgent)
                         {
                             <li class="nav-item">
@@ -102,18 +108,23 @@
                             </li>
                         }
                         @*<li class="nav-item">
-                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Iniciar Sesion</a>
-            </li>*@
+            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Iniciar Sesion</a>
+        </li>*@
                     </ul>
                     <ul class="navbar-nav navbar-right">
                         <li class="dropdown navbar-user">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <img src="@foto" class="img-perfil">
-                                <span class="d-none d-md-inline">Adam Schwartz</span> <b class="caret"></b>
+                                <span class="d-none d-md-inline">
+                                    @(User != null?User.UserName:"Usuario")
+                                </span> <b class="caret"></b>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" asp-area="" asp-controller="Agents" asp-action="MiPerfil">Mi Perfil</a>
-                                <div class="dropdown-divider"></div>
+                                @if (User != null && isAgent)
+                                {
+                                    <a class="dropdown-item" asp-area="" asp-controller="Agents" asp-action="MiPerfil">Mi Perfil</a>
+                                    <div class="dropdown-divider"></div>
+                                }
                                 @if (User != null)
                                 {
                                     <a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="LogOut">Salir</a>
