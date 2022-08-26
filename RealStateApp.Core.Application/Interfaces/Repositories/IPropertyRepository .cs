@@ -10,5 +10,6 @@ namespace RealStateApp.Core.Application.Interfaces.Repositories
     public interface IPropertyRepository : IGenericRepository<Property>
     {
         Task<Property> GetByIdWithIncludeAsync(int Id);
+        Task<Property> GetByCodeWithIncludeAsync(string Code);
     }
 }
