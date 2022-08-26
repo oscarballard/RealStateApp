@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using RealStateApp.Core.Application.Dtos.Account;
+using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.Services;
 using RealStateApp.Core.Application.ViewModels.Roles;
 using RealStateApp.Core.Application.ViewModels.User;
@@ -12,11 +14,15 @@ namespace Application.Services
     {
         private readonly IAccountService _accountService;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly AuthenticationResponse userViewModel;
 
-        public UserServices(IAccountService accountService, IMapper mapper)
+        public UserServices(IAccountService accountService, IMapper mapper,IHttpContextAccessor httpContextAccesso)
         {
             _accountService = accountService;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccesso;
+            userViewModel = _httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
         }
 
         public async Task<AuthenticationResponse> LoginAsync(LoginViewModel vm)
@@ -73,6 +79,10 @@ namespace Application.Services
             return await _accountService.GetUserByRol(RolName);
         }
 
+        public async Task<UsersViewModel> GetUserById()
+        {
+            return await _accountService.GetUserByIdAsync(userViewModel.Id);
+        }
         public async Task  Delete(string Id)
         {
             await _accountService.Delete(Id);

@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Text;
 using RealStateApp.Core.Application.ViewModels.Properties;
 using RealStateApp.Core.Application.ViewModels.PropertyImprovements;
+using RealStateApp.Core.Application.ViewModels.ClientLike;
 
 namespace RealStateApp.Core.Application.Mappings
 {
@@ -71,7 +72,21 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(dest => dest.Propiedad, opt => opt.Ignore())
                 .ForMember(dest => dest.Mejora, opt => opt.Ignore());
 
+            CreateMap<SaveClientAgentViewModel, UsersViewModel>()
+                .ForMember(x => x.Identification, opt => opt.Ignore())
+                .ForMember(x => x.ConfirmPassword, opt => opt.Ignore())
+                .ForMember(x => x.estado, opt => opt.Ignore())
+                .ForMember(x => x.Password, opt => opt.Ignore())
+                .ForMember(x => x.Role, opt => opt.Ignore())
+                .ForMember(x => x.Username, opt => opt.Ignore())
+                .ReverseMap()
+                .ForMember(x => x.HasError, opt => opt.Ignore())
+                .ForMember(x => x.Error, opt => opt.Ignore());
+
             CreateMap<PropertyImprovements, PropertyImprovementsViewModel>()
+                .ReverseMap();
+
+            CreateMap<ClientLike, SaveClientLikeViewModel>()
                 .ReverseMap();
         }
     }
