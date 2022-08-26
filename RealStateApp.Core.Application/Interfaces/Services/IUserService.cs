@@ -18,6 +18,7 @@ namespace RealStateApp.Core.Application.Interfaces.Services
         Task<List<RolesViewModel>> GetAllRoles();
         Task<RolesViewModel> GetRolByName(string RolName);
         Task<List<UsersViewModel>> GetUserByRol(string RolName);
+        Task<UsersViewModel> GetUserById();
         Task Delete(string Id);
     }
 }

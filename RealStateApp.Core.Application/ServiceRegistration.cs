@@ -24,6 +24,7 @@ namespace RealStateApp.Infrastructure.Persistence
             services.AddTransient<IImprovementsService, ImprovementsService>(); 
             services.AddTransient<IPropertyService, PropertyService>();
             services.AddTransient<IPropertyImprovementsService, PropertyImprovementsService>();
+            services.AddTransient<IClientLikeService, ClientLikeService>();
             #endregion
         }
     }

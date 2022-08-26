@@ -41,6 +41,7 @@ namespace RealStateApp.Infrastructure.Persistence
             services.AddTransient<IImprovementsRepository, ImprovementsRepository> ();
             services.AddTransient<IPropertyRepository, PropertyRepository> ();
             services.AddTransient<IPropertyImprovementsRepository, PropertyImprovementsRepository> ();
+            services.AddTransient<IClientLikeRepository, ClientLikeRepository> ();
             #endregion
         }
     }

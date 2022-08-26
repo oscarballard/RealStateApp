@@ -23,6 +23,7 @@ namespace RealStateApp.Infrastructure.Persistence.Contexts
             builder.ApplyConfiguration(new PropertyImprovementsMap());
             builder.ApplyConfiguration(new SalesTypeMap());
             builder.ApplyConfiguration(new PropertyTypeMap());
+            builder.ApplyConfiguration(new ClientLikeMap());
         }
     }
 }

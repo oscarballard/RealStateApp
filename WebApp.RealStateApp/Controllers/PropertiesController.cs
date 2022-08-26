@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace WebApp.RealStateApp.Controllers
 {
-    //[Authorize(Roles = "Agent")]
     public class PropertiesController : Controller
     {
         private readonly IPropertyTypeService _propertyTypeService;
@@ -34,11 +33,21 @@ namespace WebApp.RealStateApp.Controllers
             _httpContextAccessor = httpContextAccessor;
             userViewModel = _httpContextAccessor.HttpContext.Session.Get<UsersViewModel>("user");
         }
+
         public async Task<IActionResult> Index(FilterPropertyViewModel vm)
         {
             ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
             return View(await _propertyService.GetAllViewModelWithFilters(vm));
         }
+
+        public async Task<IActionResult> FavoryProperties(FilterPropertyViewModel vm)
+        {
+            ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
+            vm.IdClient = userViewModel.Id;
+            return View(await _propertyService.GetAllViewModelWithFilters(vm));
+        }
+
+
         public async Task<IActionResult> Create()
         {
             ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();

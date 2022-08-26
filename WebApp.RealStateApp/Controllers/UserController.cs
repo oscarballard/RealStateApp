@@ -170,6 +170,8 @@ namespace WebApp.RealStateApp.Controllers
             return RedirectToRoute(new { controller = "Users", action = "Index" });
         }
 
+
+
         public IActionResult AccessDenied()
         {
             return View();

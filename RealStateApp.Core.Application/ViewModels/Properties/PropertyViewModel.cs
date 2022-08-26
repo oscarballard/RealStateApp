@@ -1,4 +1,5 @@
-﻿using RealStateApp.Core.Application.ViewModels.Improvements;
+﻿using RealStateApp.Core.Application.ViewModels.ClientLike;
+using RealStateApp.Core.Application.ViewModels.Improvements;
 using RealStateApp.Core.Application.ViewModels.PropertyImprovements;
 using RealStateApp.Core.Application.ViewModels.PropertyType;
 using RealStateApp.Core.Application.ViewModels.SalesType;
@@ -27,10 +28,12 @@ namespace RealStateApp.Core.Application.ViewModels.Properties
         public string Imagen2 { get; set; }
         public string Imagen3 { get; set; }
         public string Imagen4 { get; set; }
+        //public List<ClientLikeViewModel> ClientLikes { get; set; }
 
         //NAVIGATION PROPERTTY
         public SalesTypeViewModel TipoVenta { get; set; }
         public PropertyTypeViewModel TipoPropiedad { get; set; }
+        public ICollection<ClientLikeViewModel> ClientLikes { get; set; }
         public UsersViewModel Usuario { get; set; }
         public ICollection<ImprovementsViewModel> Mejoras { get; set; }
     }
