@@ -76,16 +76,19 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Agentes</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="RegisterUser">Unete a la App</a>
-                        </li>
-                        @if (User != null && isClient)
+                        @if (User == null)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="RegisterUser">Unete a la App</a>
+                            </li>
+                        }
+                        @if (User != null && isClient && !isAdmin)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="properties" asp-action="FavoryProperties">Mis Propiedades</a>
                             </li>
                         }
-                        @if (User != null && isAgent)
+                        @if (User != null && isAgent && !isAdmin)
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="properties" asp-action="Index">Mant.Propiedades</a>
@@ -107,10 +110,10 @@
                                 </div>
                             </li>
                         }
-                        @*<li class="nav-item">
-            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Iniciar Sesion</a>
-        </li>*@
-                    </ul>
+                            @*<li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Iniciar Sesion</a>
+            </li>*@
+                        </ul>
                     <ul class="navbar-nav navbar-right">
                         <li class="dropdown navbar-user">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

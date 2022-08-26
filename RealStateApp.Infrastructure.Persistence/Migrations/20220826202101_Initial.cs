@@ -2,7 +2,7 @@
 
 namespace RealStateApp.Infrastructure.Persistence.Migrations
 {
-    public partial class Initial1 : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -86,6 +86,27 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ClientLike",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    IdPropiedad = table.Column<int>(type: "int", nullable: false),
+                    IdClient = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PropiedadesId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ClientLike", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ClientLike_Propiedades_PropiedadesId",
+                        column: x => x.PropiedadesId,
+                        principalTable: "Propiedades",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "MejorasPropiedades",
                 columns: table => new
                 {
@@ -112,6 +133,11 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_ClientLike_PropiedadesId",
+                table: "ClientLike",
+                column: "PropiedadesId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MejorasPropiedades_IdMejora",
                 table: "MejorasPropiedades",
                 column: "IdMejora");
@@ -134,6 +160,9 @@ namespace RealStateApp.Infrastructure.Persistence.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ClientLike");
+
             migrationBuilder.DropTable(
                 name: "MejorasPropiedades");
 
