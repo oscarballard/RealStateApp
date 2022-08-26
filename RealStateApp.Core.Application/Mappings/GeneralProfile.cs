@@ -59,6 +59,7 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(dest => dest.FileImagen2, opt => opt.Ignore())
                 .ForMember(dest => dest.FileImagen3, opt => opt.Ignore())
                 .ForMember(dest => dest.FileImagen4, opt => opt.Ignore())
+                .ForMember(dest => dest.MejorasId, opt => opt.Ignore())
                 .ReverseMap()
                 .ForMember(dest => dest.TipoPropiedad, opt => opt.Ignore())
                 .ForMember(dest => dest.TipoVenta, opt => opt.Ignore());

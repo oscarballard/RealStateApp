@@ -26,6 +26,7 @@ namespace RealStateApp.Core.Application.ViewModels.Properties
         public string Imagen3 { get; set; }
         public string Imagen4 { get; set; }
         public List<ImprovementsViewModel> Mejoras { get; set; }
+        public List<int> MejorasId { get; set; }
 
         [DataType(DataType.Upload)]
         public IFormFile FileImagen1 { get; set; }
