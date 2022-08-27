@@ -14,8 +14,7 @@ using System.Threading.Tasks;
 namespace WebApi.RealStateApp.Controllers.v1
 {
     [ApiVersion("1.0")]
-    [Authorize(Roles = "Admin")]
-    [Authorize(Roles = "Dev")]
+    [Authorize(Roles = "Admin,Dev")]
     public class PropertyController : BaseApiController
     {
 
