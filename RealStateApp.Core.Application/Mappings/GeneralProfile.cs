@@ -11,6 +11,12 @@ using System.Text;
 using RealStateApp.Core.Application.ViewModels.Properties;
 using RealStateApp.Core.Application.ViewModels.PropertyImprovements;
 using RealStateApp.Core.Application.ViewModels.ClientLike;
+using RealStateApp.Core.Application.Features.SalesType.Commands.UpdatePropertyType;
+using RealStateApp.Core.Application.Features.SalesType.Queries.GetSalesTypeById;
+using RealStateApp.Core.Application.Features.SalesType.Queries.GetAllSalesType;
+using RealStateApp.Core.Application.Features.SalesType.Commands.CreateSalesType;
+using RealStateApp.Core.Application.Features.Improvements.Commands.CreateImprovements;
+using RealStateApp.Core.Application.Features.Improvements.Commands.UpdateImprovements;
 
 namespace RealStateApp.Core.Application.Mappings
 {
@@ -88,6 +94,30 @@ namespace RealStateApp.Core.Application.Mappings
 
             CreateMap<ClientLike, SaveClientLikeViewModel>()
                 .ReverseMap();
+
+            #region FeaturesSalesType
+            CreateMap<SalesTypeViewModel, UpdateSalesTypeCommand>()
+                .ReverseMap()
+                .ForMember(x => x.CantPropiedades, opt => opt.Ignore());
+
+            CreateMap<SalesType, CreateSalesTypeCommand>()
+                .ReverseMap();
+
+            CreateMap<SalesType, UpdateSalesTypeCommand>()
+                .ReverseMap()
+                .ForMember(x => x.Propiedades, opt => opt.Ignore());
+
+            CreateMap<ImprovementsViewModel, UpdateImprovementsCommand>()
+                .ReverseMap()
+                .ForMember(x => x.CantPropiedades, opt => opt.Ignore());
+
+            CreateMap<Improvements, CreateImprovementsCommand>()
+                .ReverseMap();
+
+            CreateMap<Improvements, UpdateImprovementsCommand>()
+                .ReverseMap()
+                .ForMember(x => x.Propiedades, opt => opt.Ignore());
+            #endregion
         }
     }
 }
