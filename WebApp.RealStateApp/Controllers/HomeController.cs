@@ -50,11 +50,6 @@ namespace WebApp.RealStateApp.Controllers
         }
         public async Task<IActionResult> IndexByCode(FilterPropertyViewModel vm)
         {   
-            if (Usuario != null && Usuario.Roles.Any(r => r == "Admin"))
-            {
-                return View("IndexAdmin");
-
-            }
 
             ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
             List<PropertyViewModel> propiedad = new List<PropertyViewModel>();
