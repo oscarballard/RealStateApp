@@ -10,6 +10,7 @@ using WebApp.RealStateApp.Middlewares;
 
 namespace WebApp.RealStateApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PropertyTypeController : Controller
     {
         private readonly IPropertyTypeService _propertyTypeService;

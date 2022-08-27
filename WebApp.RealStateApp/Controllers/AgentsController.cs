@@ -29,6 +29,7 @@ namespace WebApp.RealStateApp.Controllers
             _mapper = mapper;
             _httpContextAccessor = httpContextAccesso;
         }
+        [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> Index()
         {
@@ -59,6 +60,7 @@ namespace WebApp.RealStateApp.Controllers
             return View(vm);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Active(string Id)
         {
             SaveClientAgentViewModel vm = new();
@@ -69,6 +71,7 @@ namespace WebApp.RealStateApp.Controllers
             ViewBag.admins = await _userServices.GetUserByRol(Roles.Agent.ToString());
             return RedirectToRoute(new { controller = "Agents", action = "Index" });
         }
+        [Authorize(Roles = "Admin")]
 
         public async Task<IActionResult> Inactivate(string Id)
         {

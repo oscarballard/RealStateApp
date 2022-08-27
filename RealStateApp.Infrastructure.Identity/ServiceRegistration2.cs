@@ -45,8 +45,8 @@ namespace RealStateApp.Infrastructure.Identity
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/User";
-                options.AccessDeniedPath = "/User/AccessDenied";
+                options.LoginPath = "/Users";
+                options.AccessDeniedPath = "/Users/AccessDenied";
             });
 
             services.AddAuthentication();

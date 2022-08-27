@@ -69,13 +69,13 @@ namespace RealStateApp.Infrastructure.Identity.Services
                 return response;
             }
 
+            JwtSecurityToken jwtSecurityToken = new();
+
+
             if (_jwtSettings.Key != null)
             {
-                JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);
-                if (_jwtSettings.Key != null)
-                {
-                    response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-                }
+
+                jwtSecurityToken = await GenerateJWToken(user);
             }
 
             response.Id = user.Id;
@@ -91,6 +91,13 @@ namespace RealStateApp.Infrastructure.Identity.Services
  
             var refreshToken = GenerateRefreshToken();
             response.RefreshToken = refreshToken.Token;
+
+            if (!user.IsActive && !rolesList.Any(r => r == "Client"))
+            {
+                response.HasError = true;
+                response.Error = $"Usuario Inactivo {request.UserName}";
+                return response;
+            }
 
             return response;
         }

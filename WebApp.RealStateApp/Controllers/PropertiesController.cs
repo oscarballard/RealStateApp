@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace WebApp.RealStateApp.Controllers
 {
+    [Authorize(Roles = "Agent")]
     public class PropertiesController : Controller
     {
         private readonly IPropertyTypeService _propertyTypeService;
