@@ -53,6 +53,7 @@ namespace RealStateApp.Core.Application.ViewModels.User
         [DataType(DataType.Upload)]
         public IFormFile File { get; set; }
 
+        public bool IsActive { get; set; }
         public RolesViewModel Roles { get; set; }
         public List<RolesViewModel> RolesList { get; set; }
         public bool HasError { get; set; }

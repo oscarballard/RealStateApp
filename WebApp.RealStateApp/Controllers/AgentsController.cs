@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RealStateApp.Core.Application.Dtos.Account;
 using RealStateApp.Core.Application.Enums;
@@ -18,11 +19,13 @@ namespace WebApp.RealStateApp.Controllers
     {
         private readonly IUserServices _userServices;
         private readonly IMapper _mapper;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AgentsController(IUserServices userService, IMapper mapper)
+        public AgentsController(IUserServices userService, IMapper mapper, IHttpContextAccessor httpContextAccesso)
         {
             _userServices = userService;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccesso;
         }
 
         public async Task<IActionResult> Index()
@@ -35,26 +38,29 @@ namespace WebApp.RealStateApp.Controllers
 
         public async Task<IActionResult> MiPerfil()
         {
+            UsersViewModel userViewModel = _httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
             SaveClientAgentViewModel vm = new();
-            vm = _mapper.Map<SaveClientAgentViewModel>(await _userServices.GetUserById());
+            vm = _mapper.Map<SaveClientAgentViewModel>(await _userServices.GetUserById(userViewModel.Id));
             List<RolesViewModel> RolesList = new();
             return View(vm);
         }
 
-        //public async Task<IActionResult> Active()
-        //{
+        public async Task<IActionResult> Active(string Id)
+        {
+            SaveClientAgentViewModel vm = new();
+            vm = _mapper.Map<SaveClientAgentViewModel>(await _userServices.GetUserById(Id));
+            _userServices.UpdateAsycn(vm, )
+        }
 
-        //}
+        public async Task<IActionResult> inactivate()
+        {
 
-        //public async Task<IActionResult> inactivate()
-        //{
+        }
 
-        //}
+        public async Task<IActionResult> Delete()
+        {
 
-        //public async Task<IActionResult> Delete()
-        //{
-
-        //}
+        }
 
     }
 }

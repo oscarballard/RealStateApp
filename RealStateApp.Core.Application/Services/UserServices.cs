@@ -47,6 +47,12 @@ namespace Application.Services
             return await _accountService.RegisterBasicUserAsync(registerRequest, origin);
         }
 
+        public async Task<RegisterResponse> UpdateAsycn(SaveClientAgentViewModel vm, string Id)
+        {
+            RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(vm);
+            return await _accountService.RegisterBasicUserAsync(registerRequest, Id);
+        }
+
         public async Task<string> ConfirmEmailAsync(string userId, string token)
         {
             return await _accountService.ConfirmAccountAsync(userId, token);
@@ -79,9 +85,9 @@ namespace Application.Services
             return await _accountService.GetUserByRol(RolName);
         }
 
-        public async Task<UsersViewModel> GetUserById()
+        public async Task<UsersViewModel> GetUserById(string Id)
         {
-            return await _accountService.GetUserByIdAsync(userViewModel.Id);
+            return await _accountService.GetUserByIdAsync(Id);
         }
         public async Task  Delete(string Id)
         {

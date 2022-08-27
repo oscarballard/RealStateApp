@@ -20,6 +20,6 @@ namespace RealStateApp.Core.Application.ViewModels.User
         public IList<string> Type { get; set; }
         public string Phone { get; set; }
         public string Role { get; set; }
-        public bool estado { get; set; }
+        public bool IsActive { get; set; }
     }
 }
