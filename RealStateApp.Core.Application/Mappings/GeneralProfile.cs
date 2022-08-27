@@ -15,6 +15,14 @@ using RealStateApp.Core.Application.Features.Categories.Queries.GetAllCategories
 using RealStateApp.Core.Application.Features.Products.Queries.GetAllProducts;
 using RealStateApp.Core.Application.Features.Properties.Queries.GetAllProperties;
 using StockApp.Core.Application.Features.Categories.Commands.UpdateCategory;
+using RealStateApp.Core.Application.Features.SalesType.Commands.UpdatePropertyType;
+using RealStateApp.Core.Application.Features.SalesType.Queries.GetSalesTypeById;
+using RealStateApp.Core.Application.Features.SalesType.Queries.GetAllSalesType;
+using RealStateApp.Core.Application.Features.SalesType.Commands.CreateSalesType;
+using RealStateApp.Core.Application.Features.Improvements.Commands.CreateImprovements;
+using RealStateApp.Core.Application.Features.Improvements.Commands.UpdateImprovements;
+using RealStateApp.Core.Application.Features.PropertyType.Commands.UpdatePropertyType;
+using RealStateApp.Core.Application.Features.PropertyType.Commands.CreatePropertyType;
 
 namespace RealStateApp.Core.Application.Mappings
 {
@@ -130,6 +138,39 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(x => x.RolId, opt => opt.Ignore())
                 .ForMember(x => x.Phone, opt => opt.Ignore());
 
+            #region FeaturesSalesType
+            CreateMap<SalesTypeViewModel, UpdateSalesTypeCommand>()
+                .ReverseMap()
+                .ForMember(x => x.CantPropiedades, opt => opt.Ignore());
+
+            CreateMap<SalesType, CreateSalesTypeCommand>()
+                .ReverseMap();
+
+            CreateMap<SalesType, UpdateSalesTypeCommand>()
+                .ReverseMap()
+                .ForMember(x => x.Propiedades, opt => opt.Ignore());
+
+            CreateMap<PropertyTypeViewModel, UpdatePropertyTypeCommand>()
+                .ReverseMap()
+                .ForMember(x => x.CantPropiedades, opt => opt.Ignore());
+
+            CreateMap<PropertyType, CreatePropertyTypeCommand>()
+                .ReverseMap();
+
+            CreateMap<PropertyType, UpdatePropertyTypeCommand>()
+                .ReverseMap()
+                .ForMember(x => x.Propiedades, opt => opt.Ignore());
+
+            CreateMap<ImprovementsViewModel, UpdateImprovementsCommand>()
+                .ReverseMap()
+                .ForMember(x => x.CantPropiedades, opt => opt.Ignore());
+
+            CreateMap<Improvements, CreateImprovementsCommand>()
+                .ReverseMap();
+
+            CreateMap<Improvements, UpdateImprovementsCommand>()
+                .ReverseMap()
+                .ForMember(x => x.Propiedades, opt => opt.Ignore());
             #endregion
         }
     }
