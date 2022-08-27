@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using RealStateApp.Core.Application.Dtos.Account;
+using RealStateApp.Core.Application.Enums;
 using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.Services;
 using RealStateApp.Core.Application.ViewModels.Properties;
+using RealStateApp.Core.Application.ViewModels.Roles;
 using RealStateApp.Core.Application.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -24,7 +26,9 @@ namespace WebApp.RealStateApp.Controllers
         private readonly IMapper _mapper;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly AuthenticationResponse Usuario;
-        public HomeController(IHttpContextAccessor httpContextAccessor,IMapper mapper,IPropertyTypeService propertyTypeService,IPropertyService propertyService, ILogger<HomeController> logger)
+        private readonly IUserServices _userServices;
+
+        public HomeController(IHttpContextAccessor httpContextAccessor,IMapper mapper,IPropertyTypeService propertyTypeService,IPropertyService propertyService, IUserServices userService, ILogger<HomeController> logger)
         {
             _logger = logger;
             _propertyService = propertyService;
@@ -32,16 +36,22 @@ namespace WebApp.RealStateApp.Controllers
             _mapper = mapper;
             _httpContextAccessor = httpContextAccessor;
             Usuario = httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
-
+            _userServices = userService;
         }
 
         public async Task<IActionResult> Index(FilterPropertyViewModel vm)
         {
+            UsersStateViewModel vmUser = new();
             if (Usuario != null && Usuario.Roles.Any(r => r == "Admin"))
             {
+                vmUser.Admin = await _userServices.GetAllUserStateByRol(Roles.Admin.ToString());
+                vmUser.Agent = await _userServices.GetAllUserStateByRol(Roles.Agent.ToString());
+                vmUser.Client = await _userServices.GetAllUserStateByRol(Roles.Client.ToString());
+                vmUser.Dev = await _userServices.GetAllUserStateByRol(Roles.Client.ToString());
+
                 var propiedades = await _propertyService.GetAllViewModel();
                 ViewBag.CantPropiedades = propiedades.Count();
-                return View("IndexAdmin");
+                return View("IndexAdmin", vmUser);
 
             }
 

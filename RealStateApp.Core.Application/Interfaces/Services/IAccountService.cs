@@ -23,5 +23,6 @@ namespace RealStateApp.Core.Application.Interfaces.Services
         Task Delete(string id);
         Task Active(string id);
         Task Inactive(string id);
+        Task<UsersStateByRolViewModel> GetAllUserStateByRol(string Rol);
     }
 }

@@ -71,7 +71,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
 
             if (_jwtSettings.Key != null)
             {
-                JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);https://plataformavirtual.itla.edu.do/my/
+                JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);
                 if (_jwtSettings.Key != null)
                 {
                     response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
@@ -108,7 +108,8 @@ namespace RealStateApp.Infrastructure.Identity.Services
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                IsActive = user.EmailConfirmed
+                IsActive = user.IsActive,
+                EmailConfirmed = user.EmailConfirmed
                 //Identification = user.Identification
             }).OrderBy(u => u.FirstName).ToListAsync();
 
@@ -131,6 +132,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             user.Email = users.Email;
             user.Phone = users.PhoneNumber;
             user.Photo = users.Photo;
+            user.Username = users.UserName;
             return user;
         }
         public async Task<RegisterResponse> RegisterBasicUserAsync(RegisterRequest request, string origin)
@@ -436,7 +438,8 @@ namespace RealStateApp.Infrastructure.Identity.Services
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                IsActive = user.EmailConfirmed,
+                EmailConfirmed = user.EmailConfirmed,
+                IsActive = user.IsActive,
                 Photo = user.Photo
                 //Identification = user.Identification
             }).OrderBy(u => u.FirstName).ToList();
@@ -486,7 +489,15 @@ namespace RealStateApp.Infrastructure.Identity.Services
             return $"{basePath}/{fileName}";
         }
 
+        public async Task<UsersStateByRolViewModel> GetAllUserStateByRol(string Rol)
+        {
+            RolesViewModel rol = await GetRolByName(Rol);
+            List<UsersViewModel> listViewModel = await GetUserByRol(Rol);
+            UsersStateByRolViewModel vm = new();
+            vm.UserActive   = listViewModel.Where(u => u.IsActive == true).Count();
+            vm.UserInactive = listViewModel.Where(u => u.IsActive == false).Count();
+
+            return vm;
+        }
     }
-
-
 }

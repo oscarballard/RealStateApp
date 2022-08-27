@@ -22,6 +22,7 @@ namespace RealStateApp.Core.Application.ViewModels.User
         public string Phone { get; set; }
         public List<string> Roles { get; set; }
         public string Role { get; set; }
+        public bool EmailConfirmed { get; set; }
         public bool IsActive { get; set; }
     }
 }

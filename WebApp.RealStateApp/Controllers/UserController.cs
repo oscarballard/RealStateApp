@@ -170,7 +170,27 @@ namespace WebApp.RealStateApp.Controllers
             return RedirectToRoute(new { controller = "Users", action = "Index" });
         }
 
+        public async Task<IActionResult> Active(string Id)
+        {
+            SaveClientAgentViewModel vm = new();
+            vm = _mapper.Map<SaveClientAgentViewModel>(await _userService.GetUserById(Id));
+            vm.IsActive = true;
+            await _userService.UpdateAsycn(vm, Id);
+            vm.Roles = await _userService.GetRolByName(Roles.Agent.ToString());
+            ViewBag.admins = await _userService.GetUserByRol(Roles.Agent.ToString());
+            return RedirectToRoute(new { controller = "Users", action = "Index" });
+        }
 
+        public async Task<IActionResult> Inactivate(string Id)
+        {
+            SaveClientAgentViewModel vm = new();
+            vm = _mapper.Map<SaveClientAgentViewModel>(await _userService.GetUserById(Id));
+            vm.IsActive = false;
+            await _userService.UpdateAsycn(vm, Id);
+            vm.Roles = await _userService.GetRolByName(Roles.Agent.ToString());
+            ViewBag.admins = await _userService.GetUserByRol(Roles.Agent.ToString());
+            return RedirectToRoute(new { controller = "Users", action = "Index" });
+        }
 
         public IActionResult AccessDenied()
         {
