@@ -44,11 +44,14 @@ namespace WebApp.RealStateApp.Controllers
 
             AuthenticationResponse userVm = await _userService.LoginAsync(vm);
 
-            if (userVm != null && userVm.Roles.Any(r => r == "Dev"))
+            if (userVm != null && userVm.HasError != true)
             {
-                vm.HasError = true;
-                vm.Error = "No tienes acceso a la App";
-                return View(vm);
+                if (userVm.Roles.Any(r => r == "Dev"))
+                {
+                    vm.HasError = true;
+                    vm.Error = "No tienes acceso a la App";
+                    return View(vm);
+                }
             }
             
             if (userVm != null && userVm.HasError != true)
