@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 
 namespace WebApp.RealStateApp.Controllers
 {
-    [Authorize(Roles = "Agent")]
     public class PropertiesController : Controller
     {
         private readonly IPropertyTypeService _propertyTypeService;
@@ -34,13 +33,13 @@ namespace WebApp.RealStateApp.Controllers
             _httpContextAccessor = httpContextAccessor;
             userViewModel = _httpContextAccessor.HttpContext.Session.Get<UsersViewModel>("user");
         }
-
+        [Authorize(Roles = "Agent")]
         public async Task<IActionResult> Index(FilterPropertyViewModel vm)
         {
             ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
             return View(await _propertyService.GetAllViewModelWithFilters(vm));
         }
-
+        [Authorize(Roles = "Client")]
         public async Task<IActionResult> FavoryProperties(FilterPropertyViewModel vm)
         {
             ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
@@ -48,7 +47,7 @@ namespace WebApp.RealStateApp.Controllers
             return View(await _propertyService.GetAllViewModelWithFilters(vm));
         }
 
-
+        [Authorize(Roles = "Agent")]
         public async Task<IActionResult> Create()
         {
             ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
@@ -59,7 +58,7 @@ namespace WebApp.RealStateApp.Controllers
 
             return View("SaveProperty", vm);
         }
-
+        [Authorize(Roles = "Agent")]
         [HttpPost]
         public async Task<IActionResult> Create(SavePropertyViewModel vm)
         {
@@ -99,7 +98,7 @@ namespace WebApp.RealStateApp.Controllers
 
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "Agent")]
         [HttpGet]
         public async Task<IActionResult> Edit(int Id)
         {
@@ -109,6 +108,7 @@ namespace WebApp.RealStateApp.Controllers
             SavePropertyViewModel vm = await _propertyService.GetByIdSaveViewModel(Id);
             return View("SaveProperty", vm);
         }
+        [Authorize(Roles = "Agent")]
         [HttpPost]
         public async Task<IActionResult> Edit(SavePropertyViewModel vm)
         {
@@ -209,7 +209,7 @@ namespace WebApp.RealStateApp.Controllers
             await _propertyService.Update(vm, vm.Id);
             return RedirectToAction("Index");
         }
-
+        [Authorize(Roles = "Agent")]
         public string GenerateSequence(int Id)
         {
             var sequence = Id.ToString().PadLeft(9, '0');
