@@ -33,9 +33,9 @@
                     <td>@user.Email</td>
                     <td>
                         <div class="btn-group" role="group" aria-label="Basic example">
-                            <a type="button" class="btn btn-success" asp-controller="Agents" asp-route-value="@user.Id" asp-action="Active">Activar</a>
-                            <a type="button" class="btn btn-warning" asp-controller="Agents" asp-route-value="@user.Id" asp-action="inactivate">Inactivar</a>
-                            <a type="button" class="btn btn-danger"  asp-controller="Agents" asp-route-value="@user.Id" asp-action="Delete">Borrar</a>
+                            <a type="button" class="btn btn-success" asp-controller="Agents" asp-route-Id="@user.Id" asp-action="Active">Activar</a>
+                            <a type="button" class="btn btn-warning" asp-controller="Agents" asp-route-Id="@user.Id" asp-action="inactivate">Inactivar</a>
+                            <a type="button" class="btn btn-danger"  asp-controller="Agents" asp-route-Id="@user.Id" asp-action="Delete">Borrar</a>
                         </div>
                     </td>
                 </tr>

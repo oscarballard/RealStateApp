@@ -11,6 +11,10 @@ using System.Text;
 using RealStateApp.Core.Application.ViewModels.Properties;
 using RealStateApp.Core.Application.ViewModels.PropertyImprovements;
 using RealStateApp.Core.Application.ViewModels.ClientLike;
+using RealStateApp.Core.Application.Features.Categories.Queries.GetAllCategories;
+using RealStateApp.Core.Application.Features.Products.Queries.GetAllProducts;
+using RealStateApp.Core.Application.Features.Properties.Queries.GetAllProperties;
+using StockApp.Core.Application.Features.Categories.Commands.UpdateCategory;
 using RealStateApp.Core.Application.Features.SalesType.Commands.UpdatePropertyType;
 using RealStateApp.Core.Application.Features.SalesType.Queries.GetSalesTypeById;
 using RealStateApp.Core.Application.Features.SalesType.Queries.GetAllSalesType;
@@ -32,6 +36,11 @@ namespace RealStateApp.Core.Application.Mappings
                 .ReverseMap();
 
             CreateMap<RegisterRequest, SaveUsersViewModel>()
+                .ForMember(x => x.HasError, opt => opt.Ignore())
+                .ForMember(x => x.Error, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<RegisterRequest, SaveClientAgentViewModel>()
                 .ForMember(x => x.HasError, opt => opt.Ignore())
                 .ForMember(x => x.Error, opt => opt.Ignore())
                 .ReverseMap();
@@ -83,7 +92,7 @@ namespace RealStateApp.Core.Application.Mappings
             CreateMap<SaveClientAgentViewModel, UsersViewModel>()
                 .ForMember(x => x.Identification, opt => opt.Ignore())
                 .ForMember(x => x.ConfirmPassword, opt => opt.Ignore())
-                .ForMember(x => x.estado, opt => opt.Ignore())
+                .ForMember(x => x.IsActive, opt => opt.Ignore())
                 .ForMember(x => x.Password, opt => opt.Ignore())
                 .ForMember(x => x.Role, opt => opt.Ignore())
                 .ForMember(x => x.Username, opt => opt.Ignore())
@@ -96,6 +105,38 @@ namespace RealStateApp.Core.Application.Mappings
 
             CreateMap<ClientLike, SaveClientLikeViewModel>()
                 .ReverseMap();
+
+
+            #region Agents features
+            CreateMap<GetAllAgentsQuery, GetAllAgentsParameter>()
+                .ReverseMap();
+
+            CreateMap<GetAllAgentsResponse, UsersViewModel>()
+                .ForMember(x => x.Identification, opt => opt.Ignore())
+                .ForMember(x => x.IsActive, opt => opt.Ignore())
+                .ForMember(x => x.Password, opt => opt.Ignore())
+                .ForMember(x => x.Phone, opt => opt.Ignore())
+                .ForMember(x => x.Photo, opt => opt.Ignore())
+                .ForMember(x => x.Role, opt => opt.Ignore())
+                .ForMember(x => x.Type, opt => opt.Ignore())
+                .ForMember(x => x.Username, opt => opt.Ignore())
+                .ForMember(x => x.ConfirmPassword, opt => opt.Ignore())
+                .ReverseMap();
+
+            CreateMap<RegisterRequest, UpdateAgentsCommand>()
+                .ForMember(x => x.Id, opt => opt.Ignore())
+                .ReverseMap()
+                .ForMember(x => x.FirstName, opt => opt.Ignore())
+                .ForMember(x => x.LastName, opt => opt.Ignore())
+                .ForMember(x => x.UserName, opt => opt.Ignore())
+                .ForMember(x => x.Password, opt => opt.Ignore())
+                .ForMember(x => x.ConfirmPassword, opt => opt.Ignore())
+                .ForMember(x => x.Email, opt => opt.Ignore())
+                .ForMember(x => x.Photo, opt => opt.Ignore())
+                .ForMember(x => x.File, opt => opt.Ignore())
+                .ForMember(x => x.Amount, opt => opt.Ignore())
+                .ForMember(x => x.RolId, opt => opt.Ignore())
+                .ForMember(x => x.Phone, opt => opt.Ignore());
 
             #region FeaturesSalesType
             CreateMap<SalesTypeViewModel, UpdateSalesTypeCommand>()

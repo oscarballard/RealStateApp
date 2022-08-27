@@ -50,7 +50,7 @@ namespace Application.Services
         public async Task<RegisterResponse> UpdateAsycn(SaveClientAgentViewModel vm, string Id)
         {
             RegisterRequest registerRequest = _mapper.Map<RegisterRequest>(vm);
-            return await _accountService.RegisterBasicUserAsync(registerRequest, Id);
+            return await _accountService.UpdateUser(registerRequest, Id);
         }
 
         public async Task<string> ConfirmEmailAsync(string userId, string token)

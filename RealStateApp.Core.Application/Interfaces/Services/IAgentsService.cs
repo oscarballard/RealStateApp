@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace RealStateApp.Core.Application.Interfaces.Services
 {
-    public interface IUserServices
+    public interface IAgentsService
     {
         Task<List<UsersViewModel>> GetAllUsersAsync();
         Task<string> ConfirmEmailAsync(string userId, string token);
