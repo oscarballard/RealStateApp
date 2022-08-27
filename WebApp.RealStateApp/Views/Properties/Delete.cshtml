@@ -13,9 +13,9 @@
             </div>
             <div class="card-body">
 
-                <form method="post" asp-controller="PropertyType" asp-action="DeletePost">
+                <form method="post" asp-controller="Properties" asp-action="DeletePost">
 
-                    @*<input type="hidden" asp-for="Id" />*@
+                    <input type="hidden" asp-for="Id" />
 
                     <button type="submit" class="btn btn-danger">Eliminar</button>
                     <a asp-controller="PropertyType" asp-action="Index" class="btn btn-warning">Cancelar</a>

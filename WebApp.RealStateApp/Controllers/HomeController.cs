@@ -47,7 +47,7 @@ namespace WebApp.RealStateApp.Controllers
                 vmUser.Admin = await _userServices.GetAllUserStateByRol(Roles.Admin.ToString());
                 vmUser.Agent = await _userServices.GetAllUserStateByRol(Roles.Agent.ToString());
                 vmUser.Client = await _userServices.GetAllUserStateByRol(Roles.Client.ToString());
-                vmUser.Dev = await _userServices.GetAllUserStateByRol(Roles.Client.ToString());
+                vmUser.Dev = await _userServices.GetAllUserStateByRol(Roles.Dev.ToString());
 
                 var propiedades = await _propertyService.GetAllViewModel();
                 ViewBag.CantPropiedades = propiedades.Count();

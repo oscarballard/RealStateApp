@@ -58,6 +58,26 @@ namespace WebApp.RealStateApp.Controllers
 
             return View("SaveProperty", vm);
         }
+
+        [Authorize(Roles = "Agent")]
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
+        {
+            return View(await _propertyService.GetByIdSaveViewModel(id));
+        }
+
+        [Authorize(Roles = "Agent")]
+        [HttpPost]
+        public async Task<IActionResult> DeletePost(int Id)
+        {
+            ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
+            ViewBag.SalesType = await _salesTypeService.GetAllViewModel();
+            ViewBag.Mejoras = await _improvementsService.GetAllViewModel();
+            SavePropertyViewModel vm = await _propertyService.GetByIdSaveViewModel(Id);
+            await _propertyService.Delete(vm.Id);
+            return RedirectToAction("Index");
+        }
+            
         [Authorize(Roles = "Agent")]
         [HttpPost]
         public async Task<IActionResult> Create(SavePropertyViewModel vm)
