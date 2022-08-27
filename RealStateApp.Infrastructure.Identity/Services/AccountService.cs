@@ -69,7 +69,10 @@ namespace RealStateApp.Infrastructure.Identity.Services
                 return response;
             }
 
-            JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);
+            if (_jwtSettings.Key != null)
+            {
+                JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);
+            }
 
             response.Id = user.Id;
             response.Email = user.Email;
@@ -81,7 +84,10 @@ namespace RealStateApp.Infrastructure.Identity.Services
             response.Roles = rolesList.ToList();
             response.IsVerified = user.EmailConfirmed;
 
-            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            if (_jwtSettings.Key != null)
+            {
+                response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+            }
             var refreshToken = GenerateRefreshToken();
             response.RefreshToken = refreshToken.Token;
 

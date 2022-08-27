@@ -3,14 +3,32 @@
 @{
     int cont = 0;
     string Photo = "";
+    string filterName = ViewBag.Filters != null ? ViewBag.Filters.firstName :"";
 }
 
+
 <div class="row">
+    <div class="col-12">
+        <form method="post" asp-controller="Agents" asp-action="AgentList">
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Nombre</span>
+                        </div>
+                        <input type="text"  class="form-control" name="firstName" value="@filterName" />
+                    </div>
+                </div>
+                <div class="col-md-2"><button type="submit" class="btn btn-primary">Filtrar</button></div>
+
+            </div>
+        </form>
+    </div>
     @foreach (RealStateApp.Core.Application.ViewModels.User.UsersViewModel user in Model)
     {
         Photo = user.Photo != null ? user.Photo : "https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg";
-        <div class="col-md-3">
-            <div class="card card-agent" >
+        <div class="col-md-3" onclick=' window.location.href = "@Url.Action("Index","Home", new { IdAgent = user.Id})"'>
+            <div class="card card-agent">
                 <img class="card-img-top img-card" src="@Photo" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title">@user.FirstName @user.LastName</h5>

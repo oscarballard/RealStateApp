@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RealStateApp.Core.Application.ViewModels.Roles;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,6 +20,7 @@ namespace RealStateApp.Core.Application.ViewModels.User
         public string Identification { get; set; }
         public IList<string> Type { get; set; }
         public string Phone { get; set; }
+        public List<string> Roles { get; set; }
         public string Role { get; set; }
         public bool IsActive { get; set; }
     }
