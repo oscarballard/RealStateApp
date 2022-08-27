@@ -31,6 +31,13 @@ namespace WebApp.RealStateApp.Controllers
             ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
             return View(await _propertyService.GetAllViewModelWithFilters(vm));
         }
+        public async Task<IActionResult> IndexByCode(FilterPropertyViewModel vm)
+        {
+            ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
+            List<PropertyViewModel> propiedad = new List<PropertyViewModel>();
+            propiedad.Add(await _propertyService.GetByCodeViewModel(vm.Codigo));
+            return View("Index", propiedad);
+        }
         public async Task<IActionResult> Detalle(int Id)
         {
             PropertyViewModel vm = await _propertyService.GetByIdViewModel(Id);

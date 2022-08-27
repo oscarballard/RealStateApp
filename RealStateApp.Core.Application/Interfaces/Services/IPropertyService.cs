@@ -12,5 +12,6 @@ namespace RealStateApp.Core.Application.Interfaces.Services
     {
         Task<List<PropertyViewModel>> GetAllViewModelWithFilters(FilterPropertyViewModel filters);
         Task<PropertyViewModel> GetByIdViewModel(int Id);
+        Task<PropertyViewModel> GetByCodeViewModel(string Code);
     }
 }
