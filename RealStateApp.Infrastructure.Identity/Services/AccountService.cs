@@ -69,9 +69,12 @@ namespace RealStateApp.Infrastructure.Identity.Services
                 return response;
             }
 
+            JwtSecurityToken jwtSecurityToken = new();
+
+
             if (_jwtSettings.Key != null)
             {
-                JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);
+                jwtSecurityToken = await GenerateJWToken(user);
             }
 
             response.Id = user.Id;
