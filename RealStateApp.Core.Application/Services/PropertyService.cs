@@ -52,6 +52,15 @@ namespace RealStateApp.Core.Application.Services
 
             return vm;
         }
+
+        public async Task<PropertyViewModel> GetByCodeViewModel(string Code)
+        {
+            var entity = await _propertyRepository.GetByCodeWithIncludeAsync(Code);
+            PropertyViewModel vm = _mapper.Map<PropertyViewModel>(entity);
+
+            return vm;
+        }
+
         public async Task<List<PropertyViewModel>> GetAllViewModelWithFilters(FilterPropertyViewModel filters)
         {
             var productList = await _propertyRepository.GetAllWithIncludeAsync(new List<string> { "TipoVenta", "TipoPropiedad"});
