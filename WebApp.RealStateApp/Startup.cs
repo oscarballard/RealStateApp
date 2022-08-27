@@ -25,7 +25,7 @@ namespace WebApp.RealStateApp
         {
             services.AddSession();
             services.AddPersistenceInfrastructure(_config);
-            services.AddIdentityInfrastructure(_config);
+            services.AddIdentityInfrastructure2(_config);
             services.AddApplicationLayer(_config);
             services.AddSharedInfrastructure(_config);
 
