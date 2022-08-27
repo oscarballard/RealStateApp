@@ -21,5 +21,6 @@ namespace RealStateApp.Core.Application.Dtos.Account
         public IFormFile File { get; set; }
         public float Amount { get; set; }
         public string RolId { get; set; }
+        public bool IsActive { get; set; }
     }
 }

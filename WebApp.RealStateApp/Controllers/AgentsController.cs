@@ -24,6 +24,7 @@ namespace WebApp.RealStateApp.Controllers
         public AgentsController(IUserServices userService, IMapper mapper, IHttpContextAccessor httpContextAccesso)
         {
             _userServices = userService;
+            _userServices = userService;
             _mapper = mapper;
             _httpContextAccessor = httpContextAccesso;
         }
@@ -36,31 +37,48 @@ namespace WebApp.RealStateApp.Controllers
             return View("Index", vm);
         }
 
-        public async Task<IActionResult> MiPerfil()
+        public async Task<IActionResult> AgentList()
         {
-            UsersViewModel userViewModel = _httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
-            SaveClientAgentViewModel vm = new();
-            vm = _mapper.Map<SaveClientAgentViewModel>(await _userServices.GetUserById(userViewModel.Id));
-            List<RolesViewModel> RolesList = new();
+            List<UsersViewModel> vm = new();
+            vm = await _userServices.GetUserByRol(Roles.Agent.ToString());
             return View(vm);
         }
+
+        //public async Task<IActionResult> MiPerfil()
+        //{
+        //    UsersViewModel userViewModel = _httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
+        //    SaveClientAgentViewModel vm = new();
+        //    vm = _mapper.Map<SaveClientAgentViewModel>(await _userServices.GetUserById(userViewModel.Id));
+        //    List<RolesViewModel> RolesList = new();
+        //    return View(vm);
+        //}
 
         public async Task<IActionResult> Active(string Id)
         {
             SaveClientAgentViewModel vm = new();
             vm = _mapper.Map<SaveClientAgentViewModel>(await _userServices.GetUserById(Id));
-            _userServices.UpdateAsycn(vm, )
+            vm.IsActive = true;
+            await _userServices.UpdateAsycn(vm, Id);
+            vm.Roles = await _userServices.GetRolByName(Roles.Agent.ToString());
+            ViewBag.admins = await _userServices.GetUserByRol(Roles.Agent.ToString());
+            return RedirectToRoute(new { controller = "Agents", action = "Index" });
         }
 
-        public async Task<IActionResult> inactivate()
+        public async Task<IActionResult> Inactivate(string Id)
         {
-
+            SaveClientAgentViewModel vm = new();
+            vm = _mapper.Map<SaveClientAgentViewModel>(await _userServices.GetUserById(Id));
+            vm.IsActive = false;
+            await _userServices.UpdateAsycn(vm, Id);
+            vm.Roles = await _userServices.GetRolByName(Roles.Agent.ToString());
+            ViewBag.admins = await _userServices.GetUserByRol(Roles.Agent.ToString());
+            return RedirectToRoute(new { controller = "Agents", action = "Index" });
         }
 
-        public async Task<IActionResult> Delete()
-        {
+        //public async Task<IActionResult> Delete()
+        //{
 
-        }
+        //}
 
     }
 }

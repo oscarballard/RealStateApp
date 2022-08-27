@@ -101,7 +101,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                estado = user.EmailConfirmed
+                IsActive = user.EmailConfirmed
                 //Identification = user.Identification
             }).OrderBy(u => u.FirstName).ToListAsync();
 
@@ -162,9 +162,9 @@ namespace RealStateApp.Infrastructure.Identity.Services
 
             var rolName = await _roleManager.FindByIdAsync(request.RolId);
             //await _userManager.AddToRoleAsync(user, Roles.Client.ToString());
-            userWithSameUserName = await _userManager.FindByIdAsync(user.Id);
+            //userWithSameUserName = await _userManager.FindByIdAsync(user.Id);
 
-            if (user.Id != "" && user != null)
+            if (user.Id != "" && user != null && request.Photo != null)
             {
                 request.Photo = UploadFile(request.File, user.Id);
                 await this.UpdateUser(request, user.Id);
@@ -195,8 +195,9 @@ namespace RealStateApp.Infrastructure.Identity.Services
             userWithSameUserName.LastName = request.LastName;
             userWithSameUserName.UserName = request.UserName;
             userWithSameUserName.Photo = request.Photo; 
+            userWithSameUserName.IsActive = request.IsActive;
 
-           var result = await _userManager.UpdateAsync(userWithSameUserName);
+            var result = await _userManager.UpdateAsync(userWithSameUserName);
 
             if (userWithSameUserName == null)
             {
@@ -428,7 +429,8 @@ namespace RealStateApp.Infrastructure.Identity.Services
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Email = user.Email,
-                estado = user.EmailConfirmed
+                IsActive = user.EmailConfirmed,
+                Photo = user.Photo
                 //Identification = user.Identification
             }).OrderBy(u => u.FirstName).ToList();
         }

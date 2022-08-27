@@ -28,7 +28,7 @@ namespace WebApp.RealStateApp.Controllers
             return View("Index", vm);
         }
 
-        [ServiceFilter(typeof(LoginAuthorize))]
+        //[ServiceFilter(typeof(LoginAuthorize))]
         [HttpPost]
         public async Task<IActionResult> Register(SaveUsersViewModel vm)
         {

@@ -70,7 +70,8 @@ namespace RealStateApp.Core.Application.Services
                 Imagen3 = prop.Imagen3,
                 Imagen4 = prop.Imagen4,
                 IdTipoPropiedad = prop.TipoPropiedad.Id,
-                Precio = prop.Precio
+                Precio = prop.Precio,
+                IdAgente = prop.IdAgente
             }).ToList();
 
 
@@ -98,11 +99,11 @@ namespace RealStateApp.Core.Application.Services
                 listViewModels = listViewModels.Where(product => product.Precio <= filters.MaxPrecio.Value).ToList();
             }
 
+            if (filters.IdAgent != null)
+            {
+                listViewModels = listViewModels.Where(product => product.IdAgente == filters.IdAgent.ToString()).ToList();
+            }
 
-            //if (filters.IdAgent != null)
-            //{
-            //    listViewModels = listViewModels.Where(product => product.IdAgente == filters.IdAgent.Value).ToList();
-            //}
             if (userViewModel != null)
             {
                 List<PropertyViewModel> ListLikeWithLike = new();

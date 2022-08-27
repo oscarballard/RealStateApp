@@ -1,0 +1,66 @@
+﻿@using RealStateApp.Core.Application.ViewModels.User;
+@model List<UsersViewModel>;
+@{
+    int cont = 0;
+    string Photo = "";
+}
+
+<div class="row">
+    @foreach (RealStateApp.Core.Application.ViewModels.User.UsersViewModel user in Model)
+    {
+        Photo = user.Photo != null ? user.Photo : "https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg";
+        <div class="col-md-3">
+            <div class="card card-agent" >
+                <img class="card-img-top img-card" src="@Photo" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">@user.FirstName @user.LastName</h5>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<style>
+    .hidden {
+        display: none;
+    }
+
+    .img-card {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        margin: 0 auto;
+        box-shadow: 0 0 10px rgba(0,0,0,.2);
+    }
+
+    .card-agent {
+        padding: 1.5em .5em .5em;
+        border-radius: 2em;
+        text-align: center;
+        box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    }
+
+    .card-title {
+        font-weight: 700;
+        font-size: 1.5em;
+    }
+</style>
+
+<script>
+    var el = document.getElementById('IdProducType');
+    var element = document.getElementById('limit');
+    var monto = document.getElementById('monto');
+    element.classList.add('hidden')
+
+    el.addEventListener('change', (e) => {
+        if (e.target.value == 2) {
+            element.classList.remove('hidden')
+            monto.classList.add('hidden')
+        } else {
+            element.classList.add('hidden')
+            monto.classList.remove('hidden')
+        }
+    })
+
+</script>
