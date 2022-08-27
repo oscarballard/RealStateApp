@@ -71,7 +71,11 @@ namespace RealStateApp.Infrastructure.Identity.Services
 
             if (_jwtSettings.Key != null)
             {
-                JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);
+                JwtSecurityToken jwtSecurityToken = await GenerateJWToken(user);https://plataformavirtual.itla.edu.do/my/
+                if (_jwtSettings.Key != null)
+                {
+                    response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+                }
             }
 
             response.Id = user.Id;
@@ -84,10 +88,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             response.Roles = rolesList.ToList();
             response.IsVerified = user.EmailConfirmed;
 
-            if (_jwtSettings.Key != null)
-            {
-                response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
-            }
+ 
             var refreshToken = GenerateRefreshToken();
             response.RefreshToken = refreshToken.Token;
 
