@@ -137,6 +137,7 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(x => x.Amount, opt => opt.Ignore())
                 .ForMember(x => x.RolId, opt => opt.Ignore())
                 .ForMember(x => x.Phone, opt => opt.Ignore());
+            #endregion
 
             #region FeaturesSalesType
             CreateMap<SalesTypeViewModel, UpdateSalesTypeCommand>()

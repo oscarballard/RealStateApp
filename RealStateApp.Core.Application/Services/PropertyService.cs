@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using RealStateApp.Core.Application.Enums;
 using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.Repositories;
 using RealStateApp.Core.Application.Interfaces.Services;
@@ -102,6 +103,17 @@ namespace RealStateApp.Core.Application.Services
             if (filters.IdAgent != null)
             {
                 listViewModels = listViewModels.Where(product => product.IdAgente == filters.IdAgent.ToString()).ToList();
+            }
+            else
+            {
+                if (userViewModel != null)
+                {
+                    if (userViewModel.Roles.Any(r => r == "Agent"))
+                    {
+                        listViewModels = listViewModels.Where(product => product.IdAgente == userViewModel.Id.ToString()).ToList();
+
+                    }
+                }
             }
 
             if (userViewModel != null)

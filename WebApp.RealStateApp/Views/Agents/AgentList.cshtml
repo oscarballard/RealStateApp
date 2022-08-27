@@ -27,7 +27,7 @@
     @foreach (RealStateApp.Core.Application.ViewModels.User.UsersViewModel user in Model)
     {
         Photo = user.Photo != null ? user.Photo : "https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg";
-        <div class="col-md-3">
+        <div class="col-md-3" onclick=' window.location.href = "@Url.Action("Index","Home", new { IdAgent = user.Id})"'>>
             <div class="card card-agent">
                 <img class="card-img-top img-card" src="@Photo" alt="Card image cap">
                 <div class="card-body">
