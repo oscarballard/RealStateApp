@@ -1,8 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using RealStateApp.Core.Application.Dtos.Account;
+using RealStateApp.Core.Application.Helpers;
 using RealStateApp.Core.Application.Interfaces.Services;
 using RealStateApp.Core.Application.ViewModels.Properties;
+using RealStateApp.Core.Application.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -18,21 +22,40 @@ namespace WebApp.RealStateApp.Controllers
         private readonly IPropertyService _propertyService;
         private readonly IPropertyTypeService _propertyTypeService;
         private readonly IMapper _mapper;
-        public HomeController(IMapper mapper,IPropertyTypeService propertyTypeService,IPropertyService propertyService, ILogger<HomeController> logger)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly AuthenticationResponse Usuario;
+        public HomeController(IHttpContextAccessor httpContextAccessor,IMapper mapper,IPropertyTypeService propertyTypeService,IPropertyService propertyService, ILogger<HomeController> logger)
         {
             _logger = logger;
             _propertyService = propertyService;
             _propertyTypeService = propertyTypeService;
             _mapper = mapper;
+            _httpContextAccessor = httpContextAccessor;
+            Usuario = httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
+
         }
 
         public async Task<IActionResult> Index(FilterPropertyViewModel vm)
         {
+            if (Usuario != null && Usuario.Roles.Any(r => r == "Admin"))
+            {
+                var propiedades = await _propertyService.GetAllViewModel();
+                ViewBag.CantPropiedades = propiedades.Count();
+                return View("IndexAdmin");
+
+            }
+
             ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
             return View(await _propertyService.GetAllViewModelWithFilters(vm));
         }
         public async Task<IActionResult> IndexByCode(FilterPropertyViewModel vm)
-        {
+        {   
+            if (Usuario != null && Usuario.Roles.Any(r => r == "Admin"))
+            {
+                return View("IndexAdmin");
+
+            }
+
             ViewBag.PropertyType = await _propertyTypeService.GetAllViewModel();
             List<PropertyViewModel> propiedad = new List<PropertyViewModel>();
             propiedad.Add(await _propertyService.GetByCodeViewModel(vm.Codigo));
