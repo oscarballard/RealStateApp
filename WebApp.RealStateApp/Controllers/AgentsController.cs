@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using RealStateApp.Core.Application.Dtos.Account;
 using RealStateApp.Core.Application.Enums;
 using RealStateApp.Core.Application.Interfaces.Services;
+using RealStateApp.Core.Application.ViewModels.Properties;
 using RealStateApp.Core.Application.ViewModels.Roles;
 using RealStateApp.Core.Application.ViewModels.User;
 using System;
@@ -37,10 +38,16 @@ namespace WebApp.RealStateApp.Controllers
             return View("Index", vm);
         }
 
-        public async Task<IActionResult> AgentList()
+        public async Task<IActionResult> AgentList(FilterUserViewModel filter)
         {
             List<UsersViewModel> vm = new();
             vm = await _userServices.GetUserByRol(Roles.Agent.ToString());
+            if (filter.firstName != null)
+            {
+                vm = vm.Where(u => u.FirstName.ToLower().Contains(filter.firstName.ToLower())).ToList();
+                vm = vm.Where(u => u.IsActive == true).ToList(); 
+                ViewBag.Filters = filter;
+            }
             return View(vm);
         }
 
