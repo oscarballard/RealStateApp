@@ -13,6 +13,21 @@
 
 <div class="row">
     <div class="col-md-12">
+        <form method="post" asp-controller="Home" asp-action="IndexByCode">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Codigo</span>
+                        </div>
+                        <input type="number" min="0" class="form-control" name="Codigo" />
+                    </div>
+                </div>
+                <div class="col-md-2"><button type="submit" class="btn btn-primary">Buscar</button></div>
+            </div>
+        </form>
+    </div>
+    <div class="col-md-12">
         <form method="post" asp-controller="Home" asp-action="Index">
             <div class="row">
                 <div class="col-md-2">
@@ -155,43 +170,43 @@
                         {
                             <div class="d-flex align-items-center @(Propiedad.ClientLikes.Count > 0 ? "text-danger":"") " onclick="Like(this, @Propiedad.Id)">
                                 <span class="mr-2">
-                                    <i  class="fa-solid fa-heart"></i>
+                                    <i class="fa-solid fa-heart"></i>
                                 </span>
                             </div>
                         }
 
                         @*<div class="row">
-            <div class="col-lg-6 col-xl-4 col-sm-6 col-md-6">
-                <div class="d-flex align-items-center">
-                    <span class="mr-2">
-                        <i class="fa-solid fa-bath"></i>
-                    </span>
-                    <div>
-                        <h4 class="m-0"><strong>@Propiedad.CantLavabos</strong></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4 col-sm-6 col-md-6">
-                <div class="d-flex align-items-center">
-                    <span class="mr-2">
-                        <i class="fa-solid fa-bed"></i>
-                    </span>
-                    <div>
-                        <h4 class="m-0"><strong>@Propiedad.CantHabitaciones</strong></h4>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-6 col-xl-4 col-sm-6 col-md-6">
-                <div class="d-flex align-items-center">
-                    <span class="mr-2">
-                        <i class="fa-solid fa-people-roof"></i>
-                    </span>
-                    <div>
-                        <h4 class="m-0"><strong>@Propiedad.Terreno M</strong></h4>
-                    </div>
-                </div>
-            </div>
-        </div>*@
+                                <div class="col-lg-6 col-xl-4 col-sm-6 col-md-6">
+                                    <div class="d-flex align-items-center">
+                                        <span class="mr-2">
+                                            <i class="fa-solid fa-bath"></i>
+                                        </span>
+                                        <div>
+                                            <h4 class="m-0"><strong>@Propiedad.CantLavabos</strong></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-xl-4 col-sm-6 col-md-6">
+                                    <div class="d-flex align-items-center">
+                                        <span class="mr-2">
+                                            <i class="fa-solid fa-bed"></i>
+                                        </span>
+                                        <div>
+                                            <h4 class="m-0"><strong>@Propiedad.CantHabitaciones</strong></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 col-xl-4 col-sm-6 col-md-6">
+                                    <div class="d-flex align-items-center">
+                                        <span class="mr-2">
+                                            <i class="fa-solid fa-people-roof"></i>
+                                        </span>
+                                        <div>
+                                            <h4 class="m-0"><strong>@Propiedad.Terreno M</strong></h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>*@
                     </div>
                 </div>
             </div>

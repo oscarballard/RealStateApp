@@ -15,5 +15,6 @@ namespace RealStateApp.Core.Application.ViewModels.Properties
         public int? CantLavabos { get; set; }
         public string? IdAgent { get; set; }
         public string? IdClient { get; set; }
+        public string? Codigo { get; set; }
     }
 }

@@ -27,7 +27,7 @@ namespace RealStateApp.Infrastructure.Persistence.Repositories
         }
         public virtual async Task<Property> GetByCodeWithIncludeAsync(string Code)
         {
-            var property = await _dbContext.Set<Property>().Include(i => i.Mejoras)
+            var property = await _dbContext.Set<Property>().Include(i => i.TipoVenta).Include(i => i.TipoPropiedad).Include(i => i.Mejoras)
                     .FirstOrDefaultAsync(i => i.Codigo == Code);
             return property;
         }
