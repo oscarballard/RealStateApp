@@ -94,7 +94,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
             var refreshToken = GenerateRefreshToken();
             response.RefreshToken = refreshToken.Token;
 
-            if (!user.IsActive && rolesList.Any(r => r == "Client"))
+            if (!user.IsActive && !rolesList.Any(r => r == "Client"))
             {
                 response.HasError = true;
                 response.Error = $"Usuario Inactivo {request.UserName}";
