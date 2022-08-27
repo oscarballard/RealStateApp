@@ -93,5 +93,11 @@ namespace Application.Services
         {
             await _accountService.Delete(Id);
         }
+
+        public async Task<UsersStateByRolViewModel> GetAllUserStateByRol(string Rol)
+        {
+            UsersStateByRolViewModel vm = await _accountService.GetAllUserStateByRol(Rol);
+            return vm;
+        }
     }
 }

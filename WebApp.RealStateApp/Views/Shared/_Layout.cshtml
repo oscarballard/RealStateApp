@@ -125,7 +125,7 @@
                             <div class="dropdown-menu dropdown-menu-right">
                                 @if (User != null && isAgent)
                                 {
-                                    <a class="dropdown-item" asp-area="" asp-controller="Agents" asp-action="MiPerfil">Mi Perfil</a>
+                                    <a class="dropdown-item" asp-area="" asp-controller="Agents" asp-action="MiPerfil" asp-route-Id="@User.Id"> Mi Perfil</a>
                                     <div class="dropdown-divider"></div>
                                 }
                                 @if (User != null)

@@ -1,8 +1,6 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@using RealStateApp.Core.Application.ViewModels.User;
+@model UsersStateViewModel;
+
 <style>
     .row {
         margin-top: 20px;
@@ -16,7 +14,7 @@
                     <i class="fa-solid fa-user-tie"></i>
                 </span>
                 <div>
-                    <h4 class="m-0"><strong>92</strong></h4>
+                    <h4 class="m-0"><strong>@Model.Agent.UserActive</strong></h4>
                     <h6>Agentes Activos</h6>
                 </div>
             </div>
@@ -29,7 +27,7 @@
                     <i class="fa-solid fa-user-gear"></i>
                 </span>
                 <div>
-                    <h4 class="m-0"><strong>125</strong></h4>
+                    <h4 class="m-0"><strong>@Model.Dev.UserActive</strong></h4>
                     <h6>Desarrolladores Activos</h6>
                 </div>
             </div>
@@ -42,7 +40,7 @@
                     <i class="fa-solid fa-user-group"></i>
                 </span>
                 <div>
-                    <h4 class="m-0"><strong>125</strong></h4>
+                    <h4 class="m-0"><strong>@Model.Client.UserActive</strong></h4>
                     <h6>Clientes Activos</h6>
                 </div>
             </div>
@@ -70,7 +68,7 @@
                     <i class="fa-solid fa-user-tie"></i>
                 </span>
                 <div>
-                    <h4 class="m-0"><strong>2,456 </strong></h4>
+                    <h4 class="m-0"><strong>@Model.Agent.UserInactive </strong></h4>
                     <h6>Agentes Inactivos</h6>
                 </div>
             </div>
@@ -83,7 +81,7 @@
                     <i class="fa-solid fa-user-gear"></i>
                 </span>
                 <div>
-                    <h4 class="m-0"><strong>125</strong></h4>
+                    <h4 class="m-0"><strong>@Model.Dev.UserInactive</strong></h4>
                     <h6>Desarrolladores Inactivos</h6>
                 </div>
             </div>
@@ -96,7 +94,7 @@
                     <i class="fa-solid fa-user-group"></i>
                 </span>
                 <div>
-                    <h4 class="m-0"><strong>125</strong></h4>
+                    <h4 class="m-0"><strong>@Model.Client.UserInactive</strong></h4>
                     <h6>Clientes Inactivos</h6>
                 </div>
             </div>

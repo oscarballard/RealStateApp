@@ -21,5 +21,6 @@ namespace RealStateApp.Core.Application.Interfaces.Services
         Task<UsersViewModel> GetUserById(string Id);
         Task Delete(string Id);
         Task<RegisterResponse> UpdateAsycn(SaveClientAgentViewModel vm, string Id);
+        Task<UsersStateByRolViewModel> GetAllUserStateByRol(string Rol);
     }
 }

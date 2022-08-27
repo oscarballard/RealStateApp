@@ -52,16 +52,15 @@ namespace WebApp.RealStateApp.Controllers
             return View(vm);
         }
 
-        //public async Task<IActionResult> MiPerfil()
-        //{
-        //    UsersViewModel userViewModel = _httpContextAccessor.HttpContext.Session.Get<AuthenticationResponse>("user");
-        //    SaveClientAgentViewModel vm = new();
-        //    vm = _mapper.Map<SaveClientAgentViewModel>(await _userServices.GetUserById(userViewModel.Id));
-        //    List<RolesViewModel> RolesList = new();
-        //    return View(vm);
-        //}
-        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> MiPerfil(string Id)
+        {
+            SaveClientAgentViewModel vm = new();
+            vm = _mapper.Map<SaveClientAgentViewModel>(await _userServices.GetUserById(Id));
+            List<RolesViewModel> RolesList = new();
+            return View(vm);
+        }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Active(string Id)
         {
             SaveClientAgentViewModel vm = new();
