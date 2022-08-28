@@ -74,7 +74,6 @@ namespace RealStateApp.Infrastructure.Identity.Services
 
             if (_jwtSettings.Key != null)
             {
-
                 jwtSecurityToken = await GenerateJWToken(user);
             }
 
@@ -88,7 +87,8 @@ namespace RealStateApp.Infrastructure.Identity.Services
             response.Roles = rolesList.ToList();
             response.IsVerified = user.EmailConfirmed;
 
- 
+            response.JWToken = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+
             var refreshToken = GenerateRefreshToken();
             response.RefreshToken = refreshToken.Token;
 
@@ -173,6 +173,7 @@ namespace RealStateApp.Infrastructure.Identity.Services
                 UserName = request.UserName
             };
             user.EmailConfirmed = true;
+            user.PhoneNumber = request.Phone;
 
             var result = await _userManager.CreateAsync(user, request.Password);
 

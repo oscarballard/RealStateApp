@@ -4,7 +4,7 @@
     double monto = 0;
 }
 
-@await Html.PartialAsync("../Users/Register.cshtml", Model);
+@await Html.PartialAsync("../Users/Register.cshtml", Model)
 <div class="row">
     <div class="col-md-12">
         @Html.ValidationSummary(false, "", new { @class = "text-danger" })
