@@ -11,7 +11,7 @@ namespace RealStateApp.Core.Application.ViewModels.User
 {
     public class SaveUsersViewModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         [Required(ErrorMessage = "Debe colocar su nombre ")]
         [DataType(DataType.Text)]

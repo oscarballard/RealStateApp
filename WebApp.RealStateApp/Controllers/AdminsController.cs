@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RealStateApp.Core.Application.Dtos.Account;
 using RealStateApp.Core.Application.Enums;
@@ -16,15 +17,29 @@ namespace WebApp.RealStateApp.Controllers
     public class AdminsController : Controller
     {
         private readonly IUserServices _userServices;
+        private readonly IMapper _mapper;
 
-        public AdminsController(IUserServices userService)
+        public AdminsController(IUserServices userService, IMapper mapper)
         {
             _userServices = userService;
+            _mapper = mapper;
         }
 
         public async Task<IActionResult> Index()
         {
             SaveUsersViewModel vm = new();
+            vm.Roles = await _userServices.GetRolByName(Roles.Admin.ToString());
+            ViewBag.admins = await _userServices.GetUserByRol(Roles.Admin.ToString());
+            return View("Index", vm);
+        }
+
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(string Id)
+        {
+            SaveUsersViewModel vm = new();
+            UsersViewModel vmm = await _userServices.GetUserById(Id);
+            vm = _mapper.Map<SaveUsersViewModel>(vmm);
             vm.Roles = await _userServices.GetRolByName(Roles.Admin.ToString());
             ViewBag.admins = await _userServices.GetUserByRol(Roles.Admin.ToString());
             return View("Index", vm);

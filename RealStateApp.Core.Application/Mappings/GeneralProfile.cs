@@ -100,6 +100,22 @@ namespace RealStateApp.Core.Application.Mappings
                 .ForMember(x => x.HasError, opt => opt.Ignore())
                 .ForMember(x => x.Error, opt => opt.Ignore());
 
+
+            CreateMap<SaveUsersViewModel, UsersViewModel>()
+                .ForMember(x => x.Type, opt => opt.Ignore())
+                .ForMember(x => x.Role, opt => opt.Ignore())
+                .ForMember(x => x.Roles, opt => opt.Ignore())
+                .ForMember(x => x.EmailConfirmed, opt => opt.Ignore())
+                .ForMember(x => x.IsActive, opt => opt.Ignore())
+                .ReverseMap()
+                .ForMember(x => x.RolId, opt => opt.Ignore())
+                .ForMember(x => x.Amount, opt => opt.Ignore())
+                .ForMember(x => x.File, opt => opt.Ignore())
+                .ForMember(x => x.Roles, opt => opt.Ignore())
+                .ForMember(x => x.RolesList, opt => opt.Ignore())
+                .ForMember(x => x.HasError, opt => opt.Ignore())
+                .ForMember(x => x.Error, opt => opt.Ignore());
+
             CreateMap<PropertyImprovements, PropertyImprovementsViewModel>()
                 .ReverseMap();
 

@@ -1,11 +1,19 @@
 ﻿@model RealStateApp.Core.Application.ViewModels.User.SaveUsersViewModel
 
-@{ 
+@{
     string controllerAction = "Admins";
     if (Model.Roles.Name == "Dev")
     {
         controllerAction = "Dev";
     }
+
+    string Action = "Register";
+    if (Model.Id != null)
+    {
+        string Action = "Edit";
+    }
+
+
 }
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -18,7 +26,7 @@
             </div>
             <div class="modal-body">
                 <form method="post" asp-controller="@controllerAction" asp-action="Register">
-                    <input asp-for="RolId" class="form-control" value="@Model.Roles.Id" hidden/>
+                    <input asp-for="RolId" class="form-control" value="@Model.Roles.Id" hidden />
 
                     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                     @if (Model.HasError)
@@ -101,4 +109,11 @@
         </div>
     </div>
 </div>
-
+@if (Model.Id != null)
+{
+    <script>
+        $(document).ready(function () {
+            $('#exampleModal').modal('toggle')
+        });
+    </script>
+}
